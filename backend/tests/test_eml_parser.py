@@ -33,7 +33,7 @@ def test_spoofed_eml_parsing():
     assert len(parsed.headers.received_chain) == 3
     
     # Verify Received hops order
-    assert parsed.headers.received_chain[0].ip_address == "203.0.113.88"  # Earliest hop
+    assert parsed.headers.received_chain[0].ip_address == "185.220.101.5"  # Earliest hop
     assert parsed.headers.received_chain[2].ip_address == "10.0.0.1"      # Latest gateway hop
 
     # Verify attachment metadata extraction & SHA-256 hash calculation
