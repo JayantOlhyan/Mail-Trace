@@ -19,8 +19,11 @@ from app.parsing.email_parser import EmailParserEngine
 
 router = APIRouter(prefix="/emails", tags=["Forensics"])
 
+from sqlalchemy.orm import selectinload
+
 async def _get_canonical_from_db(email_id: str, db: AsyncSession) -> CanonicalEmailObject:
-    email_record = await db.get(EmailTable, email_id)
+    stmt = select(EmailTable).options(selectinload(EmailTable.evidence)).where(EmailTable.id == email_id)
+    email_record = (await db.execute(stmt)).scalar_one_or_none()
     if not email_record:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Email ID {email_id} not found")
 
