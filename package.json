@@ -1,0 +1,30 @@
+{
+  "name": "threattrace-ai",
+  "version": "0.1.0",
+  "description": "Next-Generation Open-Source AI Threat Detection & Incident Traceability Platform",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "threattrace": "dist/cli/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsc --watch",
+    "test": "node --test"
+  },
+  "keywords": [
+    "security",
+    "threat-detection",
+    "ai",
+    "log-analysis",
+    "cybersecurity",
+    "incident-response"
+  ],
+  "author": "Jayant Olhyan",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "typescript": "^5.3.3"
+  }
+}
