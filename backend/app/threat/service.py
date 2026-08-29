@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Optional
+from typing import Optional, Any
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 
