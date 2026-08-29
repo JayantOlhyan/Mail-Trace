@@ -1,64 +1,87 @@
-# ThreatTrace AI 🛡️🤖
+<p align="center">
+  <img src="docs/assets/logo.jpg" alt="MailTrace Logo" width="400" />
+</p>
 
-> **Next-Generation Open-Source AI Threat Detection & Incident Traceability Platform**
+<h1 align="center">MailTrace ✉️🔍🛡️</h1>
 
-ThreatTrace AI is an autonomous, open-source security intelligence framework designed to analyze system logs, network traces, and security events in real-time using modern AI models. It reconstructs attack vectors, calculates risk scores, and provides actionable remediation guidance.
+<p align="center">
+  <b>AI-Powered Email Threat Detection & Forensic Intelligence Platform</b><br />
+  <i>Smart India Hackathon (SIH) 2026 — Problem Statement 106</i>
+</p>
+
+<p align="center">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License MIT"></a>
+  <a href="https://github.com/JayantOlhyan/Mail-Trace"><img src="https://img.shields.io/badge/Build-Passing-brightgreen.svg" alt="Build Status"></a>
+  <a href="https://python.org"><img src="https://img.shields.io/badge/Python-3.9%2B-blue.svg" alt="Python 3.9+"></a>
+  <a href="https://fastapi.tiangolo.com"><img src="https://img.shields.io/badge/FastAPI-0.100%2B-009688.svg" alt="FastAPI"></a>
+  <a href="https://nextjs.org"><img src="https://img.shields.io/badge/Next.js-14-black.svg" alt="Next.js 14"></a>
+</p>
+
+---
+
+## 🎯 Overview
+
+**MailTrace** is an enterprise-grade forensic intelligence and email threat detection platform built specifically for cybersecurity analysts and incident responders. Designed for **SIH 2026 Problem Statement 106**, MailTrace goes beyond simple spam/phishing classification by answering key investigation questions:
+
+- **Why is this email suspicious?**
+- **How did it reach the recipient?**
+- **What infrastructure was involved?**
+- **What is the probable origin infrastructure?**
+- **Is this infrastructure connected to previous incidents or campaigns?**
 
 ---
 
 ## 🌟 Key Features
 
-- **🧠 Multi-Model AI Analysis**: Integrates LLMs and anomaly detection heuristics to identify zero-day threats, suspicious lateral movement, and privilege escalation.
-- **🔍 Log & Event Correlation**: Ingests syslog, CloudTrail, Auth logs, and container events to build dynamic incident timelines.
-- **⚡ Real-Time Alerting & Scoring**: Computes dynamic Threat Severity Index (TSI) scores with CVSS alignment.
-- **📋 Interactive Reports & Playbooks**: Generates incident root-cause analysis (RCA) reports and automated containment playbooks.
-- **🛠️ Extensible Plugin System**: Easily attach custom threat intelligence feeds and custom rule evaluators.
+- **📧 RFC 5322 MIME & Header Parser**: Full MIME decomposition, multi-part attachment extraction, and ordered Received hop chain analysis.
+- **🛡️ SPF / DKIM / DMARC Verification**: Cryptographic email authentication and spoofing detection.
+- **📍 Origin & Relay Tracing**: Distinguishes *Observed Origin IP* from *Probable Origin Infrastructure* with confidence scoring.
+- **🧠 AI & NLP Threat Detection**: Identifies social engineering, urgency tactics, credential harvesting, and Business Email Compromise (BEC).
+- **⚡ Centralized Risk Engine**: Defensive 0–100 threat severity scoring with explainable evidence binding.
+- **🔒 SSRF & Zero-Execution Attachment Safety**: Passive URL metadata analysis and SHA-256 evidence hashing without malicious attachment execution.
+- **📋 Forensic PDF Reports**: Chain-of-custody compliant evidence exports for security operations center (SOC) analysts.
 
 ---
 
-## 🚀 Quick Start
-
-### Prerequisites
-
-- Node.js >= 18.x
-- npm / pnpm / yarn
-
-### Installation
-
-```bash
-# Clone the repository
-git clone https://github.com/JayantOlhyan/ThreatTrace-AI.git
-cd ThreatTrace-AI
-
-# Install dependencies
-npm install
-
-# Build the project
-npm run build
-```
-
-### Basic Usage
-
-```bash
-# Run ThreatTrace CLI scanner against a sample log file
-npx threattrace analyze --file sample_auth.log
-
-# Start ThreatTrace API server & dashboard backend
-npm run start
-```
-
----
-
-## 📂 Architecture Overview
+## 📂 Core Forensic Pipeline
 
 ```mermaid
 graph TD
-    A[Log Sources / Events] --> B[ThreatTrace Ingestion Engine]
-    B --> C[Log Parser & Normalizer]
-    C --> D[AI Anomaly & Pattern Detector]
-    D --> E[Threat Severity Scoring Engine]
-    E --> F[Incident Timeline & RCA Generator]
-    F --> G[Alerting / Webhook Notifications]
+    A[Raw .eml Upload] --> B[MIME & Header Ingestor]
+    B --> C[RFC 5322 Parser & HTML Sanitizer]
+    C --> D[SPF / DKIM / DMARC Evaluator]
+    D --> E[Relay Hop & Origin Tracing]
+    E --> F[Deterministic Rules + NLP AI Detector]
+    F --> G[Centralized Risk Engine (0-100)]
+    G --> H[PostgreSQL Graph Correlator]
+    H --> I[Case Management & Forensic PDF Report]
+```
+
+---
+
+## 🚀 Quick Start (Backend Engine)
+
+### Prerequisites
+
+- Python 3.9+
+- pip & venv
+
+### Installation & Setup
+
+```bash
+# Clone the repository
+git clone https://github.com/JayantOlhyan/Mail-Trace.git
+cd Mail-Trace
+
+# Create virtual environment
+python3 -m venv backend/venv
+source backend/venv/bin/activate
+
+# Install dependencies
+pip install -r backend/requirements.txt
+
+# Run PyTest suite
+PYTHONPATH=backend pytest backend/tests/
 ```
 
 ---
@@ -77,4 +100,4 @@ Contributions are welcome! Please feel free to open issues or submit pull reques
 
 ## 📄 License
 
-Distributed under the MIT License. See `LICENSE` for more information.
+Distributed under the MIT License. See [LICENSE](LICENSE) for more information.
