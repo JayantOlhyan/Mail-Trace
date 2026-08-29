@@ -165,3 +165,5 @@ class ForensicTimelineEventTable(Base):
     description: Mapped[str] = mapped_column(Text, nullable=False)
     evidence_reference: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
 
+    email: Mapped["EmailTable"] = relationship("EmailTable", back_populates="timeline_events")
+
