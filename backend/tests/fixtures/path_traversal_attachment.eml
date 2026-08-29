@@ -1,0 +1,16 @@
+From: Attacker <attacker@evil.com>
+To: victim@company.local
+Subject: Dangerous Path Traversal Attachment Test
+Content-Type: multipart/mixed; boundary="--Path_Boundary"
+
+----Path_Boundary
+Content-Type: text/plain
+
+Please check attached document.
+
+----Path_Boundary
+Content-Type: application/octet-stream; name="../../../../etc/passwd"
+Content-Disposition: attachment; filename="../../../../etc/passwd"
+
+root:x:0:0:root:/root:/bin/bash
+----Path_Boundary--

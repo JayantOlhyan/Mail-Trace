@@ -1,6 +1,6 @@
 import re
 from typing import List, Optional
-from app.parsing.models import ParsedEmail
+from app.schemas.canonical import CanonicalEmailObject
 from app.forensics.models import (
     AuthenticationVerdict,
     SPFResult,
@@ -23,8 +23,9 @@ class AuthEvaluator:
     ]
 
     @classmethod
-    def evaluate(cls, parsed_email: ParsedEmail) -> AuthenticationVerdict:
-        from_domain = cls._extract_domain(parsed_email.headers.from_address)
+    def evaluate(cls, parsed_email: CanonicalEmailObject) -> AuthenticationVerdict:
+        from_address = parsed_email.identity.from_[0].address if parsed_email.identity.from_ else ""
+        from_domain = parsed_email.identity.from_[0].domain if parsed_email.identity.from_ else ""
 
         # 1. Evaluate SPF
         spf_result = cls._evaluate_spf(parsed_email, from_domain)
@@ -65,20 +66,18 @@ class AuthEvaluator:
         return email_address.split("@")[-1].lower().strip()
 
     @classmethod
-    def _evaluate_spf(cls, parsed_email: ParsedEmail, from_domain: str) -> SPFResult:
-        # Check Authentication-Results or Received-SPF header if available
-        custom = parsed_email.headers.custom_headers
-        auth_results = custom.get("Authentication-Results", "") + " " + custom.get("Received-SPF", "")
+    def _evaluate_spf(cls, parsed_email: CanonicalEmailObject, from_domain: str) -> SPFResult:
+        auth_headers = parsed_email.headers.authentication_headers
+        auth_results = " ".join([f"{k}: {v}" for k, v in auth_headers.items()]).lower()
 
-        if "spf=pass" in auth_results.lower():
+        if "spf=pass" in auth_results:
             return SPFResult(status=AuthStatus.PASS, domain=from_domain, reason="SPF pass confirmed in headers")
-        elif "spf=fail" in auth_results.lower() or "spf=softfail" in auth_results.lower():
-            status = AuthStatus.FAIL if "spf=fail" in auth_results.lower() else AuthStatus.SOFTFAIL
+        elif "spf=fail" in auth_results or "spf=softfail" in auth_results:
+            status = AuthStatus.FAIL if "spf=fail" in auth_results else AuthStatus.SOFTFAIL
             return SPFResult(status=status, domain=from_domain, reason="SPF failure indicated in relay headers")
 
-        # Heuristic check based on Return-Path vs From domain
-        if parsed_email.headers.return_path:
-            return_domain = cls._extract_domain(parsed_email.headers.return_path)
+        if parsed_email.identity.return_path:
+            return_domain = cls._extract_domain(parsed_email.identity.return_path)
             if return_domain and return_domain == from_domain:
                 return SPFResult(status=AuthStatus.PASS, domain=from_domain, reason="Return-Path domain aligns with From domain")
             elif return_domain and return_domain != from_domain:
@@ -87,10 +86,10 @@ class AuthEvaluator:
         return SPFResult(status=AuthStatus.NONE, domain=from_domain, reason="No SPF evaluation record available")
 
     @classmethod
-    def _evaluate_dkim(cls, parsed_email: ParsedEmail, from_domain: str) -> DKIMResult:
-        custom = parsed_email.headers.custom_headers
-        dkim_sig = custom.get("DKIM-Signature") or custom.get("Dkim-Signature")
-        auth_results = custom.get("Authentication-Results", "").lower()
+    def _evaluate_dkim(cls, parsed_email: CanonicalEmailObject, from_domain: str) -> DKIMResult:
+        auth_headers = parsed_email.headers.authentication_headers
+        dkim_sig = auth_headers.get("DKIM-Signature") or auth_headers.get("Dkim-Signature")
+        auth_results = " ".join([f"{k}: {v}" for k, v in auth_headers.items()]).lower()
 
         if not dkim_sig and "dkim=pass" not in auth_results:
             return DKIMResult(status=AuthStatus.NONE, signature_present=False, reason="No DKIM-Signature header present")
@@ -103,12 +102,12 @@ class AuthEvaluator:
         return DKIMResult(status=AuthStatus.PASS, domain=from_domain, signature_present=True, reason="DKIM signature present")
 
     @classmethod
-    def _evaluate_dmarc(cls, parsed_email: ParsedEmail, from_domain: str, spf: SPFResult, dkim: DKIMResult) -> DMARCResult:
+    def _evaluate_dmarc(cls, parsed_email: CanonicalEmailObject, from_domain: str, spf: SPFResult, dkim: DKIMResult) -> DMARCResult:
         align_spf = (spf.status == AuthStatus.PASS and spf.domain == from_domain)
         align_dkim = (dkim.status == AuthStatus.PASS and dkim.domain == from_domain)
 
-        custom = parsed_email.headers.custom_headers
-        auth_results = custom.get("Authentication-Results", "").lower()
+        auth_headers = parsed_email.headers.authentication_headers
+        auth_results = " ".join([f"{k}: {v}" for k, v in auth_headers.items()]).lower()
 
         policy = DMARCPolicy.NONE
         if "dmarc=action=reject" in auth_results or "p=reject" in auth_results:
@@ -134,19 +133,19 @@ class AuthEvaluator:
         )
 
     @classmethod
-    def _evaluate_spoofing(cls, parsed_email: ParsedEmail, from_domain: str) -> SpoofingAnalysis:
+    def _evaluate_spoofing(cls, parsed_email: CanonicalEmailObject, from_domain: str) -> SpoofingAnalysis:
         reasons: List[str] = []
         is_display_name_spoofed = False
         is_reply_to_mismatched = False
         is_return_path_mismatched = False
         impersonated_name = None
 
-        from_name = parsed_email.headers.from_name or ""
-        reply_to = parsed_email.headers.reply_to
-        return_path = parsed_email.headers.return_path
+        from_name = parsed_email.identity.from_[0].display_name if parsed_email.identity.from_ else ""
+        reply_to = parsed_email.identity.reply_to[0].address if parsed_email.identity.reply_to else None
+        return_path = parsed_email.identity.return_path
 
         # 1. Executive / Title Display Name Spoofing Check
-        from_name_lower = from_name.lower()
+        from_name_lower = (from_name or "").lower()
         for title in cls.KNOWN_EXECUTIVE_TITLES:
             if title in from_name_lower:
                 is_display_name_spoofed = True
@@ -179,19 +178,16 @@ class AuthEvaluator:
     @classmethod
     def _calculate_auth_risk(cls, spf: SPFResult, dkim: DKIMResult, dmarc: DMARCResult, spoof: SpoofingAnalysis) -> int:
         score = 0
-
         if spf.status in (AuthStatus.FAIL, AuthStatus.SOFTFAIL):
             score += 25
         if dkim.status == AuthStatus.FAIL:
             score += 20
         if dmarc.status == AuthStatus.FAIL:
             score += 30
-
         if spoof.is_display_name_spoofed:
             score += 35
         if spoof.is_reply_to_mismatched:
             score += 40
         if spoof.is_return_path_mismatched:
             score += 15
-
         return min(100, score)

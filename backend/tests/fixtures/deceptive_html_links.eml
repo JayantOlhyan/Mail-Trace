@@ -1,0 +1,11 @@
+From: Security Alert <security@bank-alert.com>
+To: target@company.local
+Subject: Account Verification Required
+Content-Type: text/html
+
+<html>
+<body>
+<p>Your account requires immediate verification.</p>
+<p>Please log in at <a href="http://evil-phish-collector.com/login">https://secure.mybank.com/login</a>.</p>
+</body>
+</html>

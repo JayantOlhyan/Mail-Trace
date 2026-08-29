@@ -1,6 +1,6 @@
 import ipaddress
 from typing import List, Optional
-from app.parsing.models import ParsedEmail, ReceivedHop
+from app.schemas.canonical import CanonicalEmailObject
 from app.forensics.models import HopAnalysisResult
 
 class HopAnalyzer:
@@ -11,8 +11,8 @@ class HopAnalyzer:
     """
 
     @classmethod
-    def analyze(cls, parsed_email: ParsedEmail) -> HopAnalysisResult:
-        hops = parsed_email.headers.received_chain
+    def analyze(cls, parsed_email: CanonicalEmailObject) -> HopAnalysisResult:
+        hops = parsed_email.headers.received
         anomalies: List[str] = []
         observed_origin_ip: Optional[str] = None
         untrusted_hops_count = 0
@@ -28,13 +28,13 @@ class HopAnalyzer:
 
         # Iterate hops starting from earliest (index 1) to newest
         for hop in hops:
-            if not hop.ip_address:
+            if not hop.source_ip:
                 continue
 
-            if cls._is_public_ip(hop.ip_address):
+            if cls._is_public_ip(hop.source_ip):
                 untrusted_hops_count += 1
                 if not observed_origin_ip:
-                    observed_origin_ip = hop.ip_address
+                    observed_origin_ip = hop.source_ip
 
         # Check for relay path anomalies
         if untrusted_hops_count == 0:
@@ -44,7 +44,7 @@ class HopAnalyzer:
 
         # Timestamp sequence check
         if len(hops) > 1:
-            missing_timestamps = sum(1 for h in hops if not h.timestamp_raw)
+            missing_timestamps = sum(1 for h in hops if not h.timestamp)
             if missing_timestamps > 0:
                 anomalies.append(f"{missing_timestamps} relay hop(s) missing timestamp metadata")
 

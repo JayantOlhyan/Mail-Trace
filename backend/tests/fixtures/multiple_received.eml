@@ -1,0 +1,14 @@
+Received: from gateway.company.local (gateway.company.local [10.0.0.1])
+	by mx.company.local (Postfix) with ESMTPS; Sun, 30 Aug 2026 01:10:00 +0000
+Received: from relay-02.public-isp.com (relay-02.public-isp.com [198.51.100.20])
+	by gateway.company.local (Postfix) with ESMTPS; Sun, 30 Aug 2026 01:09:40 +0000
+Received: from relay-01.public-isp.com (relay-01.public-isp.com [203.0.113.50])
+	by relay-02.public-isp.com (Postfix) with ESMTP; Sun, 30 Aug 2026 01:09:10 +0000
+Received: from client.origin.internal (client.origin.internal [10.2.0.88])
+	by relay-01.public-isp.com (Postfix) with ESMTP; Sun, 30 Aug 2026 01:08:30 +0000
+From: Origin <origin@client.internal>
+To: recipient@company.local
+Subject: Multi-hop Relay Chain Test
+Content-Type: text/plain
+
+Testing multiple received headers hop extraction.

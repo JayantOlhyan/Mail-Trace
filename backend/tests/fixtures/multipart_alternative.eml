@@ -1,0 +1,15 @@
+From: Marketing Team <marketing@brand.com>
+To: user@target.local
+Subject: Weekly Newsletter
+Content-Type: multipart/alternative; boundary="--Boundary_Alt_123"
+
+----Boundary_Alt_123
+Content-Type: text/plain; charset="utf-8"
+
+Read our weekly newsletter at https://brand.com/news.
+
+----Boundary_Alt_123
+Content-Type: text/html; charset="utf-8"
+
+<html><body><p>Read our weekly newsletter <a href="https://brand.com/news">here</a>.</p></body></html>
+----Boundary_Alt_123--

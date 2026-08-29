@@ -1,0 +1,8 @@
+Received: from mail.ipv6.example.com (mail.ipv6.example.com [2607:f8b0:4005:809::200e])
+	by mx.company.local with ESMTPS; Sun, 30 Aug 2026 01:15:00 +0000
+From: IPv6 Sender <ipv6@example.com>
+To: recipient@company.local
+Subject: IPv6 Relay Test
+Content-Type: text/plain
+
+Testing IPv6 address extraction: 2001:db8:85a3::8a2e:370:7334.
