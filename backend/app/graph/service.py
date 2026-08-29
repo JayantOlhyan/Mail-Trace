@@ -2,6 +2,7 @@ from datetime import datetime
 from typing import List, Dict, Optional, Any
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
+from sqlalchemy.orm import selectinload
 
 from app.schemas.canonical import CanonicalEmailObject
 from app.schemas.forensics import Phase2ForensicAnalysisResponse
@@ -51,7 +52,7 @@ class Phase5GraphService:
         nodes, edges = GraphBuilder.build_graph_for_email(canonical_email, forensics, threat, enrichment)
 
         # 2. Entity Resolution: Fetch existing global nodes to merge duplicate entities
-        stmt_n = select(GraphNodeTable)
+        stmt_n = select(GraphNodeTable).options(selectinload(GraphNodeTable.sources))
         existing_db_nodes = (await db.execute(stmt_n)).scalars().all()
         existing_node_map = {n.canonical_value: n for n in existing_db_nodes}
 
@@ -65,7 +66,8 @@ class Phase5GraphService:
                 node_id_remap[n.node_id] = existing_n.id
 
                 # Merge sources
-                all_sources = list(set(existing_n.sources + n.sources))
+                existing_src_ids = [s.email_id for s in existing_n.sources]
+                all_sources = list(set(existing_src_ids + n.sources))
                 resolved_nodes.append(GraphNodeSchema(
                     node_id=existing_n.id,
                     node_type=n.node_type,
