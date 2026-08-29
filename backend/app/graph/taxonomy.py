@@ -1,0 +1,48 @@
+from enum import Enum
+
+class NodeTypeEnum(str, Enum):
+    EMAIL = "EMAIL"
+    SENDER = "SENDER"
+    DOMAIN = "DOMAIN"
+    URL = "URL"
+    IP = "IP"
+    MAIL_SERVER = "MAIL_SERVER"
+    ASN = "ASN"
+    ORGANIZATION = "ORGANIZATION"
+    NAMESERVER = "NAMESERVER"
+    LOCATION = "LOCATION"
+    CAMPAIGN = "CAMPAIGN"
+    INDICATOR = "INDICATOR"
+
+class EdgeRelationshipEnum(str, Enum):
+    SENT_BY = "SENT_BY"
+    REPLY_TO = "REPLY_TO"
+    CONTAINS_URL = "CONTAINS_URL"
+    PASSED_THROUGH = "PASSED_THROUGH"
+    SIGNED_BY = "SIGNED_BY"
+    RESOLVES_TO = "RESOLVES_TO"
+    HAS_MX = "HAS_MX"
+    USES_NAMESERVER = "USES_NAMESERVER"
+    BELONGS_TO_ASN = "BELONGS_TO_ASN"
+    OPERATED_BY = "OPERATED_BY"
+    GEOLOCATED_TO = "GEOLOCATED_TO"
+    SHARES_INFRASTRUCTURE = "SHARES_INFRASTRUCTURE"
+    RELATED_TO = "RELATED_TO"
+    PART_OF_CAMPAIGN = "PART_OF_CAMPAIGN"
+
+class RelationshipOriginEnum(str, Enum):
+    DIRECT = "DIRECT"
+    INFERRED = "INFERRED"
+
+class RelationshipStrengthEnum(str, Enum):
+    VERY_HIGH = "VERY_HIGH"
+    HIGH = "HIGH"
+    MEDIUM = "MEDIUM"
+    LOW = "LOW"
+    VERY_LOW = "VERY_LOW"
+
+class CampaignStatusEnum(str, Enum):
+    CANDIDATE = "CANDIDATE"
+    UNDER_REVIEW = "UNDER_REVIEW"
+    CONFIRMED_BY_ANALYST = "CONFIRMED_BY_ANALYST"
+    DISMISSED = "DISMISSED"
