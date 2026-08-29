@@ -43,6 +43,9 @@ class EmailTable(Base):
     # Phase 3 Relationships
     threat_analyses: Mapped[List["ThreatAnalysisTable"]] = relationship("ThreatAnalysisTable", back_populates="email", cascade="all, delete-orphan")
 
+    # Phase 4 Relationships
+    infrastructure_indicators: Mapped[List["InfrastructureIndicatorTable"]] = relationship("InfrastructureIndicatorTable", back_populates="email", cascade="all, delete-orphan")
+
 class EmailAddressTable(Base):
     __tablename__ = "email_addresses"
 
@@ -226,3 +229,119 @@ class ThreatClassificationTable(Base):
     is_primary: Mapped[bool] = mapped_column(Integer, default=False, nullable=False)
 
     threat_analysis: Mapped["ThreatAnalysisTable"] = relationship("ThreatAnalysisTable", back_populates="classifications")
+
+# Phase 4 Tables
+class InfrastructureIndicatorTable(Base):
+    __tablename__ = "infrastructure_indicators"
+
+    id: Mapped[str] = mapped_column(String(64), primary_key=True)  # IND-xxxxxx
+    email_id: Mapped[str] = mapped_column(String(64), ForeignKey("emails.id"), index=True, nullable=False)
+    indicator_type: Mapped[str] = mapped_column(String(32), index=True, nullable=False)  # ip, domain, hostname, url
+    indicator_value: Mapped[str] = mapped_column(String(255), index=True, nullable=False)
+    source: Mapped[str] = mapped_column(String(64), nullable=False)  # received_header, from, reply_to
+    priority: Mapped[str] = mapped_column(String(16), nullable=False)  # high, medium, low
+    evidence_reference: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, nullable=False)
+
+    email: Mapped["EmailTable"] = relationship("EmailTable", back_populates="infrastructure_indicators")
+    ip_intelligence: Mapped[List["IPIntelligenceTable"]] = relationship("IPIntelligenceTable", back_populates="indicator", cascade="all, delete-orphan")
+    domain_intelligence: Mapped[List["DomainIntelligenceTable"]] = relationship("DomainIntelligenceTable", back_populates="indicator", cascade="all, delete-orphan")
+    reputation_results: Mapped[List["ReputationResultTable"]] = relationship("ReputationResultTable", back_populates="indicator", cascade="all, delete-orphan")
+
+class IPIntelligenceTable(Base):
+    __tablename__ = "ip_intelligence"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    indicator_id: Mapped[str] = mapped_column(String(64), ForeignKey("infrastructure_indicators.id"), index=True, nullable=False)
+    ip: Mapped[str] = mapped_column(String(64), index=True, nullable=False)
+    classification: Mapped[str] = mapped_column(String(32), nullable=False)  # PUBLIC, PRIVATE, etc.
+    asn: Mapped[Optional[str]] = mapped_column(String(64), nullable=True)
+    organization: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
+    isp: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
+    network_type: Mapped[Optional[str]] = mapped_column(String(64), nullable=True)
+    reverse_dns: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    cloud: Mapped[Optional[bool]] = mapped_column(Integer, nullable=True)
+    datacenter: Mapped[Optional[bool]] = mapped_column(Integer, nullable=True)
+    vpn: Mapped[Optional[bool]] = mapped_column(Integer, nullable=True)
+    tor: Mapped[Optional[bool]] = mapped_column(Integer, nullable=True)
+    proxy: Mapped[Optional[bool]] = mapped_column(Integer, nullable=True)
+    provider: Mapped[str] = mapped_column(String(64), nullable=False)
+    queried_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, nullable=False)
+
+    indicator: Mapped["InfrastructureIndicatorTable"] = relationship("InfrastructureIndicatorTable", back_populates="ip_intelligence")
+    geolocation: Mapped[Optional["GeolocationResultTable"]] = relationship("GeolocationResultTable", back_populates="ip_intelligence", uselist=False, cascade="all, delete-orphan")
+
+class GeolocationResultTable(Base):
+    __tablename__ = "geolocation_results"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    ip_intelligence_id: Mapped[int] = mapped_column(Integer, ForeignKey("ip_intelligence.id"), index=True, nullable=False)
+    country: Mapped[Optional[str]] = mapped_column(String(128), nullable=True)
+    country_code: Mapped[Optional[str]] = mapped_column(String(16), nullable=True)
+    region: Mapped[Optional[str]] = mapped_column(String(128), nullable=True)
+    city: Mapped[Optional[str]] = mapped_column(String(128), nullable=True)
+    latitude: Mapped[Optional[float]] = mapped_column(Integer, nullable=True)
+    longitude: Mapped[Optional[float]] = mapped_column(Integer, nullable=True)
+    timezone: Mapped[Optional[str]] = mapped_column(String(64), nullable=True)
+    accuracy: Mapped[str] = mapped_column(String(32), default="approximate", nullable=False)
+    confidence: Mapped[float] = mapped_column(Integer, nullable=False)
+    provider: Mapped[str] = mapped_column(String(64), nullable=False)
+    queried_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, nullable=False)
+
+    ip_intelligence: Mapped["IPIntelligenceTable"] = relationship("IPIntelligenceTable", back_populates="geolocation")
+
+class DomainIntelligenceTable(Base):
+    __tablename__ = "domain_intelligence"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    indicator_id: Mapped[str] = mapped_column(String(64), ForeignKey("infrastructure_indicators.id"), index=True, nullable=False)
+    domain: Mapped[str] = mapped_column(String(255), index=True, nullable=False)
+    registrar: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
+    created_at_date: Mapped[Optional[str]] = mapped_column(String(128), nullable=True)
+    expires_at_date: Mapped[Optional[str]] = mapped_column(String(128), nullable=True)
+    updated_at_date: Mapped[Optional[str]] = mapped_column(String(128), nullable=True)
+    domain_age_days: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
+    privacy_protected: Mapped[Optional[bool]] = mapped_column(Integer, nullable=True)
+    provider: Mapped[str] = mapped_column(String(64), nullable=False)
+    queried_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, nullable=False)
+
+    indicator: Mapped["InfrastructureIndicatorTable"] = relationship("InfrastructureIndicatorTable", back_populates="domain_intelligence")
+    dns_records: Mapped[List["DNSRecordTable"]] = relationship("DNSRecordTable", back_populates="domain_intelligence", cascade="all, delete-orphan")
+
+class DNSRecordTable(Base):
+    __tablename__ = "dns_records"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    domain_intelligence_id: Mapped[int] = mapped_column(Integer, ForeignKey("domain_intelligence.id"), index=True, nullable=False)
+    record_type: Mapped[str] = mapped_column(String(16), nullable=False)  # A, AAAA, MX, NS, CNAME, TXT
+    name: Mapped[str] = mapped_column(String(255), nullable=False)
+    value: Mapped[str] = mapped_column(Text, nullable=False)
+    ttl: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
+
+    domain_intelligence: Mapped["DomainIntelligenceTable"] = relationship("DomainIntelligenceTable", back_populates="dns_records")
+
+class ReputationResultTable(Base):
+    __tablename__ = "reputation_results"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    indicator_id: Mapped[str] = mapped_column(String(64), ForeignKey("infrastructure_indicators.id"), index=True, nullable=False)
+    provider: Mapped[str] = mapped_column(String(64), nullable=False)
+    status: Mapped[str] = mapped_column(String(32), nullable=False)  # CLEAN, SUSPICIOUS, MALICIOUS, UNKNOWN
+    score: Mapped[Optional[float]] = mapped_column(Integer, nullable=True)
+    confidence: Mapped[float] = mapped_column(Integer, nullable=False)
+    queried_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, nullable=False)
+
+    indicator: Mapped["InfrastructureIndicatorTable"] = relationship("InfrastructureIndicatorTable", back_populates="reputation_results")
+
+class EnrichmentLookupTable(Base):
+    __tablename__ = "enrichment_lookups"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    indicator_type: Mapped[str] = mapped_column(String(32), nullable=False)
+    indicator_value: Mapped[str] = mapped_column(String(255), index=True, nullable=False)
+    provider: Mapped[str] = mapped_column(String(64), nullable=False)
+    status: Mapped[str] = mapped_column(String(32), nullable=False)
+    latency_ms: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
+    error_code: Mapped[Optional[str]] = mapped_column(String(64), nullable=True)
+    started_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, nullable=False)
+    completed_at: Mapped[Optional[datetime]] = mapped_column(DateTime, nullable=True)
