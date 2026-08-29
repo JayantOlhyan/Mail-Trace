@@ -345,3 +345,111 @@ class EnrichmentLookupTable(Base):
     error_code: Mapped[Optional[str]] = mapped_column(String(64), nullable=True)
     started_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, nullable=False)
     completed_at: Mapped[Optional[datetime]] = mapped_column(DateTime, nullable=True)
+
+# Phase 5 Graph Tables
+class GraphNodeTable(Base):
+    __tablename__ = "graph_nodes"
+
+    id: Mapped[str] = mapped_column(String(64), primary_key=True)  # NODE-TYPE-xxxxxx
+    node_type: Mapped[str] = mapped_column(String(32), index=True, nullable=False)
+    canonical_value: Mapped[str] = mapped_column(String(255), index=True, nullable=False)
+    display_value: Mapped[str] = mapped_column(String(255), nullable=False)
+    first_seen: Mapped[str] = mapped_column(String(128), nullable=False)
+    last_seen: Mapped[str] = mapped_column(String(128), nullable=False)
+    metadata_json: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, nullable=False)
+    updated_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
+
+    sources: Mapped[List["GraphNodeSourceTable"]] = relationship("GraphNodeSourceTable", back_populates="node", cascade="all, delete-orphan")
+
+class GraphNodeSourceTable(Base):
+    __tablename__ = "graph_node_sources"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    node_id: Mapped[str] = mapped_column(String(64), ForeignKey("graph_nodes.id"), index=True, nullable=False)
+    email_id: Mapped[str] = mapped_column(String(64), index=True, nullable=False)
+    source_reference: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
+
+    node: Mapped["GraphNodeTable"] = relationship("GraphNodeTable", back_populates="sources")
+
+class GraphEdgeTable(Base):
+    __tablename__ = "graph_edges"
+
+    id: Mapped[str] = mapped_column(String(64), primary_key=True)  # EDGE-xxxxxx
+    source_node_id: Mapped[str] = mapped_column(String(64), ForeignKey("graph_nodes.id"), index=True, nullable=False)
+    target_node_id: Mapped[str] = mapped_column(String(64), ForeignKey("graph_nodes.id"), index=True, nullable=False)
+    relationship_type: Mapped[str] = mapped_column(String(64), index=True, nullable=False)  # SENT_BY, PASSED_THROUGH, etc.
+    relationship_origin: Mapped[str] = mapped_column(String(32), default="DIRECT", nullable=False)  # DIRECT, INFERRED
+    confidence: Mapped[float] = mapped_column(Integer, nullable=False)
+    strength: Mapped[str] = mapped_column(String(32), nullable=False)  # VERY_HIGH, HIGH, MEDIUM, LOW, VERY_LOW
+    first_observed: Mapped[str] = mapped_column(String(128), nullable=False)
+    last_observed: Mapped[str] = mapped_column(String(128), nullable=False)
+    metadata_json: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, nullable=False)
+    updated_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
+
+    evidence_items: Mapped[List["GraphEdgeEvidenceTable"]] = relationship("GraphEdgeEvidenceTable", back_populates="edge", cascade="all, delete-orphan")
+
+class GraphEdgeEvidenceTable(Base):
+    __tablename__ = "graph_edge_evidence"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    edge_id: Mapped[str] = mapped_column(String(64), ForeignKey("graph_edges.id"), index=True, nullable=False)
+    source_phase: Mapped[str] = mapped_column(String(32), nullable=False)
+    source_type: Mapped[str] = mapped_column(String(64), nullable=False)
+    evidence_reference: Mapped[str] = mapped_column(String(255), nullable=False)
+    provider: Mapped[Optional[str]] = mapped_column(String(64), nullable=True)
+    observed_at: Mapped[str] = mapped_column(String(128), nullable=False)
+
+    edge: Mapped["GraphEdgeTable"] = relationship("GraphEdgeTable", back_populates="evidence_items")
+
+class InfrastructureClusterTable(Base):
+    __tablename__ = "infrastructure_clusters"
+
+    id: Mapped[str] = mapped_column(String(64), primary_key=True)  # INFRA-xxxxxx
+    cluster_key: Mapped[str] = mapped_column(String(255), index=True, nullable=False)
+    cluster_type: Mapped[str] = mapped_column(String(64), default="technical_infrastructure", nullable=False)
+    confidence: Mapped[float] = mapped_column(Integer, nullable=False)
+    first_seen: Mapped[str] = mapped_column(String(128), nullable=False)
+    last_seen: Mapped[str] = mapped_column(String(128), nullable=False)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, nullable=False)
+
+    members: Mapped[List["ClusterMemberTable"]] = relationship("ClusterMemberTable", back_populates="cluster", cascade="all, delete-orphan")
+
+class ClusterMemberTable(Base):
+    __tablename__ = "cluster_members"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    cluster_id: Mapped[str] = mapped_column(String(64), ForeignKey("infrastructure_clusters.id"), index=True, nullable=False)
+    node_id: Mapped[str] = mapped_column(String(64), ForeignKey("graph_nodes.id"), index=True, nullable=False)
+    membership_score: Mapped[float] = mapped_column(Integer, nullable=False)
+    evidence_reference: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
+
+    cluster: Mapped["InfrastructureClusterTable"] = relationship("InfrastructureClusterTable", back_populates="members")
+
+class CampaignTable(Base):
+    __tablename__ = "campaigns"
+
+    id: Mapped[str] = mapped_column(String(64), primary_key=True)  # CMP-xxxxxx
+    campaign_id: Mapped[str] = mapped_column(String(64), index=True, nullable=False)
+    confidence: Mapped[float] = mapped_column(Integer, nullable=False)
+    status: Mapped[str] = mapped_column(String(32), default="CANDIDATE", nullable=False)  # CANDIDATE, UNDER_REVIEW, etc.
+    summary: Mapped[str] = mapped_column(Text, nullable=False)
+    first_seen: Mapped[str] = mapped_column(String(128), nullable=False)
+    last_seen: Mapped[str] = mapped_column(String(128), nullable=False)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, nullable=False)
+    updated_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
+
+    members: Mapped[List["CampaignMemberTable"]] = relationship("CampaignMemberTable", back_populates="campaign", cascade="all, delete-orphan")
+
+class CampaignMemberTable(Base):
+    __tablename__ = "campaign_members"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    campaign_id: Mapped[str] = mapped_column(String(64), ForeignKey("campaigns.id"), index=True, nullable=False)
+    email_id: Mapped[str] = mapped_column(String(64), index=True, nullable=False)
+    membership_score: Mapped[float] = mapped_column(Integer, nullable=False)
+    evidence_reference: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
+
+    campaign: Mapped["CampaignTable"] = relationship("CampaignTable", back_populates="members")
+
