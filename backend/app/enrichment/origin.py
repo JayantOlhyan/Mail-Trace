@@ -1,6 +1,7 @@
 from typing import List, Optional
 from app.schemas.canonical import CanonicalEmailObject
 from app.schemas.forensics import Phase2ForensicAnalysisResponse
+from app.enrichment.ip_classifier import IPClassifier
 from app.enrichment.schemas import (
     ProbableOriginSchema,
     IPIntelligenceSchema,
@@ -21,7 +22,13 @@ class ProbableOriginClassifier:
         forensics: Phase2ForensicAnalysisResponse,
         ip_intel_list: List[IPIntelligenceSchema]
     ) -> ProbableOriginSchema:
-        origin_ip = forensics.routing.origin_ip
+        origin_ip = None
+        origin_hop_index = 1
+        for hop in forensics.relay_analysis.hops:
+            if hop.source_ip and IPClassifier.is_enrichable_public_ip(hop.source_ip):
+                origin_ip = hop.source_ip
+                origin_hop_index = hop.hop
+                break
 
         if not origin_ip:
             return ProbableOriginSchema(
@@ -39,7 +46,7 @@ class ProbableOriginClassifier:
                 break
 
         basis: List[str] = [
-            f"Earliest reliable public IP ({origin_ip}) observed at relay hop #{forensics.routing.origin_hop_index or 1}",
+            f"Earliest reliable public IP ({origin_ip}) observed at relay hop #{origin_hop_index}",
             "Verified Received header timestamp chronological sequence"
         ]
 

@@ -25,14 +25,20 @@ class IndicatorPrioritizer:
         seen: Set[str] = set()
 
         # 1. Earliest Reliable Public IP from Received chain (HIGH priority)
-        if forensics.routing.origin_ip and IPClassifier.is_enrichable_public_ip(forensics.routing.origin_ip):
-            key = f"ip:{forensics.routing.origin_ip}"
+        origin_ip = None
+        for hop in forensics.relay_analysis.hops:
+            if hop.source_ip and IPClassifier.is_enrichable_public_ip(hop.source_ip):
+                origin_ip = hop.source_ip
+                break
+
+        if origin_ip:
+            key = f"ip:{origin_ip}"
             if key not in seen:
                 seen.add(key)
                 indicators.append(NormalizedIndicatorSchema(
                     indicator_id=f"IND-{uuid.uuid4().hex[:8]}",
                     type=IndicatorTypeEnum.IP,
-                    value=forensics.routing.origin_ip,
+                    value=origin_ip,
                     source="received_header_origin",
                     priority=IndicatorPriorityEnum.HIGH,
                     evidence_reference="earliest_reliable_public_ip"
@@ -87,8 +93,8 @@ class IndicatorPrioritizer:
                     ))
 
         # 5. DKIM Signing Domain (MEDIUM priority)
-        if forensics.authentication.dkim.domain:
-            dkim_domain = forensics.authentication.dkim.domain.lower()
+        if forensics.authentication.dkim.signing_domain:
+            dkim_domain = forensics.authentication.dkim.signing_domain.lower()
             key = f"domain:{dkim_domain}"
             if key not in seen:
                 seen.add(key)
@@ -102,7 +108,7 @@ class IndicatorPrioritizer:
                 ))
 
         # 6. Other Public Relay IPs (MEDIUM priority)
-        for hop in forensics.routing.hops:
+        for hop in forensics.relay_analysis.hops:
             if hop.source_ip and IPClassifier.is_enrichable_public_ip(hop.source_ip):
                 key = f"ip:{hop.source_ip}"
                 if key not in seen:

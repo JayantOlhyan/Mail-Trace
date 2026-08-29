@@ -20,10 +20,10 @@ class IPClassifier:
 
         if ip_obj.is_loopback:
             return IPClassificationEnum.LOOPBACK
-        if ip_obj.is_private:
-            return IPClassificationEnum.PRIVATE
         if ip_obj.is_link_local:
             return IPClassificationEnum.LINK_LOCAL
+        if ip_obj.is_private:
+            return IPClassificationEnum.PRIVATE
         if ip_obj.is_multicast:
             return IPClassificationEnum.MULTICAST
         if ip_obj.is_reserved:
