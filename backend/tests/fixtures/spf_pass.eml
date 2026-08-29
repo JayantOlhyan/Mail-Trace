@@ -1,0 +1,9 @@
+Received: from mail.sender.com (mail.sender.com [203.0.113.50])
+	by mx.target.local with ESMTPS; Sun, 30 Aug 2026 01:00:00 +0000
+Authentication-Results: mx.target.local; spf=pass (sender.com: domain of sender@sender.com designates 203.0.113.50 as permitted sender) smtp.mailfrom=sender@sender.com;
+From: Official Sender <sender@sender.com>
+To: recipient@target.local
+Subject: SPF Pass Test Email
+Content-Type: text/plain
+
+This email has a passing SPF result.

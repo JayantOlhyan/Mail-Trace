@@ -1,0 +1,9 @@
+Received: from bad-relay.net (bad-relay.net [198.51.100.99])
+	by mx.target.local with ESMTPS; Sun, 30 Aug 2026 01:00:00 +0000
+Authentication-Results: mx.target.local; spf=fail (sender.com: domain of sender@sender.com does not designate 198.51.100.99 as permitted sender) smtp.mailfrom=sender@sender.com;
+From: Official Sender <sender@sender.com>
+To: recipient@target.local
+Subject: SPF Fail Test Email
+Content-Type: text/plain
+
+This email has an SPF failure.

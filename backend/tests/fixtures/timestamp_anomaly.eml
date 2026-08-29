@@ -1,0 +1,10 @@
+Received: from relay2.target.local (relay2.target.local [10.0.0.2])
+	by mx.target.local with ESMTPS; Sun, 30 Aug 2026 01:00:00 +0000
+Received: from relay1.origin.com (relay1.origin.com [203.0.113.10])
+	by relay2.target.local with ESMTPS; Sun, 30 Aug 2026 01:30:00 +0000
+From: User <user@origin.com>
+To: target@company.local
+Subject: Timestamp Anomaly Email
+Content-Type: text/plain
+
+Hop 1 timestamp (01:30) is later than Hop 2 timestamp (01:00).
