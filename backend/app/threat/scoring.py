@@ -34,10 +34,14 @@ class RiskEngine:
                     signal_score += 18
                 elif sig.severity == "medium":
                     signal_score += 10
-                elif sig.severity == "low":
-                    signal_score += 5
-
         score += min(65.0, signal_score)
+
+        # Base contribution from Primary Classification label
+        p_label = classification.primary.value
+        if p_label in ("BUSINESS_EMAIL_COMPROMISE", "CREDENTIAL_HARVESTING", "PHISHING", "MALICIOUS_DELIVERY"):
+            score += 25.0
+        elif p_label in ("FINANCIAL_FRAUD", "IMPERSONATION"):
+            score += 15.0
 
         # Contribution from Phase 2 Forensic anomalies (capped at 25 points)
         f_feats = feature_vector.get("forensics", {})

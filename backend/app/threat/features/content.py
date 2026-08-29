@@ -29,7 +29,8 @@ class ContentFeatureExtractor:
 
     @classmethod
     def extract_features(cls, canonical_email: CanonicalEmailObject) -> Dict[str, Any]:
-        text_content = f"{canonical_email.content.subject}\n{canonical_email.content.text_body}"
+        from_str = " ".join([f"{a.display_name or ''} {a.address}" for a in canonical_email.identity.from_])
+        text_content = f"{from_str}\n{canonical_email.content.subject}\n{canonical_email.content.text_body}"
         if canonical_email.content.html_body:
             text_content += f"\n{canonical_email.content.html_body}"
 
