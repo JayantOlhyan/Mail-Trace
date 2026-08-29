@@ -1,0 +1,37 @@
+Received: from mail.gateway.local (mail.gateway.local [10.0.0.1])
+	by mx.company.local (8.14.4/8.14.4) with ESMTP id 99K2M91x099999
+	for <ceo@company.local>; Sun, 30 Aug 2026 00:05:00 +0000
+Received: from unknown.host.attacker.com (unknown.host.attacker.com [198.51.100.45])
+	by mail.gateway.local (Postfix) with ESMTP id 8X7102KSL
+	for <ceo@company.local>; Sun, 30 Aug 2026 00:04:30 +0000
+Received: from rogue-relay.fake-host.net (rogue-relay.fake-host.net [203.0.113.88])
+	by unknown.host.attacker.com (Postfix) with ESMTP id 7W6091JSK
+	for <ceo@company.local>; Sun, 30 Aug 2026 00:04:00 +0000
+From: "CEO John Doe" <john.doe@company-legit.com>
+To: ceo@company.local
+Subject: URGENT: Wire Transfer Authorization Required
+Date: Sun, 30 Aug 2026 00:03:50 +0000
+Message-ID: <spoof-wire-999123@evil-server.net>
+Reply-To: attacker-collector@phish-domain.xyz
+Return-Path: <bounce@evil-server.net>
+Content-Type: multipart/mixed; boundary="----=_NextPart_000_001B_01D28"
+
+------=_NextPart_000_001B_01D28
+Content-Type: text/html; charset="utf-8"
+
+<html>
+<body>
+<p>Dear Finance Team,</p>
+<p>Please process an urgent wire transfer to our new vendor immediately.</p>
+<p>Click <a href="http://login.update-secure-bank.xyz/login">here to verify invoice</a>.</p>
+<p>Thanks,<br>John Doe (CEO)</p>
+</body>
+</html>
+------=_NextPart_000_001B_01D28
+Content-Type: application/octet-stream; name="invoice_q3.exe"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="invoice_q3.exe"
+
+TVqQAAMAAAAEAAAA//8AALgAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAsAAAAA4fut4B9AAACnAAYInlIQ==
+------=_NextPart_000_001B_01D28--

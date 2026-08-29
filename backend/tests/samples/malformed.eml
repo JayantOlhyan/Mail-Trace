@@ -1,0 +1,10 @@
+From: Malformed Sender <malformed@domain.test
+To: victim@company.local
+Subject: Test Malformed Header & Script Injection
+Content-Type: text/html
+
+<p>Hello Victim,</p>
+<script>alert("XSS Payload")</script>
+<iframe src="http://evil.com/exploit"></iframe>
+<a href="javascript:alert(1)">Click Dangerous JS Link</a>
+<a href="https://legit-site.com">Click Safe Link</a>

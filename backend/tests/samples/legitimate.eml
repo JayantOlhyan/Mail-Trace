@@ -1,0 +1,22 @@
+Received: from mail.corp.example.com (mail.corp.example.com [192.168.1.10])
+	by mx.company.local (8.14.4/8.14.4) with ESMTP id 68N2K91x012345
+	for <analyst@company.local>; Sun, 30 Aug 2026 00:00:00 +0000
+Received: from workstation.internal (workstation.internal [10.0.4.15])
+	by mail.corp.example.com (Postfix) with ESMTPSA id 4S9X2189x
+	for <analyst@company.local>; Sat, 29 Aug 2026 23:59:50 +0000
+From: "Security Team" <security@example.com>
+To: analyst@company.local
+Subject: Q3 Security Audit Reminder
+Date: Sat, 29 Aug 2026 23:59:45 +0000
+Message-ID: <audit-2026-0829-001@example.com>
+Reply-To: security@example.com
+Return-Path: <security@example.com>
+Content-Type: text/plain; charset="utf-8"
+
+Hello Team,
+
+Please review the attached standard security checklist for Q3 compliance.
+You can view official guidelines at https://internal.company.local/docs/security.
+
+Regards,
+Security Operations
