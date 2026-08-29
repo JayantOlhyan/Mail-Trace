@@ -40,6 +40,9 @@ class EmailTable(Base):
     relay_hops: Mapped[List["RelayHopTable"]] = relationship("RelayHopTable", back_populates="email", cascade="all, delete-orphan")
     timeline_events: Mapped[List["ForensicTimelineEventTable"]] = relationship("ForensicTimelineEventTable", back_populates="email", cascade="all, delete-orphan")
 
+    # Phase 3 Relationships
+    threat_analyses: Mapped[List["ThreatAnalysisTable"]] = relationship("ThreatAnalysisTable", back_populates="email", cascade="all, delete-orphan")
+
 class EmailAddressTable(Base):
     __tablename__ = "email_addresses"
 
@@ -167,3 +170,59 @@ class ForensicTimelineEventTable(Base):
 
     email: Mapped["EmailTable"] = relationship("EmailTable", back_populates="timeline_events")
 
+# Phase 3 Tables
+class ThreatAnalysisTable(Base):
+    __tablename__ = "threat_analyses"
+
+    id: Mapped[str] = mapped_column(String(64), primary_key=True)  # TAN-xxxxxx
+    email_id: Mapped[str] = mapped_column(String(64), ForeignKey("emails.id"), index=True, nullable=False)
+    engine_version: Mapped[str] = mapped_column(String(32), default="3.0.0", nullable=False)
+    model_version: Mapped[str] = mapped_column(String(64), default="deterministic-v1", nullable=False)
+    primary_class: Mapped[str] = mapped_column(String(64), nullable=False)
+    risk_level: Mapped[str] = mapped_column(String(32), nullable=False)  # LOW, MEDIUM, HIGH, CRITICAL
+    risk_score: Mapped[int] = mapped_column(Integer, nullable=False)     # 0-100
+    classification_confidence: Mapped[float] = mapped_column(Integer, nullable=False)
+    explanation: Mapped[str] = mapped_column(Text, nullable=False)
+    analyzed_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, nullable=False)
+
+    email: Mapped["EmailTable"] = relationship("EmailTable", back_populates="threat_analyses")
+    signals: Mapped[List["ThreatSignalTable"]] = relationship("ThreatSignalTable", back_populates="threat_analysis", cascade="all, delete-orphan")
+    classifications: Mapped[List["ThreatClassificationTable"]] = relationship("ThreatClassificationTable", back_populates="threat_analysis", cascade="all, delete-orphan")
+
+class ThreatSignalTable(Base):
+    __tablename__ = "threat_signals"
+
+    id: Mapped[str] = mapped_column(String(64), primary_key=True)  # SIG-xxxxxx
+    analysis_id: Mapped[str] = mapped_column(String(64), ForeignKey("threat_analyses.id"), index=True, nullable=False)
+    signal_type: Mapped[str] = mapped_column(String(64), nullable=False)
+    rule_id: Mapped[Optional[str]] = mapped_column(String(32), index=True, nullable=True)  # THR001-THR008
+    severity: Mapped[str] = mapped_column(String(32), nullable=False)  # info, low, medium, high, critical
+    score: Mapped[float] = mapped_column(Integer, nullable=False)
+    title: Mapped[str] = mapped_column(String(255), nullable=False)
+    description: Mapped[str] = mapped_column(Text, nullable=False)
+
+    threat_analysis: Mapped["ThreatAnalysisTable"] = relationship("ThreatAnalysisTable", back_populates="signals")
+    evidence_spans: Mapped[List["ThreatEvidenceTable"]] = relationship("ThreatEvidenceTable", back_populates="signal", cascade="all, delete-orphan")
+
+class ThreatEvidenceTable(Base):
+    __tablename__ = "threat_evidence"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    signal_id: Mapped[str] = mapped_column(String(64), ForeignKey("threat_signals.id"), index=True, nullable=False)
+    source_type: Mapped[str] = mapped_column(String(128), nullable=False)
+    source_reference: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
+    text_span: Mapped[str] = mapped_column(Text, nullable=False)
+    raw_value: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+
+    signal: Mapped["ThreatSignalTable"] = relationship("ThreatSignalTable", back_populates="evidence_spans")
+
+class ThreatClassificationTable(Base):
+    __tablename__ = "threat_classifications"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    analysis_id: Mapped[str] = mapped_column(String(64), ForeignKey("threat_analyses.id"), index=True, nullable=False)
+    label: Mapped[str] = mapped_column(String(64), index=True, nullable=False)
+    confidence: Mapped[float] = mapped_column(Integer, nullable=False)
+    is_primary: Mapped[bool] = mapped_column(Integer, default=False, nullable=False)
+
+    threat_analysis: Mapped["ThreatAnalysisTable"] = relationship("ThreatAnalysisTable", back_populates="classifications")
