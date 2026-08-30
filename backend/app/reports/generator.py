@@ -35,7 +35,10 @@ class ForensicReportGenerator:
         version: str = "1.0",
     ) -> ForensicReportSchema:
 
-        report_id = f"RPT-2026-{case_id.replace('CASE-', '')}"
+        if case_id.startswith("CASE-"):
+            report_id = case_id.replace("CASE-", "RPT-")
+        else:
+            report_id = f"RPT-{case_id}"
         generated_at = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S IST")
 
         # 1. Build Evidence Inventory with SHA-256 Hashes

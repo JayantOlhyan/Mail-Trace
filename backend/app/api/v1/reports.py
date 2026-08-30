@@ -22,7 +22,7 @@ async def get_report_detail(report_id: str):
     """
     Fetches structured forensic report metadata and findings by report ID.
     """
-    case_id = f"CASE-{report_id.replace('RPT-2026-', '')}"
+    case_id = report_id.replace("RPT-", "CASE-") if report_id.startswith("RPT-") else f"CASE-{report_id}"
     return sih_demo_service.get_demo_report(case_id=case_id)
 
 
@@ -31,7 +31,7 @@ async def download_report_pdf(report_id: str):
     """
     Downloads printable PDF forensic report.
     """
-    case_id = f"CASE-{report_id.replace('RPT-2026-', '')}"
+    case_id = report_id.replace("RPT-", "CASE-") if report_id.startswith("RPT-") else f"CASE-{report_id}"
     report = sih_demo_service.get_demo_report(case_id=case_id)
     pdf_bytes = exporter.export_pdf(report)
 
@@ -49,7 +49,7 @@ async def download_report_json(report_id: str):
     """
     Downloads machine-readable JSON forensic report.
     """
-    case_id = f"CASE-{report_id.replace('RPT-2026-', '')}"
+    case_id = report_id.replace("RPT-", "CASE-") if report_id.startswith("RPT-") else f"CASE-{report_id}"
     report = sih_demo_service.get_demo_report(case_id=case_id)
     json_str = exporter.export_json(report)
 
@@ -67,7 +67,7 @@ async def download_evidence_package(report_id: str):
     """
     Downloads ZIP Evidence Package with manifest.json and SHA-256 checksums.
     """
-    case_id = f"CASE-{report_id.replace('RPT-2026-', '')}"
+    case_id = report_id.replace("RPT-", "CASE-") if report_id.startswith("RPT-") else f"CASE-{report_id}"
     report = sih_demo_service.get_demo_report(case_id=case_id)
     zip_bytes = exporter.export_zip_package(report)
 
