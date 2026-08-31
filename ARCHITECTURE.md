@@ -1,7 +1,7 @@
-# MailTrace — System Architecture & Forensic Intelligence Blueprint
+# ThreatTrace AI — System Architecture & Forensic Intelligence Blueprint
 ## SIH 2026 Problem Statement 106
 
-MailTrace is an AI-powered email threat detection, header forensics, infrastructure geolocation, and campaign correlation platform.
+ThreatTrace AI is an AI-powered email threat detection, header forensics, infrastructure geolocation, and campaign correlation platform.
 
 ---
 
