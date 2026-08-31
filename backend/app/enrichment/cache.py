@@ -3,7 +3,7 @@ from typing import Dict, Any, Optional
 
 class IntelligenceCache:
     """
-    In-memory TTL-based Intelligence Cache abstraction for MailTrace Phase 4.
+    In-memory TTL-based Intelligence Cache abstraction for ThreatTrace AI.
     Decoupled interface allows zero-code transition to Redis or memcached.
     """
 
