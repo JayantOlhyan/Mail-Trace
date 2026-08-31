@@ -14,7 +14,7 @@ export function AnalystScene() {
   const selectedVerdict: string | null = progress > 0.6 ? 'phishing' : null;
 
   return (
-    <section id="scene-11" className="relative min-h-[250vh]" ref={ref}>
+    <section id="scene-11" className="relative w-full h-full" ref={ref}>
       <div className="sticky top-0 flex h-screen flex-col items-center justify-center px-4" style={{ opacity: sceneOpacity }}>
         
         <div className="text-center mb-12">
