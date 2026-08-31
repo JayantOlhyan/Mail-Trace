@@ -75,6 +75,10 @@ export function RelayChain({ hops }: RelayChainProps) {
           </React.Fragment>
         ))}
       </div>
+      
+      <div className="p-3 bg-slate-950 border border-slate-800 rounded-lg text-[10px] font-mono text-slate-500 mt-2 leading-relaxed">
+        <span className="font-bold text-slate-400">Disclaimer:</span> Geolocation represents observed sending infrastructure and does not establish the physical location or identity of an attacker.
+      </div>
     </div>
   );
 }
