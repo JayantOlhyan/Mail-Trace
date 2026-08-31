@@ -25,6 +25,7 @@ import {
   FileQuestion,
   UserCheck,
   RefreshCw,
+  Briefcase,
 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -159,6 +160,13 @@ export default function EmailInvestigationDetailPage() {
                 <UserCheck className="w-3.5 h-3.5" />
                 <span>Mark False Positive</span>
               </button>
+              <Link
+                href="/cases/CASE-2026-0042"
+                className="w-full bg-indigo-600/20 hover:bg-indigo-600 border border-indigo-500/50 text-indigo-300 hover:text-white py-1.5 px-3 rounded flex items-center justify-center space-x-1.5 font-semibold transition text-center"
+              >
+                <Briefcase className="w-3.5 h-3.5" />
+                <span>Escalate to Case</span>
+              </Link>
             </div>
           </div>
         </div>
