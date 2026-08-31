@@ -70,3 +70,39 @@ MailTrace is an AI-powered email threat detection, header forensics, infrastruct
 - Every uploaded `.eml` file is hashed immediately upon receipt using SHA-256.
 - Raw file evidence is immutable.
 - Exported Forensic Packages contain `manifest.json` with cryptographic SHA-256 checksums for legal chain-of-custody verification.
+
+---
+
+## 4. Forensic Data Flow Diagram
+
+```mermaid
+graph TD
+    RawEmail["Raw Email (.eml)"] --> Parser["MIME Parser"]
+    Parser --> HeaderForensics["Header Forensics (SPF/DKIM/DMARC)"]
+    HeaderForensics --> ThreatEngine["AI Threat & Risk Engine"]
+    ThreatEngine --> IOC["IOC Extraction (IPs, Domains, URLs)"]
+    IOC --> Intelligence["Infrastructure & Geo Intelligence"]
+    Intelligence --> Correlation["Correlation Engine"]
+    Correlation --> Graph["Investigation Graph"]
+    Graph --> Investigation["Case Workspace (Analyst Decision)"]
+    Investigation --> Report["Forensic Report & SHA-256 Export"]
+end
+```
+
+---
+
+## 5. Security Architecture Diagram
+
+```mermaid
+graph TD
+    UntrustedEmail["Untrusted Input (.eml)"] --> SizeLimit["Payload size Validation (20MB)"]
+    SizeLimit --> Sanitizer["HTML AST Sanitizer (beautifulsoup4)"]
+    Sanitizer --> HashStore["Cryptographic SHA-256 Custody Hash"]
+    HashStore --> Forensics["Internal Analysis Engines"]
+    Forensics --> ExternalIntel["External Threat Intelligence Lookup"]
+    ExternalIntel --> SSRFGuard["SSRF Guard (Network filter)"]
+    SSRFGuard --> ExternalAPI["Allowed Threat Intel APIs"]
+    Forensics --> Auth["FastAPI Dependency Authorization Guard"]
+    Auth --> Report["Analyst Cryptographic Forensic Report"]
+end
+```
