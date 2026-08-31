@@ -172,12 +172,12 @@ export default function EmailInvestigationDetailPage() {
         </div>
       </div>
 
-      {/* WHY MAILTRACE FLAGGED THIS EMAIL */}
+      {/* WHY THREATTRACE AI FLAGGED THIS EMAIL */}
       <div className="space-y-4">
         <div className="flex items-center justify-between">
           <h2 className="text-lg font-bold text-slate-100 flex items-center gap-2">
             <AlertTriangle className="w-5 h-5 text-amber-400" />
-            Why MailTrace Flagged This Email
+            Why ThreatTrace AI Flagged This Email
           </h2>
           <span className="text-xs font-mono text-slate-400">
             {threat.findings.length} Evidence-Linked Findings
@@ -226,7 +226,7 @@ export default function EmailInvestigationDetailPage() {
             {
               id: 'EVT-03',
               timestamp: '2026-08-30 14:23:10',
-              title: 'MailTrace AI Risk Score Triggered',
+              title: 'ThreatTrace AI Risk Score Triggered',
               description: 'Evaluation engine scored email 91/100 (PHISHING).',
               category: 'Detection Engine',
               entity_reference: email.id,
