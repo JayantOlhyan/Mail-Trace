@@ -1,4 +1,4 @@
-# MailTrace — Production Deployment & Quickstart Guide
+# ThreatTrace AI — Production Deployment & Quickstart Guide
 
 ## 1. Prerequisites
 - Python 3.9 or higher
