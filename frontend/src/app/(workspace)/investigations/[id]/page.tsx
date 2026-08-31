@@ -78,7 +78,7 @@ export default function EmailInvestigationDetailPage() {
 
   if (!email || !threat || !forensics || !graph) {
     return (
-      <div className="p-12 text-center text-slate-400 font-mono space-y-4">
+      <div className="p-12 text-center text-slate-600 dark:text-slate-400 font-mono space-y-4">
         <p className="text-lg font-bold text-red-400">Email evidence object {id} could not be loaded.</p>
         <Link href="/investigations" className="text-indigo-400 hover:underline text-xs">
           ← Back to Investigations List
@@ -90,10 +90,10 @@ export default function EmailInvestigationDetailPage() {
   return (
     <div className="space-y-8 max-w-7xl mx-auto pb-12">
       {/* Top Breadcrumb & Action Banner */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-4">
         <Link
           href="/investigations"
-          className="inline-flex items-center space-x-1 text-xs font-mono text-slate-400 hover:text-slate-100 transition"
+          className="inline-flex items-center space-x-1 text-xs font-mono text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:text-slate-100 transition"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Back to All Investigations</span>
@@ -108,7 +108,7 @@ export default function EmailInvestigationDetailPage() {
       </div>
 
       {/* Hero Header Workspace Card */}
-      <div className="bg-slate-900/80 border border-slate-800 rounded-xl p-6 space-y-6 shadow-2xl">
+      <div className="bg-slate-100 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 rounded-xl p-6 space-y-6 shadow-2xl">
         <div className="flex flex-col md:flex-row md:items-start justify-between gap-6">
           <div className="space-y-2 max-w-3xl">
             <div className="flex flex-wrap items-center gap-2">
@@ -116,27 +116,27 @@ export default function EmailInvestigationDetailPage() {
                 ID: {email.id}
               </span>
               <ThreatBadge classification={email.classification} />
-              <span className="text-xs font-mono text-slate-400 bg-slate-950 px-2.5 py-1 rounded border border-slate-800">
-                Confidence: <strong className="text-slate-200">{threat.confidence}</strong>
+              <span className="text-xs font-mono text-slate-600 dark:text-slate-400 bg-slate-50 dark:bg-slate-950 px-2.5 py-1 rounded border border-slate-200 dark:border-slate-800">
+                Confidence: <strong className="text-slate-800 dark:text-slate-200">{threat.confidence}</strong>
               </span>
             </div>
-            <h1 className="text-2xl font-extrabold text-slate-100 tracking-tight leading-tight">
+            <h1 className="text-2xl font-extrabold text-slate-900 dark:text-slate-100 tracking-tight leading-tight">
               {email.subject}
             </h1>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2 font-mono text-xs text-slate-300">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2 font-mono text-xs text-slate-700 dark:text-slate-300">
               <div>
                 <span className="text-slate-500 block">Sender From:</span>
-                <span className="text-slate-200 font-semibold">{email.sender}</span>
+                <span className="text-slate-800 dark:text-slate-200 font-semibold">{email.sender}</span>
               </div>
               <div>
                 <span className="text-slate-500 block">Reply-To Address:</span>
-                <span className={forensics.reply_to && forensics.reply_to !== forensics.from_address ? 'text-red-400 font-bold' : 'text-slate-300'}>
+                <span className={forensics.reply_to && forensics.reply_to !== forensics.from_address ? 'text-red-400 font-bold' : 'text-slate-700 dark:text-slate-300'}>
                   {forensics.reply_to || 'None'}
                 </span>
               </div>
               <div>
                 <span className="text-slate-500 block">Received Timestamp:</span>
-                <span className="text-slate-300">{new Date(email.received_at).toLocaleString()}</span>
+                <span className="text-slate-700 dark:text-slate-300">{new Date(email.received_at).toLocaleString()}</span>
               </div>
             </div>
           </div>
@@ -148,21 +148,21 @@ export default function EmailInvestigationDetailPage() {
             <div className="pt-2 flex flex-col gap-2 font-mono text-xs">
               <button
                 onClick={() => handleAnalystAction('Marked as Malicious')}
-                className="w-full bg-red-600/20 hover:bg-red-600 border border-red-500/50 text-red-300 hover:text-white py-1.5 px-3 rounded flex items-center justify-center space-x-1.5 font-semibold transition"
+                className="w-full bg-red-600/20 hover:bg-red-600 border border-red-500/50 text-red-300 hover:text-slate-900 dark:text-white py-1.5 px-3 rounded flex items-center justify-center space-x-1.5 font-semibold transition"
               >
                 <ShieldAlert className="w-3.5 h-3.5" />
                 <span>Mark as Malicious</span>
               </button>
               <button
                 onClick={() => handleAnalystAction('Marked as False Positive')}
-                className="w-full bg-emerald-600/20 hover:bg-emerald-600 border border-emerald-500/50 text-emerald-300 hover:text-white py-1.5 px-3 rounded flex items-center justify-center space-x-1.5 font-semibold transition"
+                className="w-full bg-emerald-600/20 hover:bg-emerald-600 border border-emerald-500/50 text-emerald-300 hover:text-slate-900 dark:text-white py-1.5 px-3 rounded flex items-center justify-center space-x-1.5 font-semibold transition"
               >
                 <UserCheck className="w-3.5 h-3.5" />
                 <span>Mark False Positive</span>
               </button>
               <Link
                 href="/cases/CASE-2026-0042"
-                className="w-full bg-indigo-600/20 hover:bg-indigo-600 border border-indigo-500/50 text-indigo-300 hover:text-white py-1.5 px-3 rounded flex items-center justify-center space-x-1.5 font-semibold transition text-center"
+                className="w-full bg-indigo-600/20 hover:bg-indigo-600 border border-indigo-500/50 text-indigo-300 hover:text-slate-900 dark:text-white py-1.5 px-3 rounded flex items-center justify-center space-x-1.5 font-semibold transition text-center"
               >
                 <Briefcase className="w-3.5 h-3.5" />
                 <span>Escalate to Case</span>
@@ -175,11 +175,11 @@ export default function EmailInvestigationDetailPage() {
       {/* WHY THREATTRACE AI FLAGGED THIS EMAIL */}
       <div className="space-y-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-lg font-bold text-slate-100 flex items-center gap-2">
+          <h2 className="text-lg font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
             <AlertTriangle className="w-5 h-5 text-amber-400" />
             Why ThreatTrace AI Flagged This Email
           </h2>
-          <span className="text-xs font-mono text-slate-400">
+          <span className="text-xs font-mono text-slate-600 dark:text-slate-400">
             {threat.findings.length} Evidence-Linked Findings
           </span>
         </div>
@@ -199,7 +199,7 @@ export default function EmailInvestigationDetailPage() {
 
       {/* Bounded Investigation Graph */}
       <div className="space-y-3">
-        <h2 className="text-lg font-bold text-slate-100">Infrastructure & Entity Investigation Graph</h2>
+        <h2 className="text-lg font-bold text-slate-900 dark:text-slate-100">Infrastructure & Entity Investigation Graph</h2>
         <GraphViewer graph={graph} />
       </div>
 
