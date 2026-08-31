@@ -70,7 +70,7 @@ export default function DashboardPage() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800 pb-5">
         <div>
           <h1 className="text-3xl font-black tracking-wider text-slate-100 font-mono">
-            MAILTRACE
+            THREATTRACE AI
           </h1>
           <p className="text-xs text-slate-400 font-mono tracking-widest mt-1 uppercase">
             EMAIL THREAT & FORENSIC INTELLIGENCE
