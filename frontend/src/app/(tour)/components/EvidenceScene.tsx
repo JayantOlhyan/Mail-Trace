@@ -19,27 +19,27 @@ export function EvidenceScene() {
         {/* Narrative Left */}
         <div className="hidden md:block w-1/3">
           <h3 className="text-3xl font-bold mb-4">Evidence Preservation</h3>
-          <p className="text-slate-400 leading-relaxed">
+          <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
             All artifacts, intelligence graphs, and analyst notes are cryptographically hashed and sealed into an integrity-verifiable evidence package.
           </p>
         </div>
 
         {/* Visual Right */}
         <div className="w-full md:w-1/2 flex flex-col items-center">
-          <div className="w-full max-w-md bg-slate-900/40 backdrop-blur-xl border border-slate-700/50 rounded-xl overflow-hidden shadow-[0_0_40px_rgba(0,0,0,0.5)] transition-colors duration-500">
-            <div className="p-5 border-b border-slate-700/50 flex items-center justify-between bg-slate-800/30">
+          <div className="w-full max-w-md bg-slate-100/60 dark:bg-slate-900/40 backdrop-blur-xl border border-slate-300 dark:border-slate-700/50 rounded-xl overflow-hidden shadow-[0_0_40px_rgba(0,0,0,0.5)] transition-colors duration-500">
+            <div className="p-5 border-b border-slate-300 dark:border-slate-700/50 flex items-center justify-between bg-slate-200 dark:bg-slate-800/30">
               <div className="flex items-center gap-2">
                 <Lock className="w-5 h-5 text-emerald-400" />
-                <span className="font-bold tracking-wide text-slate-100">Verifiable Evidence</span>
+                <span className="font-bold tracking-wide text-slate-900 dark:text-slate-100">Verifiable Evidence</span>
               </div>
               <span className="text-xs font-mono text-emerald-400 bg-emerald-950/50 px-2 py-1 rounded-full border border-emerald-800/50">SECURED</span>
             </div>
             
             <div className="p-6">
-              <div className="flex items-center justify-between mb-6 border-b border-slate-700/50 pb-4">
+              <div className="flex items-center justify-between mb-6 border-b border-slate-300 dark:border-slate-700/50 pb-4">
                 <div>
-                  <div className="text-xs text-slate-400 font-mono tracking-widest mb-1">CASE ID</div>
-                  <div className="font-mono text-lg text-slate-100">{caseData.id}</div>
+                  <div className="text-xs text-slate-600 dark:text-slate-400 font-mono tracking-widest mb-1">CASE ID</div>
+                  <div className="font-mono text-lg text-slate-900 dark:text-slate-100">{caseData.id}</div>
                 </div>
                 <FileCheck className={`w-6 h-6 ${isComplete ? 'text-emerald-400' : 'text-slate-500'}`} />
               </div>
@@ -54,7 +54,7 @@ export function EvidenceScene() {
                       className={`flex items-center gap-2 text-sm font-mono transition-all duration-300 transform ${itemVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'}`}
                     >
                       <span className="text-blue-500">✓</span>
-                      <span className="text-slate-300">{item}</span>
+                      <span className="text-slate-700 dark:text-slate-300">{item}</span>
                     </div>
                   );
                 })}
@@ -63,10 +63,10 @@ export function EvidenceScene() {
               {/* Packaging Progress */}
               <div className={`transition-all duration-500 ${progress > 0.4 ? 'opacity-100' : 'opacity-0'}`}>
                 <div className="flex justify-between text-xs font-mono mb-2">
-                  <span className="text-slate-400">{isComplete ? 'SEALED' : 'PRESERVING EVIDENCE...'}</span>
-                  <span className={isComplete ? 'text-emerald-400 font-bold' : 'text-slate-300'}>{Math.floor(packagingProgress)}%</span>
+                  <span className="text-slate-600 dark:text-slate-400">{isComplete ? 'SEALED' : 'PRESERVING EVIDENCE...'}</span>
+                  <span className={isComplete ? 'text-emerald-400 font-bold' : 'text-slate-700 dark:text-slate-300'}>{Math.floor(packagingProgress)}%</span>
                 </div>
-                <div className="w-full h-2 bg-slate-800/50 rounded overflow-hidden border border-slate-700/50">
+                <div className="w-full h-2 bg-slate-200 dark:bg-slate-800/50 rounded overflow-hidden border border-slate-300 dark:border-slate-700/50">
                   <div 
                     className={`h-full transition-all duration-100 ${isComplete ? 'bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]' : 'bg-blue-500'}`} 
                     style={{ width: `${packagingProgress}%` }}
