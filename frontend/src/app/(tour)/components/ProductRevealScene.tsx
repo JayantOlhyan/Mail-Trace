@@ -21,11 +21,11 @@ export function ProductRevealScene() {
           AI-POWERED THREAT DETECTION <br className="hidden md:block"/>
           & FORENSIC INTELLIGENCE
         </h2>
-        <p className="text-xl md:text-2xl text-slate-400 max-w-3xl mx-auto mb-16 font-light">
+        <p className="text-xl md:text-2xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto mb-16 font-light">
           Turn suspicious email into actionable forensic intelligence.
         </p>
         
-        <div className="inline-flex items-center justify-center px-8 py-3 text-sm font-medium text-white transition-all duration-300 border border-slate-700/50 bg-slate-800/30 backdrop-blur-md rounded-full hover:bg-slate-700/50 hover:border-slate-500 hover:shadow-[0_0_20px_rgba(255,255,255,0.05)]">
+        <div className="inline-flex items-center justify-center px-8 py-3 text-sm font-medium text-slate-900 dark:text-white transition-all duration-300 border border-slate-300 dark:border-slate-700/50 bg-slate-200 dark:bg-slate-800/30 backdrop-blur-md rounded-full hover:bg-slate-700/50 hover:border-slate-500 hover:shadow-[0_0_20px_rgba(255,255,255,0.05)]">
           EXPLORE THE INVESTIGATION ↓
         </div>
       </div>
