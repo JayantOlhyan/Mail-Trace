@@ -31,12 +31,19 @@ export function useScrollReveal(threshold = 0.5) {
       const rect = element.getBoundingClientRect();
       const windowHeight = window.innerHeight;
       
-      // Calculate how far the element is through the viewport
-      // 0 = just entered bottom, 1 = just left top
-      const totalDistance = windowHeight + rect.height;
-      const scrolledDistance = windowHeight - rect.top;
+      // Calculate progress exclusively for the sticky phase
+      // 0 = element top reaches viewport top (starts sticking)
+      // 1 = element bottom reaches viewport bottom (stops sticking)
+      const stickyScrollDistance = rect.height - windowHeight;
       
-      let currentProgress = scrolledDistance / totalDistance;
+      let currentProgress = 0;
+      if (stickyScrollDistance > 0) {
+        currentProgress = -rect.top / stickyScrollDistance;
+      } else {
+        // Fallback for short elements
+        currentProgress = (windowHeight - rect.top) / (windowHeight + rect.height);
+      }
+      
       currentProgress = Math.max(0, Math.min(1, currentProgress));
       
       setProgress(currentProgress);

@@ -9,15 +9,14 @@ export function ProductRevealScene() {
   const translateY = Math.max(0, 50 - progress * 100);
   
   return (
-    <section id="scene-02" className="relative min-h-screen flex items-center justify-center" ref={ref}>
+    <section id="scene-02" className="relative min-h-[150vh]" ref={ref}>
       <div 
-        className="text-center transition-all duration-700"
+        className="sticky top-0 flex h-screen flex-col items-center justify-center text-center px-4 transition-all duration-700"
         style={{ 
           opacity: textOpacity,
           transform: `translateY(${translateY}px)`
         }}
       >
-        <div className="text-sm font-mono text-blue-400 tracking-[0.4em] mb-8 drop-shadow-[0_0_10px_rgba(96,165,250,0.5)]">THREATTRACE AI</div>
         <h2 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-6 bg-gradient-to-r from-white via-slate-200 to-slate-500 bg-clip-text text-transparent drop-shadow-sm leading-tight">
           AI-POWERED THREAT DETECTION <br className="hidden md:block"/>
           & FORENSIC INTELLIGENCE
