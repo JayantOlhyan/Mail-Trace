@@ -1,4 +1,4 @@
-# MailTrace — Security Architecture & Guidelines
+# ThreatTrace AI — Security Architecture & Guidelines
 
 ## 1. Input Security & Hostile Content Policy
 Every incoming email file is treated as untrusted and potentially hostile:
