@@ -4,7 +4,7 @@ from typing import Tuple
 
 class EntityNormalizer:
     """
-    Entity Normalization & Canonicalization for MailTrace Investigation Graph.
+    Entity Normalization & Canonicalization for ThreatTrace AI Investigation Graph.
     Ensures identical entities observed across different emails resolve to a single canonical node.
     """
 
