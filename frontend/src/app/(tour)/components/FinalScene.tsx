@@ -18,7 +18,7 @@ export function FinalScene() {
   const showButtons = progress > 0.7;
 
   return (
-    <section id="scene-14" className="relative min-h-[250vh]" ref={ref}>
+    <section id="scene-14" className="relative w-full h-full" ref={ref}>
       <div className="sticky top-0 flex h-screen flex-col items-center justify-center px-4" style={{ opacity: sceneOpacity }}>
         
         <div className={`text-center transition-all duration-1000 transform ${showContent ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
