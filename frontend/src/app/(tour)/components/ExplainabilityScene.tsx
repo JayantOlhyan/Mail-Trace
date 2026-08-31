@@ -21,16 +21,16 @@ export function ExplainabilityScene() {
         <div className="w-full max-w-4xl grid md:grid-cols-2 gap-8 items-center">
           
           {/* Mock Email Context */}
-          <div className="bg-slate-900 border border-slate-800 rounded-lg p-6 font-mono text-sm shadow-xl relative overflow-hidden">
+          <div className="bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-6 font-mono text-sm shadow-xl relative overflow-hidden">
             <div className="text-slate-500 mb-2">From:</div>
-            <div className={`relative inline-block transition-colors duration-500 ${showOverlay ? 'text-red-400 bg-red-950/50' : 'text-slate-300'}`}>
+            <div className={`relative inline-block transition-colors duration-500 ${showOverlay ? 'text-red-400 bg-red-950/50' : 'text-slate-700 dark:text-slate-300'}`}>
               billing@paypa1-support.com
             </div>
             
             <div className="text-slate-500 mt-6 mb-2">Message Body:</div>
-            <div className="text-slate-400 whitespace-pre-wrap">{incident.body.substring(0, 100)}...</div>
+            <div className="text-slate-600 dark:text-slate-400 whitespace-pre-wrap">{incident.body.substring(0, 100)}...</div>
             
-            <div className={`relative inline-block mt-4 transition-colors duration-500 ${showOverlay ? 'text-orange-400 bg-orange-950/50 px-2 py-1 rounded' : 'text-slate-300'}`}>
+            <div className={`relative inline-block mt-4 transition-colors duration-500 ${showOverlay ? 'text-orange-400 bg-orange-950/50 px-2 py-1 rounded' : 'text-slate-700 dark:text-slate-300'}`}>
               {incident.url}
             </div>
 
@@ -47,7 +47,7 @@ export function ExplainabilityScene() {
               className={`p-4 border-l-2 border-red-500 bg-red-950/20 transition-all duration-700 delay-100 transform ${showOverlay ? 'translate-x-0 opacity-100' : 'translate-x-8 opacity-0'}`}
             >
               <div className="text-xs font-bold text-red-500 tracking-wider mb-1">LOOKALIKE DOMAIN</div>
-              <div className="text-sm text-slate-300">
+              <div className="text-sm text-slate-700 dark:text-slate-300">
                 The sender domain <span className="font-mono text-red-400">paypa1-support.com</span> is visually similar to a known brand, but registered 2 days ago.
               </div>
             </div>
@@ -56,7 +56,7 @@ export function ExplainabilityScene() {
               className={`p-4 border-l-2 border-orange-500 bg-orange-950/20 transition-all duration-700 delay-300 transform ${showOverlay ? 'translate-x-0 opacity-100' : 'translate-x-8 opacity-0'}`}
             >
               <div className="text-xs font-bold text-orange-500 tracking-wider mb-1">SUSPICIOUS URL</div>
-              <div className="text-sm text-slate-300">
+              <div className="text-sm text-slate-700 dark:text-slate-300">
                 Link destination routes through a newly observed infrastructure cluster associated with credential harvesting.
               </div>
             </div>
