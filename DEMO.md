@@ -1,4 +1,4 @@
-# MailTrace — Smart India Hackathon (SIH 2026) 3-5 Minute Demo Guide
+# ThreatTrace AI — Smart India Hackathon (SIH 2026) 3-5 Minute Demo Guide
 
 ## Golden Demo Workflow (Problem Statement 106)
 
@@ -26,13 +26,13 @@
 ## 🎤 Presentation Script & Timeline (3-5 Minutes)
 
 ### 0:00 — Dashboard Introduction
-> "Welcome. This is MailTrace, an AI-powered email threat detection and forensic intelligence platform built for SIH 2026 Problem Statement 106. MailTrace continuously evaluates incoming email headers, routing hops, and content for phishing, impersonation, and fraud indicators."
+> "Welcome. This is ThreatTrace AI, an AI-powered email threat detection and forensic intelligence platform built for SIH 2026 Problem Statement 106. ThreatTrace AI continuously evaluates incoming email headers, routing hops, and content for phishing, impersonation, and fraud indicators."
 
 ### 0:30 — Suspicious Email Analysis
 > "We select our primary high-risk investigation `EML-2026-8801`. This email has a defensive risk score of 91/100 because multiple independent signals—including lookalike domain registration and urgent financial payload language—indicate phishing."
 
 ### 1:00 — Header Forensics & Relay hop Tracing
-> "By analyzing raw headers, MailTrace validates sender authentication and reconstructs the hop-by-hop relay path. We verify that SPF, DKIM, and DMARC have all failed, and we trace the path back to the earliest observed sending IP."
+> "By analyzing raw headers, ThreatTrace AI validates sender authentication and reconstructs the hop-by-hop relay path. We verify that SPF, DKIM, and DMARC have all failed, and we trace the path back to the earliest observed sending IP."
 
 ### 1:45 — Infrastructure Enrichment
 > "We inspect the probable sending infrastructure, geolocating the IP, classifying its hosting provider, and inspecting reverse DNS records. Note that this indicates network routing location and is not a physical claim of the attacker's home."
