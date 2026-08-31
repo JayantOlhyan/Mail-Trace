@@ -22,7 +22,7 @@ export function IngestionScene() {
         {/* Narrative Left */}
         <div className="hidden md:block w-1/3">
           <h3 className="text-3xl font-bold mb-4">Ingestion</h3>
-          <p className="text-slate-400 leading-relaxed">
+          <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
             ThreatTrace AI analyzes the technical structure, parsing raw MIME data into structured forensic artifacts.
           </p>
         </div>
@@ -31,15 +31,15 @@ export function IngestionScene() {
         <div className="w-full md:w-1/2 flex flex-col items-center">
           
           <div 
-            className="w-full max-w-sm bg-slate-900 border border-slate-800 rounded-lg p-6 shadow-2xl transition-all duration-500"
+            className="w-full max-w-sm bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-6 shadow-2xl transition-all duration-500"
             style={{ opacity: Math.min(1, progress * 4) }}
           >
-            <div className="flex items-center gap-4 mb-8 pb-6 border-b border-slate-800">
+            <div className="flex items-center gap-4 mb-8 pb-6 border-b border-slate-200 dark:border-slate-800">
               <div className="w-12 h-12 bg-blue-950 rounded flex items-center justify-center text-blue-500">
                 <FileCode2 className="w-6 h-6" />
               </div>
               <div>
-                <div className="font-mono text-sm text-slate-300">suspicious-email.eml</div>
+                <div className="font-mono text-sm text-slate-700 dark:text-slate-300">suspicious-email.eml</div>
                 <div className="text-xs text-slate-500">{tourData.incident.size} • ANALYZING...</div>
               </div>
             </div>
