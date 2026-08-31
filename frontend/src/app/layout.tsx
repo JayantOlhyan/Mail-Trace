@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Inter, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
+import { ThemeProvider } from "@/components/ThemeProvider";
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 const mono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mono' });
@@ -17,8 +18,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
-      <body className={`${inter.variable} ${mono.variable} font-sans bg-slate-950 text-slate-100 antialiased min-h-screen flex flex-col`}>
-        {children}
+      <body className={`${inter.variable} ${mono.variable} antialiased bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100`}>
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );
