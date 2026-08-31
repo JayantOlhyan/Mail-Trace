@@ -8,7 +8,7 @@ from app.schemas.threat import (
 
 class RiskEngine:
     """
-    Centralized 0-100 Risk Engine for MailTrace.
+    Centralized 0-100 Risk Engine for ThreatTrace AI.
     Computes a weighted, capped, de-duplicated risk score across content, URL, attachment,
     header forensic, and rule-based threat signals.
     """
