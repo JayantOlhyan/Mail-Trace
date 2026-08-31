@@ -15,6 +15,7 @@
   <a href="https://python.org"><img src="https://img.shields.io/badge/Python-3.9%2B-blue.svg" alt="Python 3.9+"></a>
   <a href="https://fastapi.tiangolo.com"><img src="https://img.shields.io/badge/FastAPI-0.100%2B-009688.svg" alt="FastAPI"></a>
   <a href="https://nextjs.org"><img src="https://img.shields.io/badge/Next.js-14-black.svg" alt="Next.js 14"></a>
+  <a href="ARCHITECTURE.md"><img src="https://img.shields.io/badge/Phase_8-Production_Hardened-success.svg" alt="Phase 8 Hardened"></a>
 </p>
 
 ---
@@ -38,66 +39,46 @@
 - **📍 Origin & Relay Tracing**: Distinguishes *Observed Origin IP* from *Probable Origin Infrastructure* with confidence scoring.
 - **🧠 AI & NLP Threat Detection**: Identifies social engineering, urgency tactics, credential harvesting, and Business Email Compromise (BEC).
 - **⚡ Centralized Risk Engine**: Defensive 0–100 threat severity scoring with explainable evidence binding.
-- **🔒 SSRF & Zero-Execution Attachment Safety**: Passive URL metadata analysis and SHA-256 evidence hashing without malicious attachment execution.
-- **📋 Forensic PDF Reports**: Chain-of-custody compliant evidence exports for security operations center (SOC) analysts.
+- **🔗 Bounded Investigation Graph**: Entity resolution connecting emails, IP subnets, lookalike domains, and campaign candidates (`CMP-xxxxxx`).
+- **🖥️ SOC Workspace**: Modern Next.js 14 Web UI with interactive graph visualizations, timeline analysis, and analyst decision logs.
+- **📜 Forensic Reporting & Cryptographic Export**: Generates PDF forensic reports and downloadable `.zip` evidence packages containing `manifest.json` with SHA-256 evidence hashes.
+- **🛡️ Hardened Security & SSRF Protection**: Outbound IP validation (`backend/app/security/ssrf.py`) and HTML AST sanitization (`backend/app/security/sanitizer.py`).
 
 ---
 
-## 📂 Core Forensic Pipeline
+## 📚 Documentation
 
-```mermaid
-graph TD
-    A[Raw .eml Upload] --> B[MIME & Header Ingestor]
-    B --> C[RFC 5322 Parser & HTML Sanitizer]
-    C --> D[SPF / DKIM / DMARC Evaluator]
-    D --> E[Relay Hop & Origin Tracing]
-    E --> F[Deterministic Rules + NLP AI Detector]
-    F --> G[Centralized Risk Engine (0-100)]
-    G --> H[PostgreSQL Graph Correlator]
-    H --> I[Case Management & Forensic PDF Report]
-```
+- 📐 **[ARCHITECTURE.md](ARCHITECTURE.md)** — System Pipeline & Module Design
+- 🔌 **[API.md](API.md)** — Complete REST API Specification
+- 🛡️ **[SECURITY.md](SECURITY.md)** — SSRF Protection & HTML Sanitization Guidelines
+- 🚀 **[DEPLOYMENT.md](DEPLOYMENT.md)** — Local Setup & Server Running Instructions
+- 🏆 **[DEMO.md](DEMO.md)** — SIH 2026 3-5 Minute Presentation Workflow
+- ⚙️ **[ENVIRONMENT.md](ENVIRONMENT.md)** — Environment Variables Reference
+- ⚠️ **[LIMITATIONS.md](LIMITATIONS.md)** — Scope Boundaries & Technical Limitations
 
 ---
 
-## 🚀 Quick Start (Backend Engine)
+## ⚡ Quickstart
 
-### Prerequisites
-
-- Python 3.9+
-- pip & venv
-
-### Installation & Setup
-
+### Running Backend API (FastAPI)
 ```bash
-# Clone the repository
-git clone https://github.com/JayantOlhyan/Mail-Trace.git
-cd Mail-Trace
+cd backend
+PYTHONPATH=. venv/bin/uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload
+```
 
-# Create virtual environment
-python3 -m venv backend/venv
-source backend/venv/bin/activate
+### Running Frontend UI (Next.js)
+```bash
+cd frontend
+npm run dev -- -p 3002
+```
 
-# Install dependencies
-pip install -r backend/requirements.txt
-
-# Run PyTest suite
-PYTHONPATH=backend pytest backend/tests/
+### Running Test Suite
+```bash
+PYTHONPATH=backend backend/venv/bin/pytest backend/tests/ -v
 ```
 
 ---
 
-## 🤝 Contributing
+## 📜 License
 
-Contributions are welcome! Please feel free to open issues or submit pull requests.
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'feat: Add some AmazingFeature'`)
-4. Push to the Branch (`git checkout -b feature/AmazingFeature`)
-5. Open a Pull Request
-
----
-
-## 📄 License
-
-Distributed under the MIT License. See [LICENSE](LICENSE) for more information.
+This project is licensed under the [MIT License](LICENSE).
