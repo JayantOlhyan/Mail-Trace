@@ -85,7 +85,7 @@ class AttachmentSchema(BaseModel):
 class MetadataSchema(BaseModel):
     received_date: Optional[str] = Field(None, description="Email Date header timestamp")
     parsed_at: str = Field(default_factory=lambda: datetime.utcnow().isoformat(), description="ISO UTC parsing timestamp")
-    parser_version: str = Field("1.0.0", description="MailTrace parser version")
+    parser_version: str = Field("1.0.0", description="ThreatTrace AI parser version")
 
 class CanonicalEmailObject(BaseModel):
     email_id: str = Field(..., description="Unique identifier for parsed email")
