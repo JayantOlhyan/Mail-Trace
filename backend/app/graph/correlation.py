@@ -10,7 +10,7 @@ from app.graph.suppression import CommonInfrastructureSuppression
 
 class CrossEmailCorrelationEngine:
     """
-    Cross-Email Correlation Engine & Campaign Candidate Detector for MailTrace.
+    Cross-Email Correlation Engine & Campaign Candidate Detector for ThreatTrace AI.
     Detects potential campaign candidates when multiple suspicious emails share
     meaningful technical infrastructure (IPs, Domains, URLs) within temporal windows.
     """
