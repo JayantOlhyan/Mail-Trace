@@ -53,12 +53,18 @@ def validate_url_for_ssrf(url: str) -> Tuple[bool, str]:
         if not hostname:
             return False, "Invalid URL: Missing hostname."
 
-        hostname_lower = hostname.lower()
+        hostname_lower = urllib.parse.unquote(hostname).lower()
         if hostname_lower in BLOCKED_HOSTNAMES:
             return False, f"Forbidden target hostname: '{hostname}' (Restricted Internal Host)."
 
-        # If hostname is an IP string, validate directly
-        if is_ip_private_or_restricted(hostname_lower):
+        # Try to resolve the hostname to catch octal, hex, decimal IPs and localhost aliases
+        import socket
+        try:
+            resolved_ip = socket.gethostbyname(hostname_lower)
+        except socket.gaierror:
+            resolved_ip = hostname_lower
+
+        if is_ip_private_or_restricted(resolved_ip) or is_ip_private_or_restricted(hostname_lower):
             return False, f"Forbidden destination IP: '{hostname}' (Internal/Private Network Block)."
 
         return True, "URL validated successfully."
