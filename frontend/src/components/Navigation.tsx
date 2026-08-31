@@ -14,6 +14,7 @@ import {
   ShieldAlert,
   FileText,
 } from 'lucide-react';
+import { ThemeToggle } from '@/components/ThemeToggle';
 
 const navItems = [
   { name: 'Dashboard', href: '/', icon: LayoutDashboard },
@@ -71,13 +72,16 @@ export function Navigation() {
       </nav>
 
       {/* Analyst Status Footer */}
-      <div className="p-4 border-t border-slate-800 bg-slate-900/50">
-        <div className="flex items-center space-x-3">
-          <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
-          <div className="text-xs">
-            <p className="font-medium text-slate-200">Analyst Workspace</p>
-            <p className="text-slate-500 font-mono">Active Session</p>
+      <div className="p-4 border-t border-slate-200 dark:border-slate-800 bg-slate-100/50 dark:bg-slate-900/50">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-3">
+            <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
+            <div className="text-xs">
+              <p className="font-medium text-slate-800 dark:text-slate-200">Analyst Workspace</p>
+              <p className="text-slate-500 font-mono">Active Session</p>
+            </div>
           </div>
+          <ThemeToggle />
         </div>
       </div>
     </aside>
