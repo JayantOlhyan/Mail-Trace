@@ -20,11 +20,11 @@ export function ReportScene() {
         <div className={`w-full max-w-4xl bg-slate-100 text-slate-900 rounded-lg shadow-2xl overflow-hidden transition-all duration-700 transform ${showReport ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-16'}`}>
           
           {/* Header */}
-          <div className="bg-slate-900 text-slate-200 p-6 flex items-center justify-between">
+          <div className="bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-200 p-6 flex items-center justify-between">
             <div className="flex items-center gap-3">
               <FileText className="w-6 h-6 text-blue-400" />
               <div>
-                <div className="font-mono text-xs tracking-widest text-slate-400">FORENSIC REPORT</div>
+                <div className="font-mono text-xs tracking-widest text-slate-600 dark:text-slate-400">FORENSIC REPORT</div>
                 <div className="font-bold">{caseData.id}</div>
               </div>
             </div>
@@ -95,7 +95,7 @@ export function ReportScene() {
 
               {/* Actions */}
               <div className="flex flex-wrap gap-4 pt-6 border-t border-slate-300">
-                <button className="flex items-center gap-2 bg-slate-900 text-white px-4 py-2 rounded text-sm font-medium hover:bg-slate-800 transition-colors">
+                <button className="flex items-center gap-2 bg-slate-100 dark:bg-slate-900 text-slate-900 dark:text-white px-4 py-2 rounded text-sm font-medium hover:bg-slate-200 dark:bg-slate-800 transition-colors">
                   <Download className="w-4 h-4" /> EXPORT PDF
                 </button>
                 <button className="flex items-center gap-2 bg-white text-slate-700 border border-slate-300 px-4 py-2 rounded text-sm font-medium hover:bg-slate-50 transition-colors">
