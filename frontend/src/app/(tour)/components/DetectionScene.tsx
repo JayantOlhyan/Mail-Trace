@@ -19,11 +19,11 @@ export function DetectionScene() {
   const displayedScore = Math.floor(scoreProgress * detection.riskScore);
 
   return (
-    <section id="scene-04" className="relative min-h-[200vh]" ref={ref}>
+    <section id="scene-04" className="relative min-h-[250vh]" ref={ref}>
       <div className="sticky top-0 flex h-screen items-center justify-center md:justify-between px-4 md:px-24" style={{ opacity: sceneOpacity }}>
         
         {/* Narrative Left */}
-        <div className="hidden md:block w-1/3">
+        <div className="w-full md:w-1/3 mb-6 md:mb-0 text-center md:text-left">
           <h3 className="text-3xl font-bold mb-4">Threat Detection</h3>
           <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
             Every signal is evaluated by the AI engine. As evidence mounts, the risk score dynamically increases, leading to a high-confidence classification.

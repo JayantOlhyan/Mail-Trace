@@ -1,4 +1,5 @@
 import { TourNavigation } from './components/TourNavigation';
+import { TourProgressNav } from './components/TourProgressNav';
 import { IncidentScene } from './components/IncidentScene';
 import { ProductRevealScene } from './components/ProductRevealScene';
 import { IngestionScene } from './components/IngestionScene';
@@ -27,6 +28,7 @@ export default function TourPage() {
       </div>
 
       <TourNavigation />
+      <TourProgressNav />
       
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 [&>*:not(:first-child)]:-mt-[150vh]">
         <IncidentScene />

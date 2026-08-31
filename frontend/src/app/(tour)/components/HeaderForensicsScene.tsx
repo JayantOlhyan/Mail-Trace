@@ -18,7 +18,7 @@ export function HeaderForensicsScene() {
   const showAnalyzed = progress > 0.7;
 
   return (
-    <section id="scene-06" className="relative min-h-[200vh]" ref={ref}>
+    <section id="scene-06" className="relative min-h-[250vh]" ref={ref}>
       <div className="sticky top-0 flex h-screen items-center justify-center flex-col px-4 md:px-24" style={{ opacity: sceneOpacity }}>
         
         <div className="text-center mb-12">
@@ -31,12 +31,12 @@ export function HeaderForensicsScene() {
         <div className="w-full max-w-5xl grid md:grid-cols-2 gap-8 items-stretch">
           
           {/* Raw Headers */}
-          <div className="bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg p-4 font-mono text-xs overflow-hidden shadow-2xl flex flex-col">
-            <div className="flex items-center gap-2 mb-4 text-slate-500 border-b border-slate-200 dark:border-slate-800 pb-2">
+          <div className="bg-slate-900 dark:bg-slate-950 border border-slate-800 rounded-lg p-4 font-mono text-xs overflow-hidden shadow-2xl flex flex-col">
+            <div className="flex items-center gap-2 mb-4 text-blue-400 border-b border-slate-800 pb-2 font-bold tracking-wider">
               <Code2 className="w-4 h-4" />
               RAW HEADERS
             </div>
-            <div className="text-slate-600 dark:text-slate-400 whitespace-pre-wrap leading-relaxed opacity-60">
+            <div className="text-slate-300 whitespace-pre-wrap leading-relaxed">
               {headers.raw}
             </div>
           </div>

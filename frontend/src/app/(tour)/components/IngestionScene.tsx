@@ -26,7 +26,7 @@ export function IngestionScene() {
       <div className="sticky top-0 flex h-screen items-center justify-center md:justify-between px-4 md:px-24" style={{ opacity: sceneOpacity }}>
         
         {/* Narrative Left */}
-        <div className="hidden md:block w-1/3">
+        <div className="w-full md:w-1/3 mb-6 md:mb-0 text-center md:text-left">
           <h3 className="text-3xl font-bold mb-4">Ingestion</h3>
           <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
             ThreatTrace AI analyzes the technical structure, parsing raw MIME data into structured forensic artifacts.

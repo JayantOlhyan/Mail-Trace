@@ -27,7 +27,7 @@ export function ExplainabilityScene() {
         <div className="w-full max-w-4xl grid md:grid-cols-2 gap-8 items-center">
           
           {/* Mock Email Context */}
-          <div className="bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-6 font-mono text-sm shadow-xl relative overflow-hidden">
+          <div className="w-full bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-6 font-mono text-sm shadow-xl relative overflow-hidden">
             <div className="text-slate-500 mb-2">From:</div>
             <div className={`relative inline-block transition-colors duration-500 ${showOverlay ? 'text-red-400 bg-red-950/50' : 'text-slate-700 dark:text-slate-300'}`}>
               billing@paypa1-support.com
