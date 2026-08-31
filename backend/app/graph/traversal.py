@@ -3,7 +3,7 @@ from app.graph.schemas import GraphNodeSchema, GraphEdgeSchema
 
 class GraphTraversalEngine:
     """
-    Controlled Graph Traversal & Query Safety Engine for MailTrace.
+    Controlled Graph Traversal & Query Safety Engine for ThreatTrace AI.
     Provides bounded neighborhood lookup, shortest path traversal, and relationship filtering.
     """
 
