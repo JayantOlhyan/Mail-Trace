@@ -75,7 +75,7 @@ class ForensicReportSchema(BaseModel):
     case_id: str
     version: str = "1.0"
     generated_at: str
-    generated_by: str = "MailTrace Forensic Engine"
+    generated_by: str = "ThreatTrace AI Forensic Engine"
     investigation_id: str
     evidence_count: int
 
