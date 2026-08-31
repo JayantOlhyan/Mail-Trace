@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { api } from '@/lib/api';
-import { EmailSummary } from '@/types';
+import { EmailSummary, Case } from '@/types';
 import { RiskScore } from '@/components/RiskScore';
 import { ThreatBadge } from '@/components/ThreatBadge';
 import {
@@ -14,6 +14,8 @@ import {
   Search,
   ArrowRight,
   RefreshCw,
+  Network,
+  Activity,
 } from 'lucide-react';
 
 export default function DashboardPage() {
@@ -22,17 +24,24 @@ export default function DashboardPage() {
     high_risk: 24,
     open_cases: 12,
     campaign_candidates: 7,
+    infrastructure_clusters: 15,
   });
   const [emails, setEmails] = useState<EmailSummary[]>([]);
+  const [cases, setCases] = useState<Case[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function loadDashboard() {
       try {
-        const [m, e] = await Promise.all([api.getMetrics(), api.getEmails()]);
+        const [m, e, c] = await Promise.all([
+          api.getMetrics(),
+          api.getEmails(),
+          api.getCases(),
+        ]);
         setMetrics(m);
         setEmails(e);
+        setCases(c);
       } catch (err) {
         console.error('Error loading dashboard data:', err);
       } finally {
@@ -52,16 +61,19 @@ export default function DashboardPage() {
     );
   });
 
+  // Split emails into high-risk (> 80) and normal
+  const highRiskActivity = filteredEmails.filter((e) => e.risk_score >= 80);
+
   return (
     <div className="space-y-8 max-w-7xl mx-auto">
-      {/* Top Header */}
+      {/* Top Header Section */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800 pb-5">
         <div>
-          <h1 className="text-2xl font-extrabold tracking-tight text-slate-100 flex items-center gap-2">
-            Security Operations Dashboard
+          <h1 className="text-3xl font-black tracking-wider text-slate-100 font-mono">
+            MAILTRACE
           </h1>
-          <p className="text-xs text-slate-400 font-mono mt-1">
-            Real-time Threat Monitoring & Incident Investigation Workspace
+          <p className="text-xs text-slate-400 font-mono tracking-widest mt-1 uppercase">
+            EMAIL THREAT & FORENSIC INTELLIGENCE
           </p>
         </div>
 
@@ -72,13 +84,13 @@ export default function DashboardPage() {
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search IP, Domain, Email ID..."
+            placeholder="Search IP, Domain, Subject..."
             className="w-full bg-slate-900 border border-slate-800 rounded-lg pl-9 pr-4 py-2 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-indigo-500 font-mono transition"
           />
         </div>
       </div>
 
-      {/* Top-Level Metrics */}
+      {/* Key Metrics Section */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <Link href="/investigations" className="group">
           <div className="p-5 rounded-xl border border-slate-800 bg-slate-900/60 hover:border-indigo-500/60 transition-all">
@@ -141,68 +153,135 @@ export default function DashboardPage() {
         </Link>
       </div>
 
-      {/* Recent Email Investigations Table */}
-      <div className="bg-slate-900/60 border border-slate-800 rounded-xl overflow-hidden shadow-xl">
-        <div className="p-4 bg-slate-900 flex items-center justify-between border-b border-slate-800">
-          <h3 className="font-semibold text-slate-200 text-sm tracking-wide">Recent Suspicious Email Investigations</h3>
-          <Link href="/investigations" className="text-xs text-indigo-400 hover:underline font-mono">
-            View All →
-          </Link>
+      {loading ? (
+        <div className="p-12 text-center text-slate-500 font-mono flex items-center justify-center space-x-2">
+          <RefreshCw className="w-5 h-5 animate-spin text-indigo-400" />
+          <span>Loading analyst metrics...</span>
         </div>
-
-        {loading ? (
-          <div className="p-8 text-center text-slate-500 font-mono flex items-center justify-center space-x-2">
-            <RefreshCw className="w-4 h-4 animate-spin text-indigo-400" />
-            <span>Loading active investigations...</span>
-          </div>
-        ) : filteredEmails.length === 0 ? (
-          <div className="p-8 text-center text-slate-500 font-mono">No matching email investigations found.</div>
-        ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse">
-              <thead>
-                <tr className="border-b border-slate-800 text-[11px] font-mono text-slate-400 bg-slate-950/60 uppercase">
-                  <th className="p-3.5">ID</th>
-                  <th className="p-3.5">Risk Score</th>
-                  <th className="p-3.5">Classification</th>
-                  <th className="p-3.5">Subject & Sender</th>
-                  <th className="p-3.5">Received Date</th>
-                  <th className="p-3.5 text-right">Action</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-800/60 font-mono text-xs text-slate-300">
-                {filteredEmails.map((email) => (
-                  <tr key={email.id} className="hover:bg-slate-800/40 transition-colors">
-                    <td className="p-3.5 text-indigo-400 font-bold">{email.id}</td>
-                    <td className="p-3.5">
-                      <RiskScore score={email.risk_score} size="sm" />
-                    </td>
-                    <td className="p-3.5">
+      ) : (
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Recent Investigations */}
+          <div className="bg-slate-900/60 border border-slate-800 rounded-xl overflow-hidden shadow-xl flex flex-col">
+            <div className="p-4 bg-slate-900 flex items-center justify-between border-b border-slate-800">
+              <h3 className="font-semibold text-slate-200 text-sm tracking-wide flex items-center gap-2">
+                <Activity className="w-4 h-4 text-indigo-400" /> Recent Investigations
+              </h3>
+              <Link href="/investigations" className="text-xs text-indigo-400 hover:underline font-mono">
+                View All
+              </Link>
+            </div>
+            <div className="divide-y divide-slate-800/60 overflow-y-auto max-h-[350px] flex-1">
+              {filteredEmails.length === 0 ? (
+                <div className="p-8 text-center text-slate-500 font-mono">No recent investigations.</div>
+              ) : (
+                filteredEmails.map((email) => (
+                  <div key={email.id} className="p-3.5 hover:bg-slate-800/40 transition-colors flex items-center justify-between gap-4 font-mono text-xs">
+                    <div className="min-w-0">
+                      <p className="font-sans font-semibold text-slate-200 truncate">{email.subject}</p>
+                      <p className="text-[10px] text-slate-500 truncate mt-0.5">{email.sender}</p>
+                    </div>
+                    <div className="flex items-center gap-2.5 flex-shrink-0">
                       <ThreatBadge classification={email.classification} />
-                    </td>
-                    <td className="p-3.5 max-w-xs">
-                      <p className="font-sans font-medium text-slate-200 truncate">{email.subject}</p>
-                      <p className="text-[11px] text-slate-400 truncate">{email.sender}</p>
-                    </td>
-                    <td className="p-3.5 text-slate-400 text-[11px]">
-                      {new Date(email.received_at).toLocaleString()}
-                    </td>
-                    <td className="p-3.5 text-right">
-                      <Link
-                        href={`/investigations/${email.id}`}
-                        className="inline-flex items-center space-x-1 px-3 py-1 bg-indigo-600/20 hover:bg-indigo-600 text-indigo-300 hover:text-white rounded border border-indigo-500/40 transition text-xs font-semibold"
-                      >
-                        <span>Inspect</span>
-                        <ArrowRight className="w-3 h-3" />
+                      <Link href={`/investigations/${email.id}`} className="text-indigo-400 hover:text-indigo-300 font-bold">
+                        Inspect
                       </Link>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
           </div>
-        )}
-      </div>
+
+          {/* High-Risk Activity */}
+          <div className="bg-slate-900/60 border border-slate-800 rounded-xl overflow-hidden shadow-xl flex flex-col">
+            <div className="p-4 bg-slate-900 flex items-center justify-between border-b border-slate-800">
+              <h3 className="font-semibold text-slate-200 text-sm tracking-wide flex items-center gap-2">
+                <AlertTriangle className="w-4 h-4 text-red-400" /> High-Risk Activity
+              </h3>
+              <span className="text-xs font-mono text-slate-400">Score &ge; 80</span>
+            </div>
+            <div className="divide-y divide-slate-800/60 overflow-y-auto max-h-[350px] flex-1">
+              {highRiskActivity.length === 0 ? (
+                <div className="p-8 text-center text-slate-500 font-mono">No high-risk activity detected.</div>
+              ) : (
+                highRiskActivity.map((email) => (
+                  <div key={email.id} className="p-3.5 hover:bg-slate-800/40 transition-colors flex items-center justify-between gap-4 font-mono text-xs">
+                    <div className="min-w-0">
+                      <p className="font-sans font-semibold text-slate-200 truncate">{email.subject}</p>
+                      <p className="text-[10px] text-slate-500 truncate mt-0.5">{email.sender}</p>
+                    </div>
+                    <div className="flex items-center gap-3 flex-shrink-0">
+                      <RiskScore score={email.risk_score} size="sm" />
+                      <Link href={`/investigations/${email.id}`} className="text-red-400 hover:text-red-300 font-bold">
+                        Analyze
+                      </Link>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
+          </div>
+
+          {/* Infrastructure Clusters */}
+          <div className="bg-slate-900/60 border border-slate-800 rounded-xl overflow-hidden shadow-xl flex flex-col">
+            <div className="p-4 bg-slate-900 flex items-center justify-between border-b border-slate-800">
+              <h3 className="font-semibold text-slate-200 text-sm tracking-wide flex items-center gap-2">
+                <Network className="w-4 h-4 text-purple-400" /> Infrastructure Clusters
+              </h3>
+              <Link href="/infrastructure" className="text-xs text-purple-400 hover:underline font-mono">
+                Analyze Clusters
+              </Link>
+            </div>
+            <div className="p-4 space-y-4 flex-1">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="p-4 bg-slate-950/60 border border-slate-800 rounded-lg text-center">
+                  <span className="text-[10px] font-mono text-slate-400 uppercase block">Active Clusters</span>
+                  <span className="text-2xl font-bold font-mono text-purple-400 block mt-1">{metrics.infrastructure_clusters}</span>
+                </div>
+                <div className="p-4 bg-slate-950/60 border border-slate-800 rounded-lg text-center">
+                  <span className="text-[10px] font-mono text-slate-400 uppercase block">Monitored ASNs</span>
+                  <span className="text-2xl font-bold font-mono text-slate-200 block mt-1">42</span>
+                </div>
+              </div>
+              <div className="p-3 bg-indigo-950/20 border border-indigo-900/40 rounded-lg text-xs leading-relaxed text-slate-300">
+                <span className="font-bold text-indigo-400 block mb-1">Correlation Summary:</span>
+                Identified overlap on AS13335 (Cloudflare) and AS16509 (Amazon) across recent BEC and Impersonation candidate clusters.
+              </div>
+            </div>
+          </div>
+
+          {/* Recent Cases */}
+          <div className="bg-slate-900/60 border border-slate-800 rounded-xl overflow-hidden shadow-xl flex flex-col">
+            <div className="p-4 bg-slate-900 flex items-center justify-between border-b border-slate-800">
+              <h3 className="font-semibold text-slate-200 text-sm tracking-wide flex items-center gap-2">
+                <Briefcase className="w-4 h-4 text-amber-400" /> Recent Cases
+              </h3>
+              <Link href="/cases" className="text-xs text-amber-400 hover:underline font-mono">
+                View Directory
+              </Link>
+            </div>
+            <div className="divide-y divide-slate-800/60 overflow-y-auto max-h-[350px] flex-1">
+              {cases.length === 0 ? (
+                <div className="p-8 text-center text-slate-500 font-mono">No open incidents.</div>
+              ) : (
+                cases.slice(0, 5).map((c) => (
+                  <div key={c.id} className="p-3.5 hover:bg-slate-800/40 transition-colors flex items-center justify-between gap-4 font-mono text-xs">
+                    <div className="min-w-0">
+                      <span className="text-[10px] font-bold text-amber-400 bg-amber-950/80 px-1.5 py-0.5 rounded border border-amber-800/60 mr-2">
+                        {c.case_id}
+                      </span>
+                      <span className="font-sans font-bold text-slate-200 truncate">{c.title}</span>
+                    </div>
+                    <Link href={`/cases/${c.id}`} className="text-amber-400 hover:text-amber-300 font-bold flex-shrink-0">
+                      Workspace
+                    </Link>
+                  </div>
+                ))
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
