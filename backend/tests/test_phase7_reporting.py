@@ -87,7 +87,7 @@ def test_pdf_json_and_zip_package_export():
 
     # PDF export
     pdf_bytes = exporter.export_pdf(report)
-    assert b"MAILTRACE FORENSIC REPORT" in pdf_bytes
+    assert b"THREATTRACE AI FORENSIC REPORT" in pdf_bytes
     assert b"RPT-2026-0042" in pdf_bytes
 
     # ZIP package export
