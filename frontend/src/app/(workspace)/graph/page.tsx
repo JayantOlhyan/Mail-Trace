@@ -26,11 +26,11 @@ export default function GraphExplorerPage() {
 
   return (
     <div className="space-y-6 max-w-7xl mx-auto">
-      <div className="border-b border-slate-800 pb-4">
-        <h1 className="text-xl font-bold tracking-tight text-slate-100 flex items-center gap-2">
+      <div className="border-b border-slate-200 dark:border-slate-800 pb-4">
+        <h1 className="text-xl font-bold tracking-tight text-slate-900 dark:text-slate-100 flex items-center gap-2">
           <GitFork className="w-5 h-5 text-indigo-400" /> Standalone Investigation Graph Explorer
         </h1>
-        <p className="text-xs text-slate-400 font-mono mt-0.5">
+        <p className="text-xs text-slate-600 dark:text-slate-400 font-mono mt-0.5">
           Interactive Bounded Graph Traversal Across Ingested Indicators & Relationships
         </p>
       </div>
