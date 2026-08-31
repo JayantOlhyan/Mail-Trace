@@ -50,7 +50,7 @@ export function TourNavigation() {
           className={`text-xs font-mono transition-all duration-300 ${
             activeId === chapter.id
               ? 'text-blue-400 font-bold translate-x-2'
-              : 'text-slate-600 hover:text-slate-400'
+              : 'text-slate-600 hover:text-slate-600 dark:text-slate-400'
           }`}
         >
           {chapter.label}
@@ -58,7 +58,7 @@ export function TourNavigation() {
       ))}
       <Link 
         href="/workspace"
-        className="mt-8 text-xs font-mono text-slate-500 hover:text-slate-300 transition-colors"
+        className="mt-8 text-xs font-mono text-slate-500 hover:text-slate-700 dark:text-slate-300 transition-colors"
       >
         ← EXIT TOUR
       </Link>
