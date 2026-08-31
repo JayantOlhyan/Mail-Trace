@@ -17,7 +17,7 @@ export function RelayTraceScene() {
   const [activeHop, setActiveHop] = useState<number | null>(null);
 
   return (
-    <section id="scene-07" className="relative min-h-[250vh]" ref={ref}>
+    <section id="scene-07" className="relative w-full h-full" ref={ref}>
       <div className="sticky top-0 flex h-screen items-center justify-center md:justify-between px-4 md:px-24" style={{ opacity: sceneOpacity }}>
         
         {/* Narrative Left */}
