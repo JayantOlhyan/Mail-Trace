@@ -16,7 +16,7 @@ export function InfrastructureScene() {
         
         <div className="text-center mb-16">
           <h3 className="text-xl font-mono text-slate-500 tracking-widest mb-4">INFRASTRUCTURE INTELLIGENCE</h3>
-          <p className="text-slate-400 max-w-xl mx-auto">
+          <p className="text-slate-600 dark:text-slate-400 max-w-xl mx-auto">
             Technical indicators are expanded into an intelligence graph, querying external datasets for context.
           </p>
         </div>
@@ -26,7 +26,7 @@ export function InfrastructureScene() {
           
           <div className="flex flex-col items-center">
             {/* Level 1: Email */}
-            <div className={`px-6 py-2 bg-slate-900 border border-slate-700 rounded transition-all duration-500 ${showLevel1 ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
+            <div className={`px-6 py-2 bg-slate-100 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded transition-all duration-500 ${showLevel1 ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
               EMAIL
             </div>
             
@@ -39,7 +39,7 @@ export function InfrastructureScene() {
               {/* Domain Branch */}
               <div className={`flex flex-col items-center transition-all duration-700 delay-100 transform ${showLevel2 ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}>
                 <div className="w-px h-8 bg-slate-700" />
-                <div className="px-6 py-2 bg-slate-900 border border-slate-700 rounded text-blue-400">
+                <div className="px-6 py-2 bg-slate-100 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded text-blue-400">
                   DOMAIN
                 </div>
 
@@ -50,11 +50,11 @@ export function InfrastructureScene() {
                   
                   <div className="flex flex-col items-center pt-8">
                     <div className="absolute top-0 w-px h-8 bg-slate-700" />
-                    <div className="px-3 py-1 bg-slate-950 border border-slate-800 rounded text-slate-400 text-xs">DNS</div>
+                    <div className="px-3 py-1 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded text-slate-600 dark:text-slate-400 text-xs">DNS</div>
                   </div>
                   <div className="flex flex-col items-center pt-8">
                     <div className="absolute top-0 w-px h-8 bg-slate-700" />
-                    <div className="px-3 py-1 bg-slate-950 border border-slate-800 rounded text-slate-400 text-xs">MX</div>
+                    <div className="px-3 py-1 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded text-slate-600 dark:text-slate-400 text-xs">MX</div>
                   </div>
                 </div>
               </div>
@@ -62,7 +62,7 @@ export function InfrastructureScene() {
               {/* IP Branch */}
               <div className={`flex flex-col items-center transition-all duration-700 delay-200 transform ${showLevel2 ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}>
                 <div className="w-px h-8 bg-slate-700" />
-                <div className="px-6 py-2 bg-slate-900 border border-slate-700 rounded text-orange-400">
+                <div className="px-6 py-2 bg-slate-100 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded text-orange-400">
                   IP
                 </div>
 
@@ -73,11 +73,11 @@ export function InfrastructureScene() {
                   
                   <div className="flex flex-col items-center pt-8">
                     <div className="absolute top-0 w-px h-8 bg-slate-700" />
-                    <div className="px-3 py-1 bg-slate-950 border border-slate-800 rounded text-slate-400 text-xs">ASN</div>
+                    <div className="px-3 py-1 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded text-slate-600 dark:text-slate-400 text-xs">ASN</div>
                   </div>
                   <div className="flex flex-col items-center pt-8">
                     <div className="absolute top-0 w-px h-8 bg-slate-700" />
-                    <div className="px-3 py-1 bg-slate-950 border border-slate-800 rounded text-slate-400 text-xs">GEO</div>
+                    <div className="px-3 py-1 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded text-slate-600 dark:text-slate-400 text-xs">GEO</div>
                   </div>
                 </div>
               </div>
