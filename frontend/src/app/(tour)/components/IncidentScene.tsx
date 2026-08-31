@@ -20,7 +20,7 @@ export function IncidentScene() {
   const separation = Math.max(0, progress * 2);
 
   return (
-    <section id="scene-01" className="relative min-h-[250vh]" ref={ref}>
+    <section id="scene-01" className="relative w-full h-full" ref={ref}>
       <div className="sticky top-0 flex h-screen flex-col items-center justify-center" style={{ opacity: sceneOpacity }}>
         <div 
           className="w-full max-w-2xl bg-slate-100/60 dark:bg-slate-900/40 backdrop-blur-2xl text-slate-800 dark:text-slate-200 border border-slate-300 dark:border-slate-700/50 rounded-2xl shadow-[0_0_40px_rgba(0,0,0,0.5)] overflow-hidden transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]"
