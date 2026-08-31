@@ -21,7 +21,7 @@ from app.enrichment.providers.base import (
 
 class MockIntelligenceProvider(IPIntelligenceProvider, DomainIntelligenceProvider, ReputationProvider):
     """
-    Offline/Mock Intelligence Provider for MailTrace.
+    Offline/Mock Intelligence Provider for ThreatTrace AI.
     Provides fast, deterministic IP, Domain, and Reputation enrichment without external network requests.
     """
 
