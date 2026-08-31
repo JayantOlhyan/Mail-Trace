@@ -34,13 +34,13 @@ export function InvestigationGraphScene() {
             <Network className="w-8 h-8 text-blue-500" />
             Investigation Graph
           </h3>
-          <p className="text-slate-400 mt-4 max-w-xl mx-auto">
+          <p className="text-slate-600 dark:text-slate-400 mt-4 max-w-xl mx-auto">
             ThreatTrace AI correlates isolated artifacts to reveal broader attack campaigns automatically.
           </p>
         </div>
 
         {/* Graph Container */}
-        <div className="relative w-full max-w-4xl aspect-[4/3] bg-slate-950/50 border border-slate-800 rounded-xl overflow-hidden shadow-2xl">
+        <div className="relative w-full max-w-4xl aspect-[4/3] bg-slate-50 dark:bg-slate-950/50 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden shadow-2xl">
           
           {/* SVG for Edges */}
           <svg className="absolute inset-0 w-full h-full pointer-events-none">
