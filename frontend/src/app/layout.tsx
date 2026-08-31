@@ -8,7 +8,7 @@ const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 const mono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mono' });
 
 export const metadata: Metadata = {
-  title: 'MailTrace — AI Email Forensic Intelligence Platform',
+  title: 'ThreatTrace AI — Email Threat Detection & Forensic Intelligence',
   description: 'Cybersecurity Incident Response & Investigation Workspace for SIH 2026 Problem Statement 106',
 };
 
