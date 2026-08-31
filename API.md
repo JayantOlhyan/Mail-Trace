@@ -1,4 +1,4 @@
-# MailTrace — REST API Reference Specification
+# ThreatTrace AI — REST API Reference Specification
 ## SIH 2026 Problem Statement 106
 
 All endpoints are hosted under the base prefix `/api/v1`.
