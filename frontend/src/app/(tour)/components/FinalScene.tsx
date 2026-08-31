@@ -7,13 +7,19 @@ import { ArrowRight, Box } from 'lucide-react';
 export function FinalScene() {
   const { ref, progress } = useScrollReveal(0.3);
 
+  // Unified Cinematic Timing
+  const fadeIn = Math.min(1, progress * 3);
+  const fadeOut = Math.max(0, 1 - (progress - 0.66) * 3);
+  const sceneOpacity = fadeIn;
+
+
   const showContent = progress > 0.1;
   const showPipeline = progress > 0.4;
   const showButtons = progress > 0.7;
 
   return (
-    <section id="scene-14" className="relative min-h-[150vh]" ref={ref}>
-      <div className="sticky top-0 flex h-screen flex-col items-center justify-center px-4">
+    <section id="scene-14" className="relative min-h-[250vh]" ref={ref}>
+      <div className="sticky top-0 flex h-screen flex-col items-center justify-center px-4" style={{ opacity: sceneOpacity }}>
         
         <div className={`text-center transition-all duration-1000 transform ${showContent ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
           <div className="text-sm font-mono text-blue-500 tracking-[0.3em] mb-6">THREATTRACE AI</div>

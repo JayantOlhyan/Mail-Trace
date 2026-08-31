@@ -6,13 +6,19 @@ import { tourData } from '../data/tourData';
 export function InfrastructureScene() {
   const { ref, progress } = useScrollReveal(0.3);
 
+  // Unified Cinematic Timing
+  const fadeIn = Math.min(1, progress * 3);
+  const fadeOut = Math.max(0, 1 - (progress - 0.66) * 3);
+  const sceneOpacity = Math.min(fadeIn, fadeOut);
+
+
   const showLevel1 = progress > 0.1;
   const showLevel2 = progress > 0.35;
   const showLevel3 = progress > 0.6;
 
   return (
-    <section id="scene-08" className="relative min-h-[150vh]" ref={ref}>
-      <div className="sticky top-0 flex h-screen flex-col items-center justify-center px-4">
+    <section id="scene-08" className="relative min-h-[250vh]" ref={ref}>
+      <div className="sticky top-0 flex h-screen flex-col items-center justify-center px-4" style={{ opacity: sceneOpacity }}>
         
         <div className="text-center mb-16">
           <h3 className="text-xl font-mono text-slate-500 tracking-widest mb-4">INFRASTRUCTURE INTELLIGENCE</h3>

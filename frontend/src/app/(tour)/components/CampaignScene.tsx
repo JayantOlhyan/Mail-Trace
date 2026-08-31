@@ -6,13 +6,19 @@ import { Target, Users, Globe, Server, Layers } from 'lucide-react';
 export function CampaignScene() {
   const { ref, progress } = useScrollReveal(0.4);
 
+  // Unified Cinematic Timing
+  const fadeIn = Math.min(1, progress * 3);
+  const fadeOut = Math.max(0, 1 - (progress - 0.66) * 3);
+  const sceneOpacity = Math.min(fadeIn, fadeOut);
+
+
   const showCard = progress > 0.2;
   const showMetrics = progress > 0.5;
   const showButton = progress > 0.8;
 
   return (
-    <section id="scene-10" className="relative min-h-[150vh]" ref={ref}>
-      <div className="sticky top-0 flex h-screen items-center justify-center px-4">
+    <section id="scene-10" className="relative min-h-[250vh]" ref={ref}>
+      <div className="sticky top-0 flex h-screen items-center justify-center px-4" style={{ opacity: sceneOpacity }}>
         
         <div className={`w-full max-w-xl bg-slate-100/60 dark:bg-slate-900/40 backdrop-blur-xl border border-slate-300 dark:border-slate-700/50 rounded-2xl p-8 shadow-[0_0_40px_rgba(0,0,0,0.5)] transition-all duration-700 transform ease-[cubic-bezier(0.16,1,0.3,1)] ${showCard ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
           

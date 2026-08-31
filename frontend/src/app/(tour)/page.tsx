@@ -28,7 +28,7 @@ export default function TourPage() {
 
       <TourNavigation />
       
-      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 [&>*:not(:first-child)]:-mt-[100vh]">
+      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 [&>*:not(:first-child)]:-mt-[150vh]">
         <IncidentScene />
         <ProductRevealScene />
         <IngestionScene />

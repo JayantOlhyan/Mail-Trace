@@ -6,6 +6,12 @@ import { ShieldAlert } from 'lucide-react';
 
 export function DetectionScene() {
   const { ref, progress } = useScrollReveal(0.3);
+
+  // Unified Cinematic Timing
+  const fadeIn = Math.min(1, progress * 3);
+  const fadeOut = Math.max(0, 1 - (progress - 0.66) * 3);
+  const sceneOpacity = Math.min(fadeIn, fadeOut);
+
   const { detection } = tourData;
 
   // Derive score based on progress
@@ -14,7 +20,7 @@ export function DetectionScene() {
 
   return (
     <section id="scene-04" className="relative min-h-[200vh]" ref={ref}>
-      <div className="sticky top-0 flex h-screen items-center justify-center md:justify-between px-4 md:px-24">
+      <div className="sticky top-0 flex h-screen items-center justify-center md:justify-between px-4 md:px-24" style={{ opacity: sceneOpacity }}>
         
         {/* Narrative Left */}
         <div className="hidden md:block w-1/3">

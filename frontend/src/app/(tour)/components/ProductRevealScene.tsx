@@ -5,15 +5,20 @@ import { useScrollReveal } from '../hooks/useScrollReveal';
 export function ProductRevealScene() {
   const { ref, progress } = useScrollReveal();
   
+  // Unified Cinematic Timing
+  const fadeIn = Math.min(1, progress * 3);
+  const fadeOut = Math.max(0, 1 - (progress - 0.66) * 3);
+  const sceneOpacity = Math.min(fadeIn, fadeOut);
+
   const textOpacity = Math.min(1, progress * 2);
   const translateY = Math.max(0, 50 - progress * 100);
   
   return (
-    <section id="scene-02" className="relative min-h-[150vh]" ref={ref}>
+    <section id="scene-02" className="relative min-h-[250vh]" ref={ref}>
       <div 
         className="sticky top-0 flex h-screen flex-col items-center justify-center text-center px-4 transition-all duration-700"
         style={{ 
-          opacity: textOpacity,
+          opacity: sceneOpacity,
           transform: `translateY(${translateY}px)`
         }}
       >

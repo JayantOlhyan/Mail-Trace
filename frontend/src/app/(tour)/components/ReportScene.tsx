@@ -6,6 +6,12 @@ import { FileText, Download } from 'lucide-react';
 
 export function ReportScene() {
   const { ref, progress } = useScrollReveal(0.3);
+
+  // Unified Cinematic Timing
+  const fadeIn = Math.min(1, progress * 3);
+  const fadeOut = Math.max(0, 1 - (progress - 0.66) * 3);
+  const sceneOpacity = Math.min(fadeIn, fadeOut);
+
   const { case: caseData, detection } = tourData;
   
   // Simulate report generation based on scroll progress
@@ -14,8 +20,8 @@ export function ReportScene() {
   const showReport = progress > 0.2;
 
   return (
-    <section id="scene-13" className="relative min-h-[150vh]" ref={ref}>
-      <div className="sticky top-0 flex h-screen items-center justify-center px-4 md:px-24">
+    <section id="scene-13" className="relative min-h-[250vh]" ref={ref}>
+      <div className="sticky top-0 flex h-screen items-center justify-center px-4 md:px-24" style={{ opacity: sceneOpacity }}>
         
         <div className={`w-full max-w-4xl bg-slate-100 text-slate-900 rounded-lg shadow-2xl overflow-hidden transition-all duration-700 transform ${showReport ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-16'}`}>
           

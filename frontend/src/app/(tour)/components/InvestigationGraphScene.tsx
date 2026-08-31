@@ -6,6 +6,12 @@ import { Network } from 'lucide-react';
 export function InvestigationGraphScene() {
   const { ref, progress } = useScrollReveal(0.2);
 
+  // Unified Cinematic Timing
+  const fadeIn = Math.min(1, progress * 3);
+  const fadeOut = Math.max(0, 1 - (progress - 0.66) * 3);
+  const sceneOpacity = Math.min(fadeIn, fadeOut);
+
+
   // SVG Node positions (0 to 100 percentages)
   const nodes = [
     { id: 'email1', x: 50, y: 80, label: 'EMAIL', color: '#ef4444', showAt: 0.1 },
@@ -27,7 +33,7 @@ export function InvestigationGraphScene() {
 
   return (
     <section id="scene-09" className="relative min-h-[250vh]" ref={ref}>
-      <div className="sticky top-0 flex h-screen flex-col items-center justify-center md:px-24">
+      <div className="sticky top-0 flex h-screen flex-col items-center justify-center md:px-24" style={{ opacity: sceneOpacity }}>
         
         <div className="text-center mb-8 z-10">
           <h3 className="text-3xl font-bold flex items-center justify-center gap-3">

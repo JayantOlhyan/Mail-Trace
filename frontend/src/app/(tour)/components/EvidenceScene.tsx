@@ -6,6 +6,12 @@ import { Lock, FileCheck } from 'lucide-react';
 
 export function EvidenceScene() {
   const { ref, progress } = useScrollReveal(0.3);
+
+  // Unified Cinematic Timing
+  const fadeIn = Math.min(1, progress * 3);
+  const fadeOut = Math.max(0, 1 - (progress - 0.66) * 3);
+  const sceneOpacity = Math.min(fadeIn, fadeOut);
+
   const { case: caseData } = tourData;
 
   const showItems = progress > 0.2;
@@ -13,8 +19,8 @@ export function EvidenceScene() {
   const isComplete = packagingProgress >= 100;
 
   return (
-    <section id="scene-12" className="relative min-h-[150vh]" ref={ref}>
-      <div className="sticky top-0 flex h-screen items-center justify-center md:justify-between px-4 md:px-24">
+    <section id="scene-12" className="relative min-h-[250vh]" ref={ref}>
+      <div className="sticky top-0 flex h-screen items-center justify-center md:justify-between px-4 md:px-24" style={{ opacity: sceneOpacity }}>
         
         {/* Narrative Left */}
         <div className="hidden md:block w-1/3">

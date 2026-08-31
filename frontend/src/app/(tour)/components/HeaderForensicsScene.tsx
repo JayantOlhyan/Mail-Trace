@@ -6,6 +6,12 @@ import { Code2 } from 'lucide-react';
 
 export function HeaderForensicsScene() {
   const { ref, progress } = useScrollReveal(0.3);
+
+  // Unified Cinematic Timing
+  const fadeIn = Math.min(1, progress * 3);
+  const fadeOut = Math.max(0, 1 - (progress - 0.66) * 3);
+  const sceneOpacity = Math.min(fadeIn, fadeOut);
+
   const { headers } = tourData;
 
   const showParsed = progress > 0.4;
@@ -13,7 +19,7 @@ export function HeaderForensicsScene() {
 
   return (
     <section id="scene-06" className="relative min-h-[200vh]" ref={ref}>
-      <div className="sticky top-0 flex h-screen items-center justify-center flex-col px-4 md:px-24">
+      <div className="sticky top-0 flex h-screen items-center justify-center flex-col px-4 md:px-24" style={{ opacity: sceneOpacity }}>
         
         <div className="text-center mb-12">
           <h3 className="text-xl font-mono text-slate-500 tracking-widest mb-4">HEADER FORENSICS</h3>
