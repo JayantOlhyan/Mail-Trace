@@ -16,30 +16,30 @@ export function IncidentScene() {
     <section id="scene-01" className="relative min-h-[150vh]" ref={ref}>
       <div className="sticky top-0 flex h-screen flex-col items-center justify-center">
         <div 
-          className="w-full max-w-2xl bg-slate-900/40 backdrop-blur-2xl text-slate-200 border border-slate-700/50 rounded-2xl shadow-[0_0_40px_rgba(0,0,0,0.5)] overflow-hidden transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]"
+          className="w-full max-w-2xl bg-slate-100/60 dark:bg-slate-900/40 backdrop-blur-2xl text-slate-800 dark:text-slate-200 border border-slate-300 dark:border-slate-700/50 rounded-2xl shadow-[0_0_40px_rgba(0,0,0,0.5)] overflow-hidden transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]"
           style={{ opacity, transform: `scale(${0.95 + opacity * 0.05})` }}
         >
           {/* Email Header */}
-          <div className="bg-slate-800/30 p-5 border-b border-slate-700/50 backdrop-blur-md">
+          <div className="bg-slate-200 dark:bg-slate-800/30 p-5 border-b border-slate-300 dark:border-slate-700/50 backdrop-blur-md">
             <div className="flex items-center gap-3 mb-2">
               <Mail className="w-5 h-5 text-slate-500" />
               <div className="font-semibold text-sm">New Message</div>
             </div>
             <div className="text-sm">
-              <span className="text-slate-400 w-16 inline-block">From:</span>
-              <span className="font-medium text-slate-100">{incident.from}</span>
+              <span className="text-slate-600 dark:text-slate-400 w-16 inline-block">From:</span>
+              <span className="font-medium text-slate-900 dark:text-slate-100">{incident.from}</span>
             </div>
             <div className="text-sm">
-              <span className="text-slate-400 w-16 inline-block">Subject:</span>
-              <span className="font-bold text-slate-100">{incident.subject}</span>
+              <span className="text-slate-600 dark:text-slate-400 w-16 inline-block">Subject:</span>
+              <span className="font-bold text-slate-900 dark:text-slate-100">{incident.subject}</span>
             </div>
           </div>
           
           {/* Email Body */}
-          <div className="p-8 text-sm relative leading-relaxed text-slate-300">
+          <div className="p-8 text-sm relative leading-relaxed text-slate-700 dark:text-slate-300">
             <div className="mb-8">{incident.body.split('\n')[0]}</div>
             <div className="flex justify-center mb-8">
-              <button className="bg-blue-600/90 hover:bg-blue-500 text-white px-8 py-3 rounded-md font-semibold tracking-wide shadow-[0_0_20px_rgba(37,99,235,0.3)] transition-all hover:scale-105 active:scale-95">
+              <button className="bg-blue-600/90 hover:bg-blue-500 text-slate-900 dark:text-white px-8 py-3 rounded-md font-semibold tracking-wide shadow-[0_0_20px_rgba(37,99,235,0.3)] transition-all hover:scale-105 active:scale-95">
                 VERIFY ACCOUNT
               </button>
             </div>
@@ -63,7 +63,7 @@ export function IncidentScene() {
           style={{ opacity: separation > 0.8 ? 1 : 0 }}
         >
           <h2 className="text-2xl font-bold mb-2 tracking-tight">ONE EMAIL.</h2>
-          <p className="text-slate-400 text-lg">MULTIPLE HIDDEN SIGNALS.</p>
+          <p className="text-slate-600 dark:text-slate-400 text-lg">MULTIPLE HIDDEN SIGNALS.</p>
         </div>
       </div>
     </section>
