@@ -19,7 +19,7 @@ export function DetectionScene() {
         {/* Narrative Left */}
         <div className="hidden md:block w-1/3">
           <h3 className="text-3xl font-bold mb-4">Threat Detection</h3>
-          <p className="text-slate-400 leading-relaxed">
+          <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
             Every signal is evaluated by the AI engine. As evidence mounts, the risk score dynamically increases, leading to a high-confidence classification.
           </p>
         </div>
@@ -72,12 +72,12 @@ export function DetectionScene() {
                 return (
                   <div 
                     key={signal.id}
-                    className={`flex items-center justify-between p-3 rounded bg-slate-900/50 border border-slate-800 transition-all duration-500 transform ${
+                    className={`flex items-center justify-between p-3 rounded bg-slate-100/70 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 transition-all duration-500 transform ${
                       isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'
                     }`}
                   >
-                    <span className="text-xs font-mono text-slate-400">{signal.label}</span>
-                    <span className="text-sm font-medium text-slate-200">{signal.evidence}</span>
+                    <span className="text-xs font-mono text-slate-600 dark:text-slate-400">{signal.label}</span>
+                    <span className="text-sm font-medium text-slate-800 dark:text-slate-200">{signal.evidence}</span>
                   </div>
                 );
               })}
