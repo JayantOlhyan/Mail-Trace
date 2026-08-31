@@ -8,7 +8,7 @@ from app.ingestion.evidence import EvidenceMetadata
 from app.parsing.email_parser import EmailParserEngine
 
 def main():
-    parser = argparse.ArgumentParser(description="MailTrace Phase 1 Development & Analysis CLI")
+    parser = argparse.ArgumentParser(description="ThreatTrace AI Development & Analysis CLI")
     subparsers = parser.add_subparsers(dest="command", required=True)
 
     analyze_parser = subparsers.add_parser("analyze", help="Analyze and parse a local .eml email file")
@@ -40,7 +40,7 @@ def main():
 
         to_addrs = ", ".join([a.address for a in canonical_obj.identity.to]) or "Unknown"
 
-        print("\nMailTrace Email Ingestion & Parsing Engine")
+        print("\nThreatTrace AI Email Ingestion & Parsing Engine")
         print("------------------------------------------")
         print(f"File:        {filename}")
         print(f"SHA-256:     {sha256_hash}")
