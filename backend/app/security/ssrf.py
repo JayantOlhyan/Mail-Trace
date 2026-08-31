@@ -23,20 +23,55 @@ BLOCKED_HOSTNAMES = {
 }
 
 
+def _parse_encoded_ip(ip_str: str):
+    try:
+        return ipaddress.ip_address(ip_str)
+    except ValueError:
+        pass
+    
+    # Try integer parsing
+    try:
+        if ip_str.startswith("0x") or ip_str.startswith("0X"):
+            return ipaddress.ip_address(int(ip_str, 16))
+        elif ip_str.startswith("0") and len(ip_str) > 1 and ip_str.isdigit():
+            return ipaddress.ip_address(int(ip_str, 8))
+        elif ip_str.isdigit():
+            return ipaddress.ip_address(int(ip_str))
+    except ValueError:
+        pass
+
+    # Try dot notation with hex/octal parts
+    parts = ip_str.split('.')
+    if len(parts) == 4:
+        try:
+            parsed_parts = []
+            for p in parts:
+                if p.startswith('0x') or p.startswith('0X'):
+                    parsed_parts.append(int(p, 16))
+                elif p.startswith('0') and len(p) > 1:
+                    parsed_parts.append(int(p, 8))
+                else:
+                    parsed_parts.append(int(p))
+            return ipaddress.ip_address(f"{parsed_parts[0]}.{parsed_parts[1]}.{parsed_parts[2]}.{parsed_parts[3]}")
+        except:
+            pass
+            
+    return None
+
 def is_ip_private_or_restricted(ip_str: str) -> bool:
     """
     Checks whether an IP address belongs to a private, loopback, or restricted network block.
     """
-    try:
-        ip_obj = ipaddress.ip_address(ip_str)
-        if ip_obj.is_private or ip_obj.is_loopback or ip_obj.is_link_local or ip_obj.is_multicast:
+    ip_obj = _parse_encoded_ip(ip_str)
+    if ip_obj is None:
+        return False
+        
+    if ip_obj.is_private or ip_obj.is_loopback or ip_obj.is_link_local or ip_obj.is_multicast:
+        return True
+    for net in BLOCKED_NETWORKS:
+        if ip_obj in net:
             return True
-        for net in BLOCKED_NETWORKS:
-            if ip_obj in net:
-                return True
-        return False
-    except ValueError:
-        return False
+    return False
 
 
 def validate_url_for_ssrf(url: str) -> Tuple[bool, str]:
@@ -57,15 +92,20 @@ def validate_url_for_ssrf(url: str) -> Tuple[bool, str]:
         if hostname_lower in BLOCKED_HOSTNAMES:
             return False, f"Forbidden target hostname: '{hostname}' (Restricted Internal Host)."
 
-        # Try to resolve the hostname to catch octal, hex, decimal IPs and localhost aliases
-        import socket
-        try:
-            resolved_ip = socket.gethostbyname(hostname_lower)
-        except socket.gaierror:
-            resolved_ip = hostname_lower
+        # Try to parse encoded IPs first
+        if _parse_encoded_ip(hostname_lower) is not None:
+            if is_ip_private_or_restricted(hostname_lower):
+                return False, f"Forbidden destination IP: '{hostname}' (Internal/Private Network Block)."
+        else:
+            # If it's not directly parsable as IP, resolve it
+            import socket
+            try:
+                resolved_ip = socket.gethostbyname(hostname_lower)
+            except socket.gaierror:
+                resolved_ip = hostname_lower
 
-        if is_ip_private_or_restricted(resolved_ip) or is_ip_private_or_restricted(hostname_lower):
-            return False, f"Forbidden destination IP: '{hostname}' (Internal/Private Network Block)."
+            if is_ip_private_or_restricted(resolved_ip) or is_ip_private_or_restricted(hostname_lower):
+                return False, f"Forbidden destination IP: '{hostname}' (Internal/Private Network Block)."
 
         return True, "URL validated successfully."
     except Exception as e:
