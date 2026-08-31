@@ -14,8 +14,8 @@ async def lifespan(app: FastAPI):
     await engine.dispose()
 
 app = FastAPI(
-    title="MailTrace Ingestion & Parsing API",
-    description="MailTrace Phase 1 — RAW .EML FILE -> VALIDATED EVIDENCE -> NORMALIZED EMAIL OBJECT",
+    title="ThreatTrace AI — Email Threat Detection & Forensic Intelligence API",
+    description="ThreatTrace AI — Forensic Email Ingestion, Forensics, Intelligence & Reporting Platform",
     version="1.0.0",
     lifespan=lifespan
 )
@@ -26,6 +26,6 @@ app.include_router(api_v1_router, prefix="/api")
 async def health_check():
     return {
         "status": "online",
-        "service": "MailTrace Phase 1 Email Ingestion & Parsing Engine",
+        "service": "ThreatTrace AI Email Ingestion & Forensic Engine",
         "version": "1.0.0"
     }
