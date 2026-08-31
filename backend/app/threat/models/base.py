@@ -4,7 +4,7 @@ from app.schemas.threat import ThreatClassificationSchema
 
 class ThreatModel(ABC):
     """
-    Abstract base class for MailTrace Threat Classification Models.
+    Abstract base class for ThreatTrace AI Threat Classification Models.
     Allows swapping between baseline deterministic engine, local ML models, and LLM providers.
     """
 
