@@ -75,7 +75,7 @@ async def download_evidence_package(report_id: str):
         content=zip_bytes,
         media_type="application/zip",
         headers={
-            "Content-Disposition": f'attachment; filename="MailTrace-Evidence-{report_id}.zip"'
+            "Content-Disposition": f'attachment; filename="ThreatTrace-AI-Evidence-{report_id}.zip"'
         },
     )
 
