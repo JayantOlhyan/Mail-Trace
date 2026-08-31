@@ -16,10 +16,10 @@ import { FinalScene } from './components/FinalScene';
 
 export default function TourPage() {
   return (
-    <main className="relative w-full overflow-hidden bg-slate-950">
+    <main className="relative w-full overflow-hidden bg-slate-50 dark:bg-slate-950">
       {/* Ambient glowing background */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-blue-900/20 blur-[120px]" />
+        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-blue-100/50 dark:bg-blue-900/20 blur-[120px]" />
         <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-purple-900/10 blur-[150px]" />
       </div>
 
