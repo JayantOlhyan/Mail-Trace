@@ -14,7 +14,7 @@ from app.reports.hashing import calculate_sha256
 
 class ReportExporter:
     """
-    Export Engine for MailTrace Forensic Reports (Phase 7).
+    Export Engine for ThreatTrace AI Forensic Reports (Phase 7).
     Supports PDF rendering, JSON serialization, and ZIP Evidence Packages with manifest.json.
     """
 
@@ -31,7 +31,7 @@ class ReportExporter:
         # Formats printable, cyber-styled forensic report text buffer
         buffer = io.StringIO()
         buffer.write("================================================================================\n")
-        buffer.write("                             MAILTRACE FORENSIC REPORT                          \n")
+        buffer.write("                           THREATTRACE AI FORENSIC REPORT                       \n")
         buffer.write("                    AI-Powered Email Threat & Forensic Intelligence             \n")
         buffer.write("================================================================================\n\n")
         
