@@ -10,7 +10,7 @@ from app.enrichment.schemas import (
 
 class ProbableOriginClassifier:
     """
-    Probable Origin Infrastructure Classifier for MailTrace.
+    Probable Origin Infrastructure Classifier for ThreatTrace AI.
     Correlates Phase 2 relay hop analysis with Phase 4 IP intelligence & anonymization signals
     to calculate probable transmission origin infrastructure and confidence score (0.0 to 1.0).
     """
