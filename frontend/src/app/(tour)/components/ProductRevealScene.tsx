@@ -14,7 +14,7 @@ export function ProductRevealScene() {
   const translateY = Math.max(0, 50 - progress * 100);
   
   return (
-    <section id="scene-02" className="relative min-h-[250vh]" ref={ref}>
+    <section id="scene-02" className="relative w-full h-full" ref={ref}>
       <div 
         className="sticky top-0 flex h-screen flex-col items-center justify-center text-center px-4 transition-all duration-700"
         style={{ 
