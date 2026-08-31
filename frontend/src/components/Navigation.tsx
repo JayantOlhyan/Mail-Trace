@@ -13,18 +13,20 @@ import {
   Settings,
   ShieldAlert,
   FileText,
+  PlayCircle,
 } from 'lucide-react';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { Logo } from '@/components/Logo';
 
 const navItems = [
-  { name: 'Dashboard', href: '/', icon: LayoutDashboard },
+  { name: 'Dashboard', href: '/workspace', icon: LayoutDashboard },
   { name: 'Investigations', href: '/investigations', icon: Mail },
   { name: 'Cases', href: '/cases', icon: Briefcase },
   { name: 'Campaigns', href: '/campaigns', icon: Layers },
   { name: 'Infrastructure', href: '/infrastructure', icon: Network },
   { name: 'Graph Explorer', href: '/graph', icon: GitFork },
   { name: 'Reports', href: '/reports', icon: FileText },
+  { name: 'Product Tour', href: '/', icon: PlayCircle },
   { name: 'Settings', href: '/settings', icon: Settings },
 ];
 
@@ -35,7 +37,9 @@ export function Navigation() {
     <aside className="w-64 bg-slate-950 border-r border-slate-800 flex flex-col h-screen sticky top-0 text-slate-200 select-none">
       {/* Brand Header */}
       <div className="p-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-center">
-        <Logo className="w-48 h-12" />
+        <Link href="/workspace">
+          <Logo className="w-48 h-12" />
+        </Link>
       </div>
 
       {/* Nav Links */}
@@ -43,8 +47,8 @@ export function Navigation() {
         {navItems.map((item) => {
           const Icon = item.icon;
           const isActive =
-            item.href === '/'
-              ? pathname === '/'
+            item.href === '/workspace'
+              ? pathname === '/workspace'
               : pathname.startsWith(item.href);
 
           return (
