@@ -27,19 +27,19 @@ export default function ReportsPage() {
   return (
     <div className="space-y-6 max-w-7xl mx-auto">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-4">
         <div>
-          <h1 className="text-xl font-bold tracking-tight text-slate-100 flex items-center gap-2">
+          <h1 className="text-xl font-bold tracking-tight text-slate-900 dark:text-slate-100 flex items-center gap-2">
             <FileText className="w-5 h-5 text-indigo-400" /> Forensic Reports & Evidence Export
           </h1>
-          <p className="text-xs text-slate-400 font-mono mt-0.5">
+          <p className="text-xs text-slate-600 dark:text-slate-400 font-mono mt-0.5">
             Cryptographically Verified Case Reports & Legal Artifact Packages
           </p>
         </div>
       </div>
 
       {/* Reports Directory */}
-      <div className="bg-slate-900/60 border border-slate-800 rounded-xl overflow-hidden shadow-xl">
+      <div className="bg-slate-100/80 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden shadow-xl">
         {loading ? (
           <div className="p-8 text-center text-slate-500 font-mono flex items-center justify-center space-x-2">
             <RefreshCw className="w-4 h-4 animate-spin text-indigo-400" />
@@ -51,7 +51,7 @@ export default function ReportsPage() {
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="border-b border-slate-800 text-[11px] font-mono text-slate-400 bg-slate-950/60 uppercase">
+                <tr className="border-b border-slate-200 dark:border-slate-800 text-[11px] font-mono text-slate-600 dark:text-slate-400 bg-slate-50 dark:bg-slate-950/60 uppercase">
                   <th className="p-3.5">Report ID</th>
                   <th className="p-3.5">Associated Case</th>
                   <th className="p-3.5">Priority</th>
@@ -60,13 +60,13 @@ export default function ReportsPage() {
                   <th className="p-3.5 text-right">Action</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800/60 font-mono text-xs text-slate-300">
+              <tbody className="divide-y divide-slate-800/60 font-mono text-xs text-slate-700 dark:text-slate-300">
                 {cases.map((c) => {
                   const reportId = `RPT-2026-${c.case_id.replace('CASE-', '')}`;
                   return (
-                    <tr key={c.id} className="hover:bg-slate-800/40 transition-colors">
+                    <tr key={c.id} className="hover:bg-slate-200 dark:bg-slate-800/40 transition-colors">
                       <td className="p-3.5 font-bold text-indigo-400">{reportId}</td>
-                      <td className="p-3.5 font-bold text-slate-300">{c.case_id}</td>
+                      <td className="p-3.5 font-bold text-slate-700 dark:text-slate-300">{c.case_id}</td>
                       <td className="p-3.5">
                         <span className={`inline-flex items-center px-2 py-0.5 rounded border text-[10px] font-bold ${
                           c.priority === 'CRITICAL' 
@@ -78,16 +78,16 @@ export default function ReportsPage() {
                           {c.priority}
                         </span>
                       </td>
-                      <td className="p-3.5 max-w-xs font-sans font-medium text-slate-200 truncate">
+                      <td className="p-3.5 max-w-xs font-sans font-medium text-slate-800 dark:text-slate-200 truncate">
                         {c.title}
                       </td>
-                      <td className="p-3.5 text-slate-400 text-[11px] font-mono">
+                      <td className="p-3.5 text-slate-600 dark:text-slate-400 text-[11px] font-mono">
                         {new Date(c.created_at).toLocaleDateString()}
                       </td>
                       <td className="p-3.5 text-right">
                         <Link
                           href={`/reports/${reportId}`}
-                          className="inline-flex items-center space-x-1 px-3 py-1 bg-indigo-600/20 hover:bg-indigo-600 text-indigo-300 hover:text-white rounded border border-indigo-500/40 transition text-xs font-semibold"
+                          className="inline-flex items-center space-x-1 px-3 py-1 bg-indigo-600/20 hover:bg-indigo-600 text-indigo-300 hover:text-slate-900 dark:text-white rounded border border-indigo-500/40 transition text-xs font-semibold"
                         >
                           <span>Generate Report</span>
                           <ArrowRight className="w-3.5 h-3.5" />
