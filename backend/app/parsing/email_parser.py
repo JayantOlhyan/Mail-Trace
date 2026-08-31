@@ -16,7 +16,7 @@ from app.schemas.canonical import (
 
 class EmailParserEngine:
     """
-    Main MIME & RFC 5322 Email Parser Engine for MailTrace Phase 1.
+    Main MIME & RFC 5322 Email Parser Engine for ThreatTrace AI.
     Converts raw .eml bytes into a fully populated CanonicalEmailObject schema.
     """
 
