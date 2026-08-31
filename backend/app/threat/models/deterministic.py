@@ -4,7 +4,7 @@ from app.threat.models.base import ThreatModel
 
 class DeterministicThreatModel(ThreatModel):
     """
-    Baseline deterministic model provider for MailTrace.
+    Baseline deterministic model provider for ThreatTrace AI.
     Provides fast, reproducible, network-independent classification based on feature weights & rules.
     """
 
