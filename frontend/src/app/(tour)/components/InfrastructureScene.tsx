@@ -17,7 +17,7 @@ export function InfrastructureScene() {
   const showLevel3 = progress > 0.6;
 
   return (
-    <section id="scene-08" className="relative min-h-[250vh]" ref={ref}>
+    <section id="scene-08" className="relative w-full h-full" ref={ref}>
       <div className="sticky top-0 flex h-screen flex-col items-center justify-center px-4" style={{ opacity: sceneOpacity }}>
         
         <div className="text-center mb-16">
