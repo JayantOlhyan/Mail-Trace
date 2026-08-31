@@ -12,6 +12,7 @@ import {
   GitFork,
   Settings,
   ShieldAlert,
+  FileText,
 } from 'lucide-react';
 
 const navItems = [
@@ -21,6 +22,7 @@ const navItems = [
   { name: 'Campaigns', href: '/campaigns', icon: Layers },
   { name: 'Infrastructure', href: '/infrastructure', icon: Network },
   { name: 'Graph Explorer', href: '/graph', icon: GitFork },
+  { name: 'Reports', href: '/reports', icon: FileText },
   { name: 'Settings', href: '/settings', icon: Settings },
 ];
 
