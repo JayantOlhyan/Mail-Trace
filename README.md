@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="docs/assets/logo.jpg" alt="MailTrace Logo" width="400" />
+  <img src="docs/assets/logo.jpg" alt="ThreatTrace AI Logo" width="400" />
 </p>
 
-<h1 align="center">MailTrace ✉️🔍🛡️</h1>
+<h1 align="center">ThreatTrace AI ✉️🔍🛡️</h1>
 
 <p align="center">
   <b>AI-Powered Email Threat Detection & Forensic Intelligence Platform</b><br />
@@ -11,18 +11,18 @@
 
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License MIT"></a>
-  <a href="https://github.com/JayantOlhyan/Mail-Trace"><img src="https://img.shields.io/badge/Build-Passing-brightgreen.svg" alt="Build Status"></a>
+  <a href="https://github.com/JayantOlhyan/ThreatTrace-AI"><img src="https://img.shields.io/badge/Build-Passing-brightgreen.svg" alt="Build Status"></a>
   <a href="https://python.org"><img src="https://img.shields.io/badge/Python-3.9%2B-blue.svg" alt="Python 3.9+"></a>
   <a href="https://fastapi.tiangolo.com"><img src="https://img.shields.io/badge/FastAPI-0.100%2B-009688.svg" alt="FastAPI"></a>
   <a href="https://nextjs.org"><img src="https://img.shields.io/badge/Next.js-14-black.svg" alt="Next.js 14"></a>
-  <a href="ARCHITECTURE.md"><img src="https://img.shields.io/badge/Phase_8-Production_Hardened-success.svg" alt="Phase 8 Hardened"></a>
+  <a href="ARCHITECTURE.md"><img src="https://img.shields.io/badge/Phase_9-SIH_Production_Ready-success.svg" alt="Phase 9 Ready"></a>
 </p>
 
 ---
 
 ## 🎯 Overview
 
-**MailTrace** is an enterprise-grade forensic intelligence and email threat detection platform built specifically for cybersecurity analysts and incident responders. Designed for **SIH 2026 Problem Statement 106**, MailTrace goes beyond simple spam/phishing classification by answering key investigation questions:
+**ThreatTrace AI** is an enterprise-grade forensic intelligence and email threat detection platform built specifically for cybersecurity analysts and incident responders. Designed for **SIH 2026 Problem Statement 106**, ThreatTrace AI goes beyond simple spam/phishing classification by answering key investigation questions:
 
 - **Why is this email suspicious?**
 - **How did it reach the recipient?**
