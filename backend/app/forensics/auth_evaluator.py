@@ -13,7 +13,7 @@ from app.forensics.models import (
 
 class AuthEvaluator:
     """
-    Email Forensics & Authentication Evaluation Engine for MailTrace.
+    Email Forensics & Authentication Evaluation Engine for ThreatTrace AI.
     Evaluates SPF, DKIM, DMARC alignment, Display Name Spoofing, and Envelope Sender Mismatches.
     """
 
