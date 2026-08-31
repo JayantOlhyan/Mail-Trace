@@ -10,8 +10,7 @@ export function RelayTraceScene() {
 
   // Unified Cinematic Timing
   const fadeIn = Math.min(1, progress * 3);
-  const fadeOut = Math.max(0, 1 - (progress - 0.66) * 3);
-  const sceneOpacity = Math.min(fadeIn, fadeOut);
+  const sceneOpacity = fadeIn;
 
   const { relay } = tourData;
   const [activeHop, setActiveHop] = useState<number | null>(null);

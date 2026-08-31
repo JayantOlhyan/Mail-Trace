@@ -7,8 +7,7 @@ export function ProductRevealScene() {
   
   // Unified Cinematic Timing
   const fadeIn = Math.min(1, progress * 3);
-  const fadeOut = Math.max(0, 1 - (progress - 0.66) * 3);
-  const sceneOpacity = Math.min(fadeIn, fadeOut);
+  const sceneOpacity = fadeIn;
 
   const textOpacity = Math.min(1, progress * 2);
   const translateY = Math.max(0, 50 - progress * 100);

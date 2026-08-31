@@ -2,16 +2,18 @@
 
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import { UserCheck, Bot } from 'lucide-react';
+import { useState } from 'react';
 
 export function AnalystScene() {
   const { ref, progress } = useScrollReveal(0.4);
 
   // Unified Cinematic Timing
   const fadeIn = Math.min(1, progress * 3);
-  const fadeOut = Math.max(0, 1 - (progress - 0.66) * 3);
-  const sceneOpacity = Math.min(fadeIn, fadeOut);
+  const sceneOpacity = fadeIn;
 
-  const selectedVerdict: string | null = progress > 0.6 ? 'phishing' : null;
+  const [selectedVerdict, setSelectedVerdict] = useState<string | null>(null);
+
+  const currentVerdict = selectedVerdict ?? (progress > 0.6 ? 'phishing' : null);
 
   return (
     <section id="scene-11" className="relative w-full h-full" ref={ref}>
@@ -20,7 +22,7 @@ export function AnalystScene() {
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold mb-4">AI ASSISTS. ANALYST DECIDES.</h2>
           <p className="text-slate-600 dark:text-slate-400 max-w-xl mx-auto">
-            ThreatTrace AI provides the assessment, but human analysts retain final control over the verdict.
+            ThreatTrace AI provides the assessment, but human analysts retain final control over the verdict. Click options below to change verdict.
           </p>
         </div>
 
@@ -49,30 +51,33 @@ export function AnalystScene() {
             
             <div className="space-y-3">
               <button 
-                className={`w-full p-3 rounded border text-left transition-all ${
-                  selectedVerdict === 'phishing' 
+                onClick={() => setSelectedVerdict('phishing')}
+                className={`w-full p-3 rounded border text-left transition-all cursor-pointer ${
+                  currentVerdict === 'phishing' 
                     ? 'bg-red-950 border-red-500 text-red-400' 
-                    : 'bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400'
+                    : 'bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:border-slate-600'
                 }`}
               >
                 <div className="font-semibold text-sm">CONFIRMED PHISHING</div>
               </button>
               
               <button 
-                className={`w-full p-3 rounded border text-left transition-all ${
-                  selectedVerdict === 'bec' 
+                onClick={() => setSelectedVerdict('bec')}
+                className={`w-full p-3 rounded border text-left transition-all cursor-pointer ${
+                  currentVerdict === 'bec' 
                     ? 'bg-orange-950 border-orange-500 text-orange-400' 
-                    : 'bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400'
+                    : 'bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:border-slate-600'
                 }`}
               >
                 <div className="font-semibold text-sm">CONFIRMED BEC</div>
               </button>
               
               <button 
-                className={`w-full p-3 rounded border text-left transition-all ${
-                  selectedVerdict === 'fp' 
+                onClick={() => setSelectedVerdict('fp')}
+                className={`w-full p-3 rounded border text-left transition-all cursor-pointer ${
+                  currentVerdict === 'fp' 
                     ? 'bg-green-950 border-green-500 text-green-400' 
-                    : 'bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400'
+                    : 'bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:border-slate-600'
                 }`}
               >
                 <div className="font-semibold text-sm">FALSE POSITIVE</div>

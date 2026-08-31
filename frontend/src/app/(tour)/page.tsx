@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { TourNavigation, SCENES } from './components/TourNavigation';
 import { TourProgressNav } from './components/TourProgressNav';
 import { ParticlesBackground } from './components/ParticlesBackground';
@@ -39,6 +39,43 @@ const SCENE_COMPONENTS = [
 
 export default function TourPage() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const isScrollingRef = useRef(false);
+
+  useEffect(() => {
+    const handleWheel = (e: WheelEvent) => {
+      if (isScrollingRef.current) return;
+      
+      if (Math.abs(e.deltaY) > 20) {
+        isScrollingRef.current = true;
+        if (e.deltaY > 0) {
+          setActiveIndex((prev) => Math.min(prev + 1, SCENE_COMPONENTS.length - 1));
+        } else {
+          setActiveIndex((prev) => Math.max(prev - 1, 0));
+        }
+        setTimeout(() => {
+          isScrollingRef.current = false;
+        }, 500);
+      }
+    };
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowDown' || e.key === 'PageDown') {
+        e.preventDefault();
+        setActiveIndex((prev) => Math.min(prev + 1, SCENE_COMPONENTS.length - 1));
+      } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+        e.preventDefault();
+        setActiveIndex((prev) => Math.max(prev - 1, 0));
+      }
+    };
+
+    window.addEventListener('wheel', handleWheel, { passive: true });
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      window.removeEventListener('wheel', handleWheel);
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
 
   const ActiveComponent = SCENE_COMPONENTS[activeIndex];
 

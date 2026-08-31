@@ -9,14 +9,12 @@ export function IncidentScene() {
 
   // Unified Cinematic Timing
   const fadeIn = Math.min(1, progress * 3);
-  const fadeOut = Math.max(0, 1 - (progress - 0.66) * 3);
-  const sceneOpacity = fadeOut;
+  const sceneOpacity = fadeIn;
 
   const { incident } = tourData;
 
   // For the first scene, we want it fully visible on load (no fade in).
-  // It only fades out at the very end of the scroll (progress 0.66 to 1.0).
-  const opacity = Math.min(1, fadeOut);
+  const opacity = Math.min(1, fadeIn);
   const separation = Math.max(0, progress * 2);
 
   return (
