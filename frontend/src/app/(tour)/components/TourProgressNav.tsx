@@ -1,58 +1,16 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { SCENES } from './TourNavigation';
 
-const SCENES = [
-  { id: 'scene-01', label: 'Incident Signal', short: 'Incident' },
-  { id: 'scene-02', label: 'Threat Intelligence', short: 'Overview' },
-  { id: 'scene-03', label: 'MIME Ingestion', short: 'Ingestion' },
-  { id: 'scene-04', label: 'Multi-Layer Detection', short: 'Detection' },
-  { id: 'scene-05', label: 'Explainability & Scoring', short: 'Scoring' },
-  { id: 'scene-06', label: 'Header Forensics', short: 'Headers' },
-  { id: 'scene-07', label: 'SMTP Relay Trace', short: 'Relay' },
-  { id: 'scene-08', label: 'Infrastructure Intelligence', short: 'Infra' },
-  { id: 'scene-09', label: 'Investigation Graph', short: 'Graph' },
-  { id: 'scene-10', label: 'Campaign Correlation', short: 'Campaign' },
-  { id: 'scene-11', label: 'Analyst Workspace', short: 'SOC' },
-  { id: 'scene-12', label: 'Evidence Preservation', short: 'Evidence' },
-  { id: 'scene-13', label: 'Forensic Report', short: 'Report' },
-  { id: 'scene-14', label: 'SOC Action Plan', short: 'Action' },
-];
+interface Props {
+  activeIndex: number;
+  onSelect: (index: number) => void;
+}
 
-export function TourProgressNav() {
-  const [activeIndex, setActiveIndex] = useState(0);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY + window.innerHeight / 3;
-      
-      let current = 0;
-      for (let i = 0; i < SCENES.length; i++) {
-        const el = document.getElementById(SCENES[i].id);
-        if (el) {
-          const top = el.offsetTop;
-          if (scrollPosition >= top) {
-            current = i;
-          }
-        }
-      }
-      setActiveIndex(current);
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
-
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const scrollToScene = (id: string) => {
-    const el = document.getElementById(id);
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
+export function TourProgressNav({ activeIndex, onSelect }: Props) {
   const activeScene = SCENES[activeIndex];
+
+  if (!activeScene) return null;
 
   return (
     <>
@@ -70,7 +28,7 @@ export function TourProgressNav() {
           return (
             <button
               key={scene.id}
-              onClick={() => scrollToScene(scene.id)}
+              onClick={() => onSelect(idx)}
               className="group relative flex items-center justify-center p-1 focus:outline-none"
               aria-label={`Jump to ${scene.label}`}
             >
