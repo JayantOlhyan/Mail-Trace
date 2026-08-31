@@ -16,7 +16,7 @@ export function ExplainabilityScene() {
   const showOverlay = progress > 0.2;
 
   return (
-    <section id="scene-05" className="relative min-h-[250vh]" ref={ref}>
+    <section id="scene-05" className="relative w-full h-full" ref={ref}>
       <div className="sticky top-0 flex h-screen flex-col items-center justify-center md:px-24" style={{ opacity: sceneOpacity }}>
         
         <div className="text-center mb-12">
