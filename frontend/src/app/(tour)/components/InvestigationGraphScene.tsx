@@ -32,7 +32,7 @@ export function InvestigationGraphScene() {
   ];
 
   return (
-    <section id="scene-09" className="relative min-h-[250vh]" ref={ref}>
+    <section id="scene-09" className="relative w-full h-full" ref={ref}>
       <div className="sticky top-0 flex h-screen flex-col items-center justify-center md:px-24" style={{ opacity: sceneOpacity }}>
         
         <div className="text-center mb-8 z-10">
