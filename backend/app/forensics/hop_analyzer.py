@@ -5,7 +5,7 @@ from app.forensics.models import HopAnalysisResult
 
 class HopAnalyzer:
     """
-    SMTP Relay Path & Origin Tracing Engine for MailTrace.
+    SMTP Relay Path & Origin Tracing Engine for ThreatTrace AI.
     Analyzes Received header chains to identify the Observed Origin IP (earliest reliable public IP)
     and flags routing anomalies while stripping internal/private network hops.
     """
