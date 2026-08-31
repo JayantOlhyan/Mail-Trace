@@ -37,8 +37,8 @@ export function Navigation() {
           <ShieldAlert className="w-6 h-6" />
         </div>
         <div>
-          <h1 className="font-bold text-lg tracking-wider text-slate-100 flex items-center gap-1.5">
-            MAILTRACE <span className="text-xs bg-indigo-500/20 text-indigo-300 px-1.5 py-0.5 rounded font-mono">v1.0</span>
+          <h1 className="font-bold text-base tracking-wider text-slate-100 flex items-center gap-1.5 font-mono">
+            THREATTRACE AI <span className="text-[10px] bg-indigo-500/20 text-indigo-300 px-1.5 py-0.5 rounded font-mono">v1.0</span>
           </h1>
           <p className="text-xs text-slate-400 font-mono">SIH 2026 • PS 106</p>
         </div>
