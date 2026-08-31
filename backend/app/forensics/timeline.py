@@ -50,15 +50,15 @@ class ForensicTimelineBuilder:
                 )
             )
 
-        # 3. MailTrace Ingestion Event
+        # 3. ThreatTrace AI Ingestion Event
         events.append(
             TimelineEventSchema(
                 event_id=f"TLE-{uuid.uuid4().hex[:8]}",
                 timestamp=canonical_email.metadata.parsed_at,
                 event_type="evidence_ingestion",
-                description=f"Evidence {canonical_email.evidence.evidence_id} ingested and parsed by MailTrace v{canonical_email.metadata.parser_version}",
+                description=f"Evidence {canonical_email.evidence.evidence_id} ingested and parsed by ThreatTrace AI v{canonical_email.metadata.parser_version}",
                 evidence_reference=canonical_email.evidence.sha256,
-                source="MailTrace Engine"
+                source="ThreatTrace AI Engine"
             )
         )
 
