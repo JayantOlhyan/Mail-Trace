@@ -10,7 +10,7 @@ async def liveness_probe():
     """
     Kubernetes/container liveness probe.
     """
-    return {"status": "ALIVE", "service": "MailTrace Engine"}
+    return {"status": "ALIVE", "service": "ThreatTrace AI Engine"}
 
 
 @router.get("/ready")
@@ -18,7 +18,7 @@ async def readiness_probe():
     """
     Kubernetes/container readiness probe.
     """
-    return {"status": "READY", "service": "MailTrace Engine"}
+    return {"status": "READY", "service": "ThreatTrace AI Engine"}
 
 
 @router.get("/health")
