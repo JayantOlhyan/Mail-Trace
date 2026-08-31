@@ -16,11 +16,14 @@ import { FinalScene } from './components/FinalScene';
 
 export default function TourPage() {
   return (
-    <main className="relative w-full overflow-hidden bg-slate-50 dark:bg-slate-950">
-      {/* Ambient glowing background */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-blue-100/50 dark:bg-blue-900/20 blur-[120px]" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-purple-900/10 blur-[150px]" />
+    <main className="relative w-full overflow-hidden bg-slate-50 dark:bg-slate-950 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]">
+      {/* Ambient glowing background - absolute so it scrolls with the page */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-50">
+        <div className="absolute top-0 left-[-10%] w-[40%] h-[100vh] rounded-full bg-blue-400/20 dark:bg-blue-900/30 blur-[120px]" />
+        <div className="absolute top-[50vh] right-[-10%] w-[50%] h-[100vh] rounded-full bg-purple-400/20 dark:bg-purple-900/20 blur-[150px]" />
+        <div className="absolute top-[150vh] left-[10%] w-[40%] h-[100vh] rounded-full bg-indigo-400/20 dark:bg-indigo-900/30 blur-[120px]" />
+        <div className="absolute top-[250vh] right-[10%] w-[40%] h-[100vh] rounded-full bg-emerald-400/20 dark:bg-emerald-900/20 blur-[120px]" />
+        <div className="absolute top-[350vh] left-[20%] w-[50%] h-[100vh] rounded-full bg-blue-400/20 dark:bg-blue-900/30 blur-[150px]" />
       </div>
 
       <TourNavigation />
