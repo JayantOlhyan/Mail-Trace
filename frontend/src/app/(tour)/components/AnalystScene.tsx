@@ -13,7 +13,7 @@ export function AnalystScene() {
         
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold mb-4">AI ASSISTS. ANALYST DECIDES.</h2>
-          <p className="text-slate-400 max-w-xl mx-auto">
+          <p className="text-slate-600 dark:text-slate-400 max-w-xl mx-auto">
             ThreatTrace AI provides the assessment, but human analysts retain final control over the verdict.
           </p>
         </div>
@@ -21,8 +21,8 @@ export function AnalystScene() {
         <div className="w-full max-w-2xl grid md:grid-cols-2 gap-8">
           
           {/* AI Assessment */}
-          <div className={`bg-slate-900 border border-slate-700 rounded-lg p-6 transition-all duration-700 ${progress > 0.2 ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'}`}>
-            <div className="flex items-center gap-3 mb-6 text-slate-400 border-b border-slate-800 pb-4">
+          <div className={`bg-slate-100 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg p-6 transition-all duration-700 ${progress > 0.2 ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'}`}>
+            <div className="flex items-center gap-3 mb-6 text-slate-600 dark:text-slate-400 border-b border-slate-200 dark:border-slate-800 pb-4">
               <Bot className="w-5 h-5" />
               <span className="font-mono text-sm tracking-widest">AI ASSESSMENT</span>
             </div>
@@ -35,10 +35,10 @@ export function AnalystScene() {
           </div>
 
           {/* Analyst Review */}
-          <div className={`bg-slate-900 border border-slate-700 rounded-lg p-6 transition-all duration-700 delay-200 ${progress > 0.4 ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'}`}>
-            <div className="flex items-center gap-3 mb-6 text-blue-400 border-b border-slate-800 pb-4">
+          <div className={`bg-slate-100 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg p-6 transition-all duration-700 delay-200 ${progress > 0.4 ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'}`}>
+            <div className="flex items-center gap-3 mb-6 text-blue-400 border-b border-slate-200 dark:border-slate-800 pb-4">
               <UserCheck className="w-5 h-5" />
-              <span className="font-mono text-sm tracking-widest text-slate-200">ANALYST REVIEW</span>
+              <span className="font-mono text-sm tracking-widest text-slate-800 dark:text-slate-200">ANALYST REVIEW</span>
             </div>
             
             <div className="space-y-3">
@@ -46,7 +46,7 @@ export function AnalystScene() {
                 className={`w-full p-3 rounded border text-left transition-all ${
                   selectedVerdict === 'phishing' 
                     ? 'bg-red-950 border-red-500 text-red-400' 
-                    : 'bg-slate-950 border-slate-800 text-slate-400'
+                    : 'bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400'
                 }`}
               >
                 <div className="font-semibold text-sm">CONFIRMED PHISHING</div>
@@ -56,7 +56,7 @@ export function AnalystScene() {
                 className={`w-full p-3 rounded border text-left transition-all ${
                   selectedVerdict === 'bec' 
                     ? 'bg-orange-950 border-orange-500 text-orange-400' 
-                    : 'bg-slate-950 border-slate-800 text-slate-400'
+                    : 'bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400'
                 }`}
               >
                 <div className="font-semibold text-sm">CONFIRMED BEC</div>
@@ -66,7 +66,7 @@ export function AnalystScene() {
                 className={`w-full p-3 rounded border text-left transition-all ${
                   selectedVerdict === 'fp' 
                     ? 'bg-green-950 border-green-500 text-green-400' 
-                    : 'bg-slate-950 border-slate-800 text-slate-400'
+                    : 'bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400'
                 }`}
               >
                 <div className="font-semibold text-sm">FALSE POSITIVE</div>
