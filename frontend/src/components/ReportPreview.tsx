@@ -45,7 +45,7 @@ export function ReportPreview({ reportId, caseId }: ReportPreviewProps) {
           </div>
           <div>
             <h2 className="font-bold text-slate-100 text-sm flex items-center gap-2">
-              MAILTRACE FORENSIC REPORT • {reportId}
+              THREATTRACE AI FORENSIC REPORT • {reportId}
             </h2>
             <span className="text-xs font-mono text-slate-400">Associated Case: {caseId} • Version 1.0</span>
           </div>
@@ -95,7 +95,7 @@ export function ReportPreview({ reportId, caseId }: ReportPreviewProps) {
               Email Incident Forensic Assessment Report
             </h1>
             <p className="text-xs font-mono text-slate-400 mt-1">
-              MailTrace Automated Intelligence Engine v1.0 • Generated for {caseId}
+              ThreatTrace AI Automated Intelligence Engine v1.0 • Generated for {caseId}
             </p>
           </div>
 
@@ -112,7 +112,7 @@ export function ReportPreview({ reportId, caseId }: ReportPreviewProps) {
             1. Executive Summary
           </h3>
           <div className="p-4 rounded-xl bg-slate-900/80 border border-slate-800 text-sm leading-relaxed text-slate-200">
-            MailTrace evaluated email evidence associated with {caseId} and identified a high-risk <strong>PHISHING</strong> event exhibiting multiple technical and behavioral indicators associated with credential theft. Defensive risk score calculated at <strong>91/100 (HIGH Confidence)</strong>.
+            ThreatTrace AI evaluated email evidence associated with {caseId} and identified a high-risk <strong>PHISHING</strong> event exhibiting multiple technical and behavioral indicators associated with credential theft. Defensive risk score calculated at <strong>91/100 (HIGH Confidence)</strong>.
           </div>
         </section>
 
