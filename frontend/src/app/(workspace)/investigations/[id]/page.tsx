@@ -172,6 +172,127 @@ export default function EmailInvestigationDetailPage() {
         </div>
       </div>
 
+      {/* WHY IS THIS EMAIL RISKY PILL TAGS (Approach H Panel 2) */}
+      <div className="bg-slate-100/80 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 rounded-xl p-4 space-y-2">
+        <span className="text-xs font-mono font-bold text-slate-700 dark:text-slate-300 tracking-wider block">
+          WHY IS THIS EMAIL RISKY?
+        </span>
+        <div className="flex flex-wrap items-center gap-2 font-mono text-xs">
+          <span className="px-3 py-1 rounded bg-red-950/60 text-red-400 border border-red-800/80 font-semibold shadow-sm">
+            Lookalike Domain
+          </span>
+          <span className="px-3 py-1 rounded bg-red-950/60 text-red-400 border border-red-800/80 font-semibold shadow-sm">
+            SPF Failure
+          </span>
+          <span className="px-3 py-1 rounded bg-red-950/60 text-red-400 border border-red-800/80 font-semibold shadow-sm">
+            DKIM Failure
+          </span>
+          <span className="px-3 py-1 rounded bg-red-950/60 text-red-400 border border-red-800/80 font-semibold shadow-sm">
+            DMARC Failure
+          </span>
+          <span className="px-3 py-1 rounded bg-amber-950/60 text-amber-400 border border-amber-800/80 font-semibold shadow-sm">
+            Suspicious URL
+          </span>
+          <span className="px-3 py-1 rounded bg-blue-950/60 text-blue-400 border border-blue-800/80 font-semibold shadow-sm">
+            Social Engineering
+          </span>
+        </div>
+      </div>
+
+      {/* KEY INDICATORS & RISK SCORE HISTORY (Approach H Panel 2) */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Key Indicators */}
+        <div className="bg-slate-100/80 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 rounded-xl p-5 space-y-4 shadow-xl">
+          <h3 className="font-semibold text-slate-800 dark:text-slate-200 text-sm font-mono tracking-wide flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
+            <span>Key Indicators</span>
+            <span className="text-xs text-slate-500 font-normal">Observed Signals</span>
+          </h3>
+          <div className="space-y-3 font-mono text-xs">
+            <div className="flex items-center justify-between py-1.5 border-b border-slate-200/60 dark:border-slate-800/60">
+              <span className="text-slate-500">Sender Domain:</span>
+              <div className="flex items-center gap-2">
+                <span className="text-slate-800 dark:text-slate-200 font-bold">{forensics.from_address?.split('@')[1] || 'paypa1-support.com'}</span>
+                <span className="px-2 py-0.5 rounded bg-red-950/80 text-red-400 border border-red-800 text-[10px] font-bold">Lookalike</span>
+              </div>
+            </div>
+            <div className="flex items-center justify-between py-1.5 border-b border-slate-200/60 dark:border-slate-800/60">
+              <span className="text-slate-500">SPF:</span>
+              <span className="text-red-400 font-bold px-2 py-0.5 bg-red-950/50 rounded border border-red-900">{forensics.spf_status || 'Fail'}</span>
+            </div>
+            <div className="flex items-center justify-between py-1.5 border-b border-slate-200/60 dark:border-slate-800/60">
+              <span className="text-slate-500">DKIM:</span>
+              <span className="text-red-400 font-bold px-2 py-0.5 bg-red-950/50 rounded border border-red-900">{forensics.dkim_status || 'Fail'}</span>
+            </div>
+            <div className="flex items-center justify-between py-1.5 border-b border-slate-200/60 dark:border-slate-800/60">
+              <span className="text-slate-500">DMARC:</span>
+              <span className="text-red-400 font-bold px-2 py-0.5 bg-red-950/50 rounded border border-red-900">{forensics.dmarc_status || 'Fail'}</span>
+            </div>
+            <div className="flex items-center justify-between py-1.5 border-b border-slate-200/60 dark:border-slate-800/60">
+              <span className="text-slate-500">Suspicious Links:</span>
+              <span className="text-amber-400 font-bold">1</span>
+            </div>
+            <div className="flex items-center justify-between py-1.5">
+              <span className="text-slate-500">Attachments:</span>
+              <span className="text-slate-400">0</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Risk Score History Line Chart */}
+        <div className="bg-slate-100/80 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 rounded-xl p-5 flex flex-col justify-between shadow-xl">
+          <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3 mb-4">
+            <h3 className="font-semibold text-slate-800 dark:text-slate-200 text-sm font-mono tracking-wide">
+              Risk Score History
+            </h3>
+            <span className="text-xs font-mono text-red-400 font-bold bg-red-950/60 px-2 py-0.5 rounded border border-red-900">
+              Peak: {email.risk_score}
+            </span>
+          </div>
+          
+          <div className="relative h-44 w-full flex items-end">
+            <svg className="w-full h-full overflow-visible" viewBox="0 0 400 120">
+              <line x1="0" y1="20" x2="400" y2="20" stroke="#334155" strokeWidth="1" strokeDasharray="3 3" opacity="0.4" />
+              <line x1="0" y1="50" x2="400" y2="50" stroke="#334155" strokeWidth="1" strokeDasharray="3 3" opacity="0.4" />
+              <line x1="0" y1="80" x2="400" y2="80" stroke="#334155" strokeWidth="1" strokeDasharray="3 3" opacity="0.4" />
+              <line x1="0" y1="110" x2="400" y2="110" stroke="#334155" strokeWidth="1" opacity="0.6" />
+
+              <polyline
+                fill="none"
+                stroke="#ef4444"
+                strokeWidth="3"
+                points="20,105 100,75 180,55 260,35 360,15"
+              />
+
+              <g className="font-mono text-[9px] fill-red-400 font-bold">
+                <circle cx="20" cy="105" r="4" fill="#ef4444" />
+                <text x="20" y="97" textAnchor="middle">12</text>
+
+                <circle cx="100" cy="75" r="4" fill="#ef4444" />
+                <text x="100" y="67" textAnchor="middle">43</text>
+
+                <circle cx="180" cy="55" r="4" fill="#ef4444" />
+                <text x="180" y="47" textAnchor="middle">61</text>
+
+                <circle cx="260" cy="35" r="4" fill="#ef4444" />
+                <text x="260" y="27" textAnchor="middle">78</text>
+
+                <circle cx="360" cy="15" r="5" fill="#ef4444" />
+                <text x="360" y="7" textAnchor="middle" className="text-[11px] fill-red-400 font-black">91</text>
+              </g>
+            </svg>
+          </div>
+
+          <div className="flex justify-between text-[10px] font-mono text-slate-500 mt-2 border-t border-slate-200 dark:border-slate-800/60 pt-2">
+            <span>0h</span>
+            <span>4h</span>
+            <span>8h</span>
+            <span>12h</span>
+            <span>16h</span>
+            <span>20h</span>
+          </div>
+        </div>
+      </div>
+
       {/* WHY THREATTRACE AI FLAGGED THIS EMAIL */}
       <div className="space-y-4">
         <div className="flex items-center justify-between">

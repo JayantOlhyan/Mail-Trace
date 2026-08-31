@@ -2,31 +2,26 @@
 
 import * as React from 'react';
 import Image from 'next/image';
-import { useTheme } from 'next-themes';
 
 export function Logo({ className = '' }: { className?: string }) {
-  const { resolvedTheme } = useTheme();
-  const [mounted, setMounted] = React.useState(false);
-
-  React.useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) {
-    // Prevent hydration mismatch by rendering an empty block of similar size
-    return <div className={`w-32 h-10 ${className}`} />;
-  }
-
-  const isLight = resolvedTheme === 'light';
-
   return (
     <div className={`relative flex items-center ${className}`}>
+      {/* Light Logo for Dark theme (dark background) */}
       <Image
-        src={isLight ? '/logo-light.png' : '/logo-dark.png'}
+        src="/logo-light.png"
         alt="ThreatTrace AI Logo"
         width={160}
         height={60}
-        className="object-contain"
+        className="hidden dark:block object-contain"
+        priority
+      />
+      {/* Dark Logo for Light theme (light background) */}
+      <Image
+        src="/logo-dark.png"
+        alt="ThreatTrace AI Logo"
+        width={160}
+        height={60}
+        className="block dark:hidden object-contain border-none"
         priority
       />
     </div>

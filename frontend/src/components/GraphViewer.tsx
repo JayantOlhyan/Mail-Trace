@@ -108,42 +108,80 @@ export function GraphViewer({ graph }: GraphViewerProps) {
 
       {/* Canvas Area */}
       <div className="flex-1 bg-slate-950/90 relative overflow-hidden flex items-center justify-center p-8">
-        {/* SVG Graph Layout Simulation */}
+        {/* SVG Graph Layout Simulation with Radial Connecting Lines (Approach H Panel 3) */}
         <div
-          className="transition-transform duration-200 flex flex-wrap items-center justify-center gap-8 max-w-4xl"
+          className="transition-transform duration-200 relative w-full h-full flex items-center justify-center"
           style={{ transform: `scale(${zoom})` }}
         >
-          {graph.nodes.map((node) => {
-            const isSelected = selectedNode?.id === node.id;
-            return (
-              <div
-                key={node.id}
-                onClick={() => {
-                  setSelectedNode(node);
-                  setSelectedEdge(null);
-                }}
-                className={`p-4 rounded-xl border cursor-pointer transition-all flex items-center space-x-3 shadow-lg select-none ${
-                  isSelected
-                    ? 'border-indigo-500 bg-indigo-950/60 ring-2 ring-indigo-500/50 scale-105'
-                    : 'border-slate-800 bg-slate-900/80 hover:border-slate-700 hover:bg-slate-900'
-                }`}
-              >
-                <div className="p-2 rounded-lg bg-slate-950 border border-slate-800">
-                  {getNodeIcon(node.node_type)}
-                </div>
-                <div>
-                  <div className="flex items-center space-x-1.5">
-                    <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-slate-800 text-slate-400 font-semibold">
-                      {node.node_type}
-                    </span>
+          {/* SVG Connecting Lines */}
+          <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-80">
+            {graph.nodes.map((node, index) => {
+              const total = Math.max(1, graph.nodes.length);
+              const angle = (index / total) * 2 * Math.PI;
+              const cx = 50 + 36 * Math.cos(angle);
+              const cy = 50 + 34 * Math.sin(angle);
+              const isSelected = selectedNode?.id === node.id;
+              return (
+                <g key={`edge-g-${node.id}`}>
+                  <line
+                    x1="50%"
+                    y1="50%"
+                    x2={`${cx}%`}
+                    y2={`${cy}%`}
+                    stroke={isSelected ? '#ef4444' : node.node_type === 'EMAIL' ? '#ef4444' : '#38bdf8'}
+                    strokeWidth={isSelected ? '2.5' : '1.5'}
+                    strokeDasharray="4 3"
+                  />
+                </g>
+              );
+            })}
+          </svg>
+
+          <div className="relative w-full h-full max-w-2xl max-h-[380px]">
+            {graph.nodes.map((node, index) => {
+              const isSelected = selectedNode?.id === node.id;
+              const total = Math.max(1, graph.nodes.length);
+              const angle = (index / total) * 2 * Math.PI;
+              const isCenter = node.node_type === 'EMAIL';
+              const leftPercent = isCenter ? 50 : 50 + 36 * Math.cos(angle);
+              const topPercent = isCenter ? 50 : 50 + 34 * Math.sin(angle);
+
+              return (
+                <div
+                  key={node.id}
+                  onClick={() => {
+                    setSelectedNode(node);
+                    setSelectedEdge(null);
+                  }}
+                  style={{
+                    left: `${leftPercent}%`,
+                    top: `${topPercent}%`,
+                  }}
+                  className={`absolute -translate-x-1/2 -translate-y-1/2 p-3 rounded-xl border cursor-pointer transition-all flex items-center space-x-2.5 shadow-xl select-none backdrop-blur-md z-10 ${
+                    isCenter
+                      ? 'border-red-500 bg-red-950/80 ring-2 ring-red-500/50 scale-110'
+                      : isSelected
+                      ? 'border-indigo-500 bg-indigo-950/80 ring-2 ring-indigo-500/50 scale-105'
+                      : 'border-slate-800 bg-slate-900/90 hover:border-slate-600 hover:bg-slate-900'
+                  }`}
+                >
+                  <div className={`p-1.5 rounded-lg border ${isCenter ? 'bg-red-950 border-red-800' : 'bg-slate-950 border-slate-800'}`}>
+                    {getNodeIcon(node.node_type)}
                   </div>
-                  <p className="text-xs font-bold text-slate-200 mt-1 max-w-[160px] truncate">
-                    {node.display_value}
-                  </p>
+                  <div>
+                    <div className="flex items-center space-x-1">
+                      <span className={`text-[9px] font-mono px-1 py-0.2 rounded font-semibold ${isCenter ? 'bg-red-900/80 text-red-200' : 'bg-slate-800 text-slate-400'}`}>
+                        {node.node_type}
+                      </span>
+                    </div>
+                    <p className="text-[11px] font-bold text-slate-200 mt-0.5 max-w-[120px] truncate">
+                      {node.display_value}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
 
         {/* Node Inspector Drawer */}

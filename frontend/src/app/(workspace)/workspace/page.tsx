@@ -213,12 +213,38 @@ export default function DashboardPage() {
                     <div className="flex items-center gap-3 flex-shrink-0">
                       <RiskScore score={email.risk_score} size="sm" />
                       <Link href={`/investigations/${email.id}`} className="text-red-400 hover:text-red-300 font-bold">
-                        Analyze
+                        Analyze &gt;
                       </Link>
                     </div>
                   </div>
                 ))
               )}
+            </div>
+
+            {/* Sparkline 24h trend graph (Approach H Panel 1) */}
+            <div className="p-3 bg-slate-950/60 border-t border-slate-200 dark:border-slate-800 font-mono text-[10px]">
+              <div className="flex items-center justify-between text-slate-500 mb-1">
+                <span>24-Hour Threat Frequency</span>
+                <span className="text-red-400 font-bold">Live Stream</span>
+              </div>
+              <svg className="w-full h-12 overflow-visible" viewBox="0 0 300 40">
+                <polyline
+                  fill="none"
+                  stroke="#ef4444"
+                  strokeWidth="2"
+                  points="10,32 50,28 90,35 130,18 170,22 210,12 250,25 290,10"
+                />
+                <circle cx="290" cy="10" r="3" fill="#ef4444" />
+              </svg>
+              <div className="flex justify-between text-slate-600 dark:text-slate-500 mt-1">
+                <span>00</span>
+                <span>04</span>
+                <span>08</span>
+                <span>12</span>
+                <span>16</span>
+                <span>20</span>
+                <span>24</span>
+              </div>
             </div>
           </div>
 

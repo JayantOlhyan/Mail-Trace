@@ -76,12 +76,17 @@ export default function CaseDetailPage() {
           {/* Main Case Info Header */}
           <div className="bg-slate-100 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 rounded-xl p-6 space-y-4 shadow-2xl">
             <div className="flex items-center justify-between">
-              <span className="font-mono text-xs font-bold text-amber-400 bg-amber-950/80 px-2.5 py-1 rounded border border-amber-800">
-                {caseId}
-              </span>
-              <span className="px-2.5 py-0.5 rounded bg-red-950/60 text-red-400 border border-red-800 text-xs font-mono font-bold uppercase">
-                HIGH PRIORITY
-              </span>
+              <div className="flex items-center gap-2">
+                <span className="font-mono text-xs font-bold text-amber-400 bg-amber-950/80 px-2.5 py-1 rounded border border-amber-800">
+                  {caseId}
+                </span>
+                <span className="px-2.5 py-0.5 rounded bg-emerald-950/60 text-emerald-400 border border-emerald-800 text-xs font-mono font-bold uppercase">
+                  OPEN
+                </span>
+                <span className="px-2.5 py-0.5 rounded bg-red-950/60 text-red-400 border border-red-800 text-xs font-mono font-bold uppercase">
+                  HIGH RISK
+                </span>
+              </div>
             </div>
 
             <h1 className="text-xl font-bold text-slate-900 dark:text-slate-100">
@@ -90,57 +95,67 @@ export default function CaseDetailPage() {
             <p className="text-xs text-slate-700 dark:text-slate-300 font-sans leading-relaxed">
               Active credential harvesting campaign attempting to compromise HR payroll accounts. Infrastructure correlates across 3 distinct email incidents with shared bulletproof hosting ASN.
             </p>
+
+            {/* Sub-tabs bar (Approach H Panel 5) */}
+            <div className="flex items-center gap-2 border-t border-slate-200 dark:border-slate-800 pt-4 font-mono text-xs">
+              <button className="px-3 py-1.5 rounded bg-indigo-600 text-white font-bold">Summary</button>
+              <button className="px-3 py-1.5 rounded text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800">Evidence (17)</button>
+              <button className="px-3 py-1.5 rounded text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800">Timeline</button>
+              <button className="px-3 py-1.5 rounded text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800">Notes</button>
+              <button className="px-3 py-1.5 rounded text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800">Report</button>
+            </div>
           </div>
 
-          {/* AI Finding vs Analyst Decision Section */}
+          {/* AI Assessment vs Analyst Verdict Section (Approach H Panel 5) */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* AI Finding */}
-            <div className="bg-slate-100/80 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 p-5 rounded-xl space-y-4">
-              <h3 className="font-semibold text-slate-800 dark:text-slate-200 text-sm tracking-wide flex items-center gap-2">
+            {/* AI Assessment */}
+            <div className="bg-slate-100/80 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 p-5 rounded-xl space-y-4 shadow-xl">
+              <h3 className="font-semibold text-slate-800 dark:text-slate-200 text-sm font-mono tracking-wide flex items-center gap-2 border-b border-slate-200 dark:border-slate-800 pb-3">
                 <Cpu className="w-4 h-4 text-indigo-400" />
-                AI Auto-Detection Finding
+                AI Assessment
               </h3>
-              <div className="space-y-3 font-mono text-xs">
-                <div className="flex justify-between border-b border-slate-200 dark:border-slate-800/60 pb-2">
-                  <span className="text-slate-500">Risk Assessment:</span>
-                  <span className="text-red-400 font-bold">91 / 100</span>
-                </div>
-                <div className="flex justify-between border-b border-slate-200 dark:border-slate-800/60 pb-2">
-                  <span className="text-slate-500">AI Classification:</span>
-                  <span className="text-red-400 font-bold">PHISHING</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-slate-500">Confidence Score:</span>
-                  <span className="text-indigo-400 font-bold">HIGH</span>
-                </div>
+              <div className="text-center py-4 space-y-2 font-mono">
+                <div className="text-3xl font-black text-red-500 tracking-wider">PHISHING</div>
+                <div className="text-4xl font-extrabold text-red-400">91 / 100</div>
+                <div className="text-xs text-indigo-400 font-bold tracking-widest uppercase">High Confidence</div>
               </div>
             </div>
 
-            {/* Analyst Decision */}
-            <div className="bg-slate-100/80 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 p-5 rounded-xl space-y-4">
-              <h3 className="font-semibold text-slate-800 dark:text-slate-200 text-sm tracking-wide flex items-center gap-2">
+            {/* Analyst Verdict */}
+            <div className="bg-slate-100/80 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 p-5 rounded-xl space-y-4 shadow-xl">
+              <h3 className="font-semibold text-slate-800 dark:text-slate-200 text-sm font-mono tracking-wide flex items-center gap-2 border-b border-slate-200 dark:border-slate-800 pb-3">
                 <UserCheck className="w-4 h-4 text-emerald-400" />
-                Analyst Incident Verdict
+                Analyst Verdict
               </h3>
-              <div className="space-y-4">
-                <div className="flex flex-col gap-1.5">
-                  <label className="text-[10px] font-mono text-slate-500 uppercase">Set Official Verdict</label>
-                  <select
-                    value={analystDecision}
-                    onChange={(e) => handleDecisionChange(e.target.value)}
-                    className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 rounded p-2 text-xs focus:outline-none focus:border-emerald-500 cursor-pointer font-mono"
-                  >
-                    <option value="PENDING">PENDING REVIEW</option>
-                    <option value="CONFIRMED_PHISHING">CONFIRMED PHISHING</option>
-                    <option value="CONFIRMED_BEC">CONFIRMED BUSINESS EMAIL COMPROMISE (BEC)</option>
-                    <option value="FALSE_POSITIVE">FALSE POSITIVE (DISMISS)</option>
-                  </select>
+              <div className="space-y-4 font-mono text-xs">
+                <div className="flex flex-col gap-2">
+                  <span className="px-4 py-2 rounded bg-emerald-600 text-white font-bold text-center tracking-wider shadow-md">
+                    CONFIRMED PHISHING
+                  </span>
                 </div>
-                <div className="p-3 bg-emerald-950/20 border border-emerald-900/40 rounded-lg text-xs leading-relaxed text-slate-700 dark:text-slate-300 font-mono">
-                  <span className="font-bold text-emerald-400 block mb-1">Decision Lock Status:</span>
-                  Verdicts are cryptographically signed and injected directly into the final forensic report package.
+                <div className="space-y-1 text-slate-600 dark:text-slate-400 text-[11px] pt-1">
+                  <div className="flex justify-between">
+                    <span>Analyst:</span>
+                    <span className="text-slate-800 dark:text-slate-200 font-bold">Tier 2 Analyst</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Verified Date:</span>
+                    <span className="text-slate-800 dark:text-slate-200 font-bold">May 12, 2026 11:02 AM</span>
+                  </div>
                 </div>
               </div>
+            </div>
+          </div>
+
+          {/* Evidence Integrity SHA-256 Badge (Approach H Panel 5) */}
+          <div className="p-4 bg-emerald-950/30 border border-emerald-800/60 rounded-xl flex items-center justify-between font-mono text-xs text-emerald-300 shadow-lg">
+            <div className="flex items-center space-x-2">
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
+              <span className="font-bold">Evidence Integrity:</span>
+              <span className="text-slate-300">Cryptographically Hashed & Sealed</span>
+            </div>
+            <div className="flex items-center space-x-1.5 px-3 py-1 rounded bg-emerald-950 text-emerald-400 border border-emerald-700 font-bold">
+              <span>✓ SHA-256 Verified</span>
             </div>
           </div>
 
