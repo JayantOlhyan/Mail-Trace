@@ -18,7 +18,7 @@ export function HeaderForensicsScene() {
   const showAnalyzed = progress > 0.7;
 
   return (
-    <section id="scene-06" className="relative min-h-[250vh]" ref={ref}>
+    <section id="scene-06" className="relative w-full h-full" ref={ref}>
       <div className="sticky top-0 flex h-screen items-center justify-center flex-col px-4 md:px-24" style={{ opacity: sceneOpacity }}>
         
         <div className="text-center mb-12">
