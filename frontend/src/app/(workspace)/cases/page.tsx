@@ -41,7 +41,7 @@ export default function CasesPage() {
   );
 
   const getPriorityBadge = (priority: string) => {
-    let style = 'bg-slate-800 text-slate-300 border-slate-700';
+    let style = 'bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-300 dark:border-slate-700';
     if (priority === 'CRITICAL') style = 'bg-red-950/60 text-red-400 border-red-800';
     if (priority === 'HIGH') style = 'bg-amber-950/60 text-amber-400 border-amber-800';
     if (priority === 'MEDIUM') style = 'bg-blue-950/60 text-blue-400 border-blue-800';
@@ -56,23 +56,23 @@ export default function CasesPage() {
   return (
     <div className="space-y-6 max-w-7xl mx-auto">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-4">
         <div>
-          <h1 className="text-xl font-bold tracking-tight text-slate-100 flex items-center gap-2">
+          <h1 className="text-xl font-bold tracking-tight text-slate-900 dark:text-slate-100 flex items-center gap-2">
             <Briefcase className="w-5 h-5 text-amber-400" /> Case Management Directory
           </h1>
-          <p className="text-xs text-slate-400 font-mono mt-0.5">
+          <p className="text-xs text-slate-600 dark:text-slate-400 font-mono mt-0.5">
             Active Incident Escalation & Analyst Case Workflows
           </p>
         </div>
 
         <div className="flex items-center space-x-3">
-          <div className="flex items-center space-x-1 bg-slate-900 border border-slate-800 rounded-lg px-2 py-1 text-xs font-mono">
-            <Filter className="w-3.5 h-3.5 text-slate-400" />
+          <div className="flex items-center space-x-1 bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg px-2 py-1 text-xs font-mono">
+            <Filter className="w-3.5 h-3.5 text-slate-600 dark:text-slate-400" />
             <select
               value={selectedStatus}
               onChange={(e) => setSelectedStatus(e.target.value)}
-              className="bg-transparent text-slate-200 focus:outline-none cursor-pointer"
+              className="bg-transparent text-slate-800 dark:text-slate-200 focus:outline-none cursor-pointer"
             >
               <option value="ALL">All Statuses</option>
               <option value="OPEN">Open</option>
@@ -86,7 +86,7 @@ export default function CasesPage() {
       </div>
 
       {/* Cases Table */}
-      <div className="bg-slate-900/60 border border-slate-800 rounded-xl overflow-hidden shadow-xl">
+      <div className="bg-slate-100/80 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden shadow-xl">
         {loading ? (
           <div className="p-8 text-center text-slate-500 font-mono flex items-center justify-center space-x-2">
             <RefreshCw className="w-4 h-4 animate-spin text-amber-400" />
@@ -98,7 +98,7 @@ export default function CasesPage() {
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="border-b border-slate-800 text-[11px] font-mono text-slate-400 bg-slate-950/60 uppercase">
+                <tr className="border-b border-slate-200 dark:border-slate-800 text-[11px] font-mono text-slate-600 dark:text-slate-400 bg-slate-50 dark:bg-slate-950/60 uppercase">
                   <th className="p-3.5">Case ID</th>
                   <th className="p-3.5">Priority</th>
                   <th className="p-3.5">Status</th>
@@ -108,16 +108,16 @@ export default function CasesPage() {
                   <th className="p-3.5 text-right">Inspect</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800/60 font-mono text-xs text-slate-300">
+              <tbody className="divide-y divide-slate-800/60 font-mono text-xs text-slate-700 dark:text-slate-300">
                 {filtered.map((c) => (
-                  <tr key={c.id} className="hover:bg-slate-800/40 transition-colors">
+                  <tr key={c.id} className="hover:bg-slate-200 dark:bg-slate-800/40 transition-colors">
                     <td className="p-3.5 font-bold text-amber-400">{c.case_id}</td>
                     <td className="p-3.5">{getPriorityBadge(c.priority)}</td>
                     <td className="p-3.5">
                       <select
                         value={c.status}
                         onChange={(e) => handleStatusChange(c.id, e.target.value as CaseStatus)}
-                        className="bg-slate-950 border border-slate-800 text-slate-200 rounded px-2 py-1 text-xs focus:outline-none focus:border-amber-500 cursor-pointer font-mono"
+                        className="bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 rounded px-2 py-1 text-xs focus:outline-none focus:border-amber-500 cursor-pointer font-mono"
                       >
                         <option value="OPEN">OPEN</option>
                         <option value="UNDER_REVIEW">UNDER_REVIEW</option>
@@ -127,17 +127,17 @@ export default function CasesPage() {
                       </select>
                     </td>
                     <td className="p-3.5 max-w-xs">
-                      <p className="font-sans font-bold text-slate-200 truncate">{c.title}</p>
-                      <p className="text-[11px] text-slate-400 truncate">{c.summary}</p>
+                      <p className="font-sans font-bold text-slate-800 dark:text-slate-200 truncate">{c.title}</p>
+                      <p className="text-[11px] text-slate-600 dark:text-slate-400 truncate">{c.summary}</p>
                     </td>
-                    <td className="p-3.5 text-slate-300">{c.assigned_to}</td>
-                    <td className="p-3.5 text-slate-400 text-[11px]">
+                    <td className="p-3.5 text-slate-700 dark:text-slate-300">{c.assigned_to}</td>
+                    <td className="p-3.5 text-slate-600 dark:text-slate-400 text-[11px]">
                       {c.related_emails_count} Emails • {c.campaigns_count} Campaign
                     </td>
                     <td className="p-3.5 text-right">
                       <Link
                         href={`/cases/${c.id}`}
-                        className="inline-flex items-center space-x-1 px-3 py-1 bg-amber-600/20 hover:bg-amber-600 text-amber-300 hover:text-white rounded border border-amber-500/40 transition text-xs font-semibold"
+                        className="inline-flex items-center space-x-1 px-3 py-1 bg-amber-600/20 hover:bg-amber-600 text-amber-300 hover:text-slate-900 dark:text-white rounded border border-amber-500/40 transition text-xs font-semibold"
                       >
                         <span>Case Workspace</span>
                         <ArrowRight className="w-3 h-3" />
