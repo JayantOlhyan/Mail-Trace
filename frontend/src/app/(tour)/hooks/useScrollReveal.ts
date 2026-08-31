@@ -4,62 +4,38 @@ import { useEffect, useRef, useState } from 'react';
 
 export function useScrollReveal(threshold = 0.5) {
   const ref = useRef<HTMLDivElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    const element = ref.current;
-    if (!element) return;
+    let startTime: number | null = null;
+    // Animate the progression over 2500ms
+    const duration = 2500;
+    let rafId: number;
 
-    // Intersection Observer for visibility
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsVisible(entry.isIntersecting);
-      },
-      {
-        threshold: [0, threshold, 1],
-        rootMargin: '0px 0px -10% 0px'
-      }
-    );
-
-    observer.observe(element);
-
-    // Scroll listener for progress calculation if needed
-    const handleScroll = () => {
-      if (!isVisible) return;
+    const animate = (time: number) => {
+      if (!startTime) startTime = time;
+      const elapsed = time - startTime;
+      let newProgress = elapsed / duration;
       
-      const rect = element.getBoundingClientRect();
-      const windowHeight = window.innerHeight;
-      
-      // Calculate progress exclusively for the sticky phase
-      // 0 = element top reaches viewport top (starts sticking)
-      // 1 = element bottom reaches viewport bottom (stops sticking)
-      const stickyScrollDistance = rect.height - windowHeight;
-      
-      let currentProgress = 0;
-      if (stickyScrollDistance > 0) {
-        currentProgress = -rect.top / stickyScrollDistance;
+      if (newProgress >= 1) {
+        setProgress(1);
       } else {
-        // Fallback for short elements
-        currentProgress = (windowHeight - rect.top) / (windowHeight + rect.height);
+        setProgress(newProgress);
+        rafId = requestAnimationFrame(animate);
       }
-      
-      currentProgress = Math.max(0, Math.min(1, currentProgress));
-      
-      setProgress(currentProgress);
     };
-
-    if (isVisible) {
-      window.addEventListener('scroll', handleScroll, { passive: true });
-      // Initial call
-      handleScroll();
-    }
+    
+    // Start animation slightly after mount for smoother effect
+    const timeoutId = setTimeout(() => {
+      rafId = requestAnimationFrame(animate);
+    }, 100);
 
     return () => {
-      observer.disconnect();
-      window.removeEventListener('scroll', handleScroll);
+      clearTimeout(timeoutId);
+      if (rafId) cancelAnimationFrame(rafId);
     };
-  }, [isVisible, threshold]);
+  }, []);
 
-  return { ref, isVisible, progress };
+  // isVisible is always true now since components are only mounted when active
+  return { ref, isVisible: true, progress };
 }
