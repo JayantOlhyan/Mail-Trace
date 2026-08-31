@@ -17,7 +17,7 @@ from app.parsing.sanitizer import HTMLSanitizer
 
 class EmlParser:
     """
-    Robust RFC 5322 MIME & Header Parser Engine for MailTrace.
+    Robust RFC 5322 MIME & Header Parser Engine for ThreatTrace AI.
     Parses raw .eml bytes or string payloads into structured ParsedEmail Pydantic objects.
     Extracts complete header metadata, Received hop chains, body text/HTML, and attachment hashes.
     """
