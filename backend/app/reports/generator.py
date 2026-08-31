@@ -14,7 +14,7 @@ from app.reports.hashing import create_evidence_item, calculate_sha256
 
 class ForensicReportGenerator:
     """
-    Master Forensic Report Builder for MailTrace (Phase 7).
+    Master Forensic Report Builder for ThreatTrace AI (Phase 7).
     Consumes outputs from Phases 1-6 and produces structured ForensicReportSchema.
     """
 
@@ -84,7 +84,7 @@ class ForensicReportGenerator:
                 evidence_id=f"EVD-{case_id}-01",
                 action="Captured & Normalized",
                 timestamp=email_data.get("received_at", generated_at),
-                actor="MailTrace Ingestion Pipeline",
+                actor="ThreatTrace AI Ingestion Pipeline",
                 details="Cryptographic hash computed and evidence stored passively.",
             ),
             ChainOfCustodyItemSchema(
@@ -165,7 +165,7 @@ class ForensicReportGenerator:
 
         # 5. Executive Summary Generation
         exec_summary = (
-            f"MailTrace evaluated email object '{investigation_id}' and identified a "
+            f"ThreatTrace AI evaluated email object '{investigation_id}' and identified a "
             f"{threat_assessment.get('classification', 'SUSPICIOUS')} event with a defensive risk score of "
             f"{threat_assessment.get('risk_score', 0)}/100 ({threat_assessment.get('confidence', 'HIGH')} confidence). "
             f"Key triggers include authentication failures and suspicious origin infrastructure in "
@@ -200,7 +200,7 @@ class ForensicReportGenerator:
             case_id=case_id,
             version=version,
             generated_at=generated_at,
-            generated_by="MailTrace Forensic Engine v1.0",
+            generated_by="ThreatTrace AI Forensic Engine v1.0",
             investigation_id=investigation_id,
             evidence_count=len(evidence_inventory),
             executive_summary=exec_summary,
